@@ -1,0 +1,130 @@
+{
+  "run_id": "af79c35e-3ff4-40bf-b67e-c28fe9799164",
+  "video_info": {
+    "filename": "room.mp4",
+    "path": "media/temp_videos/room.mp4",
+    "room_type": "Study Room",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 4,
+  "user_selected_furniture": {
+    "studyTable": 1,
+    "bookShelf": 1
+  },
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 75.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "studyTable",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.5241127014160156,
+        0.5615493059158325,
+        1.1527490615844727
+      ],
+      "recommended_position_3d": [
+        -0.4605404734611511,
+        0.5757313370704651,
+        1.1530882120132446
+      ],
+      "movement_distance_m": 0.06513580580471512,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance."
+    },
+    {
+      "object": "bookShelf",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.5074469447135925,
+        0.5823161602020264,
+        1.1526870727539062
+      ],
+      "recommended_position_3d": [
+        -0.5828822255134583,
+        0.8492822051048279,
+        1.147630214691162
+      ],
+      "movement_distance_m": 0.27746517355132333,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance."
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.0036964931059628725,
+        0.6591581106185913,
+        1.1548479795455933
+      ],
+      "movement_distance_m": 0.016383463340212047,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness."
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.2168455570936203,
+        0.302102267742157,
+        1.15736985206604
+      ],
+      "movement_distance_m": 0.6021528982226935,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output."
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.6743523537981846,
+    "final_fitness": 0.15331522882686013,
+    "improvement": 0.5210371249713245
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/af79c35e-3ff4-40bf-b67e-c28fe9799164/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/af79c35e-3ff4-40bf-b67e-c28fe9799164/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/af79c35e-3ff4-40bf-b67e-c28fe9799164/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/af79c35e-3ff4-40bf-b67e-c28fe9799164/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/af79c35e-3ff4-40bf-b67e-c28fe9799164/visualizations/06_layout_comparison_2d.png"
+  }
+}

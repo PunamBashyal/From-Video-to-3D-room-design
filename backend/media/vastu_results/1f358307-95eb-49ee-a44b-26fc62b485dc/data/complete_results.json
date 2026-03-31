@@ -1,0 +1,212 @@
+{
+  "run_id": "1f358307-95eb-49ee-a44b-26fc62b485dc",
+  "video_info": {
+    "filename": "655fa428-b2e5-429f-a0a4-893c939fcd80_room.mp4",
+    "path": "media/temp_videos/655fa428-b2e5-429f-a0a4-893c939fcd80_room.mp4",
+    "room_type": "Study Room",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 6,
+  "user_selected_furniture": {
+    "studyTable": 1,
+    "tableLamp": 0,
+    "chair": 1,
+    "bookShelf": 1
+  },
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 83.3,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "studyTable",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.5034434795379639,
+        0.5450503826141357,
+        1.1530442237854004
+      ],
+      "recommended_position_3d": [
+        -0.5463916063308716,
+        0.9876492619514465,
+        1.1451835632324219
+      ],
+      "movement_distance_m": 0.4447472310987357,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 79.1,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 14.1
+      }
+    },
+    {
+      "object": "tableLamp",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.4611440896987915,
+        0.6730210781097412,
+        1.1513153314590454
+      ],
+      "recommended_position_3d": [
+        -0.4638961851596832,
+        0.6711359024047852,
+        1.1514204740524292
+      ],
+      "movement_distance_m": 0.0033375098246088888,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 85.0,
+      "vastu_score_label": "Excellent",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 20.0
+      }
+    },
+    {
+      "object": "chair",
+      "is_essential": true,
+      "current_zone": "West",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        -0.4547257721424103,
+        0.008579731918871403,
+        1.188842535018921
+      ],
+      "recommended_position_3d": [
+        -0.5655453205108643,
+        -0.06651165336370468,
+        1.2149362564086914
+      ],
+      "movement_distance_m": 0.1363839093889428,
+      "action_needed": false,
+      "vastu_rationale": "Work chairs face East (rising Sun, concentration) or North (Kuber, prosperity). West is acceptable for reading where natural light falls from behind. North-West (Vayavya) supports movement and dynamic activity.",
+      "vastu_score": 83.2,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.2
+      }
+    },
+    {
+      "object": "bookShelf",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.5033591389656067,
+        0.565759003162384,
+        1.1528511047363281
+      ],
+      "recommended_position_3d": [
+        -0.3289225101470947,
+        0.4178818464279175,
+        1.1636000871658325
+      ],
+      "movement_distance_m": 0.22893521262730007,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 81.9,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 16.9
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.06311105936765671,
+        0.7139958143234253,
+        1.1528024673461914
+      ],
+      "movement_distance_m": 0.08531659226970553,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 82.9,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.0,
+        "movement_stability": 18.9
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.2807563245296478,
+        0.35103684663772583,
+        1.1519298553466797
+      ],
+      "movement_distance_m": 0.5889402664551028,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output.",
+      "vastu_score": 74.5,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 12.4,
+        "movement_stability": 12.1
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 1.4684633246428047,
+    "final_fitness": 0.23641369596409145,
+    "improvement": 1.2320496286787133
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/1f358307-95eb-49ee-a44b-26fc62b485dc/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/1f358307-95eb-49ee-a44b-26fc62b485dc/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/1f358307-95eb-49ee-a44b-26fc62b485dc/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/1f358307-95eb-49ee-a44b-26fc62b485dc/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/1f358307-95eb-49ee-a44b-26fc62b485dc/visualizations/06_layout_comparison_2d.png"
+  }
+}

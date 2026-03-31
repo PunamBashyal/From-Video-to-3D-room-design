@@ -1,0 +1,158 @@
+{
+  "run_id": "1596d1d6-d09c-4c16-a112-0383c1e162ae",
+  "video_info": {
+    "filename": "room.mp4",
+    "path": "media/temp_videos/room.mp4",
+    "room_type": "Study Room",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 4,
+  "user_selected_furniture": {
+    "studyTable": 1,
+    "chair": 1
+  },
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 75.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "studyTable",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.4746098816394806,
+        0.5162423253059387,
+        1.1537522077560425
+      ],
+      "recommended_position_3d": [
+        -0.3967103660106659,
+        0.7143356204032898,
+        1.1500591039657593
+      ],
+      "movement_distance_m": 0.21289182021236974,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 82.2,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 17.2
+      }
+    },
+    {
+      "object": "chair",
+      "is_essential": true,
+      "current_zone": "West",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        -0.41011303663253784,
+        0.02136005274951458,
+        1.183894395828247
+      ],
+      "recommended_position_3d": [
+        -0.5166462063789368,
+        0.0706469938158989,
+        1.1856176853179932
+      ],
+      "movement_distance_m": 0.1173945848093589,
+      "action_needed": false,
+      "vastu_rationale": "Work chairs face East (rising Sun, concentration) or North (Kuber, prosperity). West is acceptable for reading where natural light falls from behind. North-West (Vayavya) supports movement and dynamic activity.",
+      "vastu_score": 83.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.4
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.015005774796009064,
+        0.6644910573959351,
+        1.154773473739624
+      ],
+      "movement_distance_m": 0.019307864298644995,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.7,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.0,
+        "movement_stability": 19.7
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.22785314917564392,
+        0.34393927454948425,
+        1.155208945274353
+      ],
+      "movement_distance_m": 0.5691447035145492,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output.",
+      "vastu_score": 74.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 12.4,
+        "movement_stability": 12.4
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.8797837219895508,
+    "final_fitness": 0.07340830470506904,
+    "improvement": 0.8063754172844817
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/1596d1d6-d09c-4c16-a112-0383c1e162ae/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/1596d1d6-d09c-4c16-a112-0383c1e162ae/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/1596d1d6-d09c-4c16-a112-0383c1e162ae/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/1596d1d6-d09c-4c16-a112-0383c1e162ae/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/1596d1d6-d09c-4c16-a112-0383c1e162ae/visualizations/06_layout_comparison_2d.png"
+  }
+}

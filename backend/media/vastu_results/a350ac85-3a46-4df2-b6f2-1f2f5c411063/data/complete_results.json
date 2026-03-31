@@ -1,0 +1,133 @@
+{
+  "run_id": "a350ac85-3a46-4df2-b6f2-1f2f5c411063",
+  "video_info": {
+    "filename": "e33625c9-a79a-4705-a5df-9e46485bc643_room.mp4",
+    "path": "C:\\Users\\Lenovo\\Desktop\\colorful-room - Copy\\backend\\media\\temp_videos\\e33625c9-a79a-4705-a5df-9e46485bc643_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.09251594543457,
+    "depth_m": 3.1480891704559326,
+    "height_m": 2.5
+  },
+  "detected_objects": 3,
+  "user_selected_furniture": [
+    "bed",
+    "desk",
+    "dustbin"
+  ],
+  "initial_violations": 0,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 100.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 0,
+  "recommendations": [
+    {
+      "object": "bed",
+      "is_essential": true,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        0.06285198777914047,
+        0.38160133361816406,
+        0.7775917053222656
+      ],
+      "recommended_position_3d": [
+        0.07486411184072495,
+        0.3823660612106323,
+        0.7773480415344238
+      ],
+      "movement_distance_m": 0.012038907957247798,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 84.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.5,
+        "movement_stability": 19.8
+      }
+    },
+    {
+      "object": "desk",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.3840915858745575,
+        -0.05819569528102875,
+        0.8063832521438599
+      ],
+      "recommended_position_3d": [
+        0.30480292439460754,
+        0.043467823415994644,
+        0.7892861366271973
+      ],
+      "movement_distance_m": 0.13005565820883083,
+      "action_needed": false,
+      "vastu_rationale": "East faces the rising Sun - ideal for study and work desks. North (Kuber) brings professional success. North-East (Ishanya) is the zone of intellect and knowledge in Vastu.",
+      "vastu_score": 83.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.3
+      }
+    },
+    {
+      "object": "dustbin",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.29254505038261414,
+        0.3621986210346222,
+        0.7721186876296997
+      ],
+      "recommended_position_3d": [
+        -0.34023329615592957,
+        0.4644758403301239,
+        0.7714525461196899
+      ],
+      "movement_distance_m": 0.11285052997778806,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 83.5,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.5
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.3644150725794074,
+    "final_fitness": 0.018998511729831934,
+    "improvement": 0.3454165608495755
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/a350ac85-3a46-4df2-b6f2-1f2f5c411063/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/a350ac85-3a46-4df2-b6f2-1f2f5c411063/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/a350ac85-3a46-4df2-b6f2-1f2f5c411063/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/a350ac85-3a46-4df2-b6f2-1f2f5c411063/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/a350ac85-3a46-4df2-b6f2-1f2f5c411063/visualizations/06_layout_comparison_2d.png"
+  }
+}

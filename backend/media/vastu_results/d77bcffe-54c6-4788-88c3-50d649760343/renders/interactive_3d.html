@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Vastu 3D Viewer</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0d0d1a;font-family:'Segoe UI',sans-serif;
+     display:flex;height:100vh;overflow:hidden;}
+
+/* ─── Canvas ─────────────────────────────────── */
+#cv{flex:1;position:relative;min-width:0;}
+
+/* ─── Top bar ────────────────────────────────── */
+#topbar{
+  position:absolute;top:0;left:0;right:0;height:48px;
+  background:rgba(13,13,26,.92);border-bottom:1px solid #3b2f8f;
+  display:flex;align-items:center;justify-content:center;gap:16px;z-index:50;
+}
+#toggle-btn{
+  background:linear-gradient(135deg,#3b2f8f,#1565c0);
+  color:#fff;border:2px solid #7c6fe0;border-radius:24px;
+  padding:6px 22px;font-size:13px;font-weight:700;cursor:pointer;
+  transition:background .2s;white-space:nowrap;
+}
+#toggle-btn:hover{background:linear-gradient(135deg,#5544bb,#1e88e5);}
+#mode-pill{
+  background:#1e1e3a;border:1px solid #3b2f8f;border-radius:12px;
+  padding:4px 14px;font-size:11px;font-weight:700;color:#aac4ff;
+  letter-spacing:.6px;
+}
+
+/* ─── Tooltip ────────────────────────────────── */
+#tip{
+  position:absolute;display:none;pointer-events:none;
+  background:rgba(8,6,28,.97);border:1.5px solid #7c6fe0;
+  border-radius:12px;padding:10px 14px;color:#e8eaf6;
+  font-size:12px;z-index:200;max-width:240px;
+  box-shadow:0 6px 24px #000b;
+}
+#tip .tn{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px;}
+#tip .te{font-size:24px;float:right;margin-left:8px;}
+#tip .tz{color:#ffd966;font-size:11px;margin-bottom:1px;}
+#tip .td{color:#64748b;font-size:10px;margin-bottom:4px;}
+#tip .ts{font-size:11px;font-weight:700;}
+#tip .ts.essential{color:#00ffd0;}
+#tip .ts.violation{color:#ff6666;}
+#tip .ts.detected{color:#88aacc;}
+
+/* ─── Instructions ───────────────────────────── */
+#inst{
+  position:absolute;bottom:12px;left:12px;z-index:50;
+  background:rgba(8,6,28,.85);border:1px solid #3b2f8f;
+  border-radius:8px;padding:7px 12px;color:#555;
+  font-size:10px;line-height:1.7;
+}
+
+/* ─── Sidebar ────────────────────────────────── */
+#sb{
+  width:260px;flex-shrink:0;background:#0a0a1e;
+  border-left:2px solid #3b2f8f;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+#sb-head{
+  padding:10px 14px;background:#141430;
+  border-bottom:1px solid #3b2f8f;
+  font-size:12px;font-weight:700;color:#aac4ff;
+  letter-spacing:.5px;display:flex;align-items:center;gap:8px;
+}
+#sb-count{
+  margin-left:auto;background:#3b2f8f;color:#aac4ff;
+  border-radius:10px;padding:2px 8px;font-size:10px;
+}
+
+/* Compass strip */
+#cstrip{
+  display:grid;grid-template-columns:1fr 1fr;gap:3px;
+  padding:6px 8px;border-bottom:1px solid #3b2f8f;
+  background:#0d0d22;
+}
+.cbadge{
+  display:flex;align-items:center;justify-content:center;
+  gap:4px;padding:4px 6px;border-radius:6px;
+  font-size:10px;font-weight:800;letter-spacing:.5px;cursor:default;
+}
+
+/* Item list */
+#ilist{flex:1;overflow-y:auto;padding:4px 0;}
+#ilist::-webkit-scrollbar{width:4px;}
+#ilist::-webkit-scrollbar-thumb{background:#3b2f8f;border-radius:2px;}
+
+.irow{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 10px;cursor:pointer;
+  border-left:3px solid transparent;
+  transition:background .12s, border-color .12s;
+  position:relative;
+}
+.irow:hover{background:#131330;}
+.irow.active{
+  background:#181840;border-left-color:#7c6fe0;
+}
+.irow.focused{
+  background:#1a1a50;border-left-color:#00ffd0;
+  box-shadow:inset 0 0 0 1px #00ffd033;
+}
+.inum{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:800;
+}
+.iemoji{font-size:18px;flex-shrink:0;}
+.iinfo{flex:1;min-width:0;}
+.iname{
+  font-size:11.5px;font-weight:600;color:#e2e8f0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.izone{
+  font-size:9px;margin-top:1px;font-weight:700;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.istat{font-size:9px;font-weight:700;margin-top:2px;}
+.istat.essential{color:#00ffd0;}
+.istat.violation{color:#ff6666;}
+.istat.detected{color:#88aacc;}
+/* Click indicator arrow */
+.irow.focused::after{
+  content:'→';position:absolute;right:8px;
+  color:#00ffd0;font-size:14px;font-weight:900;
+}
+
+/* Legend */
+#sb-leg{
+  padding:8px 12px;border-top:1px solid #3b2f8f;
+  font-size:10px;color:#555;
+}
+.lrow{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.lsw{width:13px;height:9px;border-radius:2px;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<div id="cv">
+  <div id="topbar">
+    <button id="toggle-btn">&#8644; Current Layout</button>
+    <div id="mode-pill">CURRENT</div>
+  </div>
+  <div id="tip"></div>
+  <div id="inst">
+    &#x1f5b1; Drag: orbit &nbsp;|&nbsp; Scroll: zoom &nbsp;|&nbsp; Right-drag: pan<br>
+    Click sidebar item to <b>focus &amp; highlight</b> in 3D
+  </div>
+</div>
+
+<div id="sb">
+  <div id="sb-head">
+    &#x1f4cb; Furniture Index
+    <span id="sb-count">0 items</span>
+  </div>
+  <div id="cstrip">
+    <div class="cbadge" style="background:#0a1428;color:#4488ff;border:1px solid #4488ff22">&#8593; N</div>
+    <div class="cbadge" style="background:#280a0a;color:#ff4444;border:1px solid #ff444422">&#8595; S</div>
+    <div class="cbadge" style="background:#201800;color:#ffaa00;border:1px solid #ffaa0022">&#8592; W</div>
+    <div class="cbadge" style="background:#0a2010;color:#00cc55;border:1px solid #00cc5522">&#8594; E</div>
+  </div>
+  <div id="ilist"></div>
+  <div id="sb-leg">
+    <div class="lrow"><div class="lsw" style="background:#00b8a5;border:1px solid #00ffd0"></div><span>&#9733; Essential</span></div>
+    <div class="lrow"><div class="lsw" style="background:#7a0d0d;border:1px solid #ff4444"></div><span>&#9888; Vastu violation</span></div>
+    <div class="lrow"><div class="lsw" style="background:#6688aa;border:1px solid #7788aa"></div><span>&#10003; Detected</span></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+
+const ROOM_W=4.3113789558410645, ROOM_D=3.3164455890655518, ROOM_H=2.5;
+const ZCOLS={"North-West": "#c3b1e1", "North": "#aec6cf", "North-East": "#a8d8a8", "West": "#f4a460", "Center": "#eeeeee", "East": "#ffd966", "South-West": "#c8a882", "South": "#ff9999", "South-East": "#ffb347"};
+const ZCOMP={"North-East": "North-East corner (Ishanya) \u2014 knowledge & prosperity", "North": "North wall (Kubera) \u2014 career & wealth", "North-West": "North-West corner (Vayavya) \u2014 movement & travel", "East": "East wall (Surya) \u2014 health & new beginnings", "Center": "Center (Brahmasthan) \u2014 sacred energy hub", "West": "West wall (Varun) \u2014 nourishment & gains", "South-East": "South-East corner (Agni) \u2014 fire & energy", "South": "South wall (Yama) \u2014 stability", "South-West": "South-West corner (Nairutya) \u2014 earth & stability"};
+const CURRENT=[{"id": 1, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 3.211977322101593, "py": 0, "pz": 1.3597426915168764, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Essential"}, {"id": 2, "name": "dustbin", "emoji": "\ud83d\uddd1\ufe0f", "px": 2.0263481092453004, "py": 0, "pz": 2.470751963853836, "fw": 0.35, "fh": 0.5, "fd": 0.35, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Essential"}, {"id": 3, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": 2.285030846595764, "py": 0, "pz": 2.470751963853836, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#966464", "opacity": 0.88, "cat": "detected", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2713 Detected"}, {"id": 4, "name": "tv", "emoji": "\ud83d\udcfa", "px": 1.7676653718948365, "py": 0, "pz": 1.5587294268608092, "fw": 1.2, "fh": 0.7, "fd": 0.15, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "Center", "compass": "Center (Brahmasthan) \u2014 sacred energy hub", "status": "\u26a0 Move needed"}, {"id": 5, "name": "suitcase", "emoji": "\ud83d\udce6", "px": 2.0263481092453004, "py": 0, "pz": 1.5587294268608092, "fw": 0.5, "fh": 0.7, "fd": 0.25, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "Center", "compass": "Center (Brahmasthan) \u2014 sacred energy hub", "status": "\u26a0 Move needed"}, {"id": 6, "name": "book", "emoji": "\ud83d\udce6", "px": 2.285030846595764, "py": 0, "pz": 2.6697386991977687, "fw": 0.15, "fh": 0.05, "fd": 0.2, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u26a0 Move needed"}, {"id": 7, "name": "chair", "emoji": "\ud83e\ude91", "px": 3.211977322101593, "py": 0, "pz": 1.7577161622047426, "fw": 0.5, "fh": 0.9, "fd": 0.5, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u26a0 Move needed"}, {"id": 8, "name": "couch", "emoji": "\ud83d\udce6", "px": 3.4706600594520567, "py": 0, "pz": 1.7577161622047426, "fw": 2.2, "fh": 0.8, "fd": 0.95, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u26a0 Move needed"}, {"id": 9, "name": "laptop", "emoji": "\ud83d\udce6", "px": 2.285030846595764, "py": 0, "pz": 2.868725434541702, "fw": 0.35, "fh": 0.02, "fd": 0.25, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u26a0 Move needed"}, {"id": 10, "name": "backpack", "emoji": "\ud83d\udce6", "px": 1.7676653718948365, "py": 0, "pz": 3.016445589065552, "fw": 0.3, "fh": 0.5, "fd": 0.2, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u26a0 Move needed"}, {"id": 11, "name": "keyboard", "emoji": "\ud83d\udce6", "px": 0.5820361590385437, "py": 0, "pz": 3.016445589065552, "fw": 0.4, "fh": 0.03, "fd": 0.15, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South-West", "compass": "South-West corner (Nairutya) \u2014 earth & stability", "status": "\u26a0 Move needed"}, {"id": 12, "name": "cell phone", "emoji": "\ud83d\udce6", "px": 0.8407188963890075, "py": 0, "pz": 3.016445589065552, "fw": 0.08, "fh": 0.01, "fd": 0.16, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South-West", "compass": "South-West corner (Nairutya) \u2014 earth & stability", "status": "\u26a0 Move needed"}];
+const OPTIMISED=[{"id": 1, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 3.211977322101593, "py": 0, "pz": 1.3597426915168764, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Vastu-correct position"}, {"id": 2, "name": "dustbin", "emoji": "\ud83d\uddd1\ufe0f", "px": 2.0263481092453004, "py": 0, "pz": 2.470751963853836, "fw": 0.35, "fh": 0.5, "fd": 0.35, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Vastu-correct position"}, {"id": 3, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": 2.285030846595764, "py": 0, "pz": 2.470751963853836, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#966464", "opacity": 0.88, "cat": "detected", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Vastu-correct position"}, {"id": 4, "name": "tv", "emoji": "\ud83d\udcfa", "px": 3.211977322101593, "py": 0, "pz": 2.6697386991977687, "fw": 1.2, "fh": 0.7, "fd": 0.15, "color": "#1e1e1e", "opacity": 0.88, "cat": "detected", "zone": "South-East", "compass": "South-East corner (Agni) \u2014 fire & energy", "status": "\u2605 Vastu-correct position"}, {"id": 5, "name": "suitcase", "emoji": "\ud83d\udce6", "px": 0.5820361590385437, "py": 0, "pz": 1.5587294268608092, "fw": 0.5, "fh": 0.7, "fd": 0.25, "color": "#786450", "opacity": 0.88, "cat": "detected", "zone": "West", "compass": "West wall (Varun) \u2014 nourishment & gains", "status": "\u2605 Vastu-correct position"}, {"id": 6, "name": "book", "emoji": "\ud83d\udce6", "px": 3.729342796802521, "py": 0, "pz": 1.5587294268608092, "fw": 0.15, "fh": 0.05, "fd": 0.2, "color": "#b48c64", "opacity": 0.88, "cat": "detected", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Vastu-correct position"}, {"id": 7, "name": "chair", "emoji": "\ud83e\ude91", "px": 1.7676653718948365, "py": 0, "pz": 0.6467068898677826, "fw": 0.5, "fh": 0.9, "fd": 0.5, "color": "#8b5a3c", "opacity": 0.88, "cat": "detected", "zone": "North", "compass": "North wall (Kubera) \u2014 career & wealth", "status": "\u2605 Vastu-correct position"}, {"id": 8, "name": "couch", "emoji": "\ud83d\udce6", "px": 2.0263481092453004, "py": 0, "pz": 0.6467068898677826, "fw": 2.2, "fh": 0.8, "fd": 0.95, "color": "#6496c8", "opacity": 0.88, "cat": "detected", "zone": "North", "compass": "North wall (Kubera) \u2014 career & wealth", "status": "\u2605 Vastu-correct position"}, {"id": 9, "name": "laptop", "emoji": "\ud83d\udce6", "px": 2.285030846595764, "py": 0, "pz": 0.6467068898677826, "fw": 0.35, "fh": 0.02, "fd": 0.25, "color": "#3c3c3c", "opacity": 0.88, "cat": "detected", "zone": "North", "compass": "North wall (Kubera) \u2014 career & wealth", "status": "\u2605 Vastu-correct position"}, {"id": 10, "name": "backpack", "emoji": "\ud83d\udce6", "px": 0.32335342168808, "py": 0, "pz": 1.9567028975486753, "fw": 0.3, "fh": 0.5, "fd": 0.2, "color": "#6478b4", "opacity": 0.88, "cat": "detected", "zone": "West", "compass": "West wall (Varun) \u2014 nourishment & gains", "status": "\u2605 Vastu-correct position"}, {"id": 11, "name": "keyboard", "emoji": "\ud83d\udce6", "px": 3.4706600594520567, "py": 0, "pz": 1.9567028975486753, "fw": 0.4, "fh": 0.03, "fd": 0.15, "color": "#464646", "opacity": 0.88, "cat": "detected", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Vastu-correct position"}, {"id": 12, "name": "cell phone", "emoji": "\ud83d\udce6", "px": 3.729342796802521, "py": 0, "pz": 0.8456936252117158, "fw": 0.08, "fh": 0.01, "fd": 0.16, "color": "#282828", "opacity": 0.88, "cat": "detected", "zone": "North-East", "compass": "North-East corner (Ishanya) \u2014 knowledge & prosperity", "status": "\u2605 Vastu-correct position"}];
+
+const ZGRID=[
+  ['North-West',0,0,1/3,1/3],['North',1/3,0,1/3,1/3],['North-East',2/3,0,1/3,1/3],
+  ['West',0,1/3,1/3,1/3],['Center',1/3,1/3,1/3,1/3],['East',2/3,1/3,1/3,1/3],
+  ['South-West',0,2/3,1/3,1/3],['South',1/3,2/3,1/3,1/3],['South-East',2/3,2/3,1/3,1/3],
+];
+const DIRMAP={North:'↑N',South:'↓S',East:'→E',West:'←W',
+  'North-East':'↗NE','North-West':'↖NW',
+  'South-East':'↘SE','South-West':'↙SW',Center:'⊕C'};
+const DIRCOL={
+  North:'#4488ff','North-East':'#4488ff','North-West':'#4488ff',
+  South:'#ff4444','South-East':'#ff4444','South-West':'#ff4444',
+  East:'#00cc55',West:'#ffaa00',Center:'#aaaaaa'
+};
+
+// ── Renderer ──────────────────────────────────────────────────────────────
+const cvEl  = document.getElementById('cv');
+const W = ()=>cvEl.clientWidth, H = ()=>window.innerHeight;
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(W(),H());
+renderer.shadowMap.enabled=true;
+cvEl.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d0d1a);
+scene.fog = new THREE.FogExp2(0x0d0d1a, 0.04);
+
+const camera = new THREE.PerspectiveCamera(45,W()/H(),.1,120);
+scene.add(new THREE.AmbientLight(0xffffff,.5));
+const dl=new THREE.DirectionalLight(0xffffff,.9);
+dl.position.set(6,10,6);dl.castShadow=true;scene.add(dl);
+scene.add(new THREE.HemisphereLight(0x334466,0x0d0d1a,.45));
+
+// ── Orbit ─────────────────────────────────────────────────────────────────
+let drag=false,rDrag=false,pm={x:0,y:0};
+let theta=0.55,phi=1.05,rad=Math.sqrt(ROOM_W*ROOM_W+ROOM_D*ROOM_D)*1.9;
+let panX=ROOM_W/2,panY=0,panZ=ROOM_D/2;
+
+function camUpdate(){
+  camera.position.set(
+    panX+rad*Math.sin(phi)*Math.sin(theta),
+    panY+rad*Math.cos(phi),
+    panZ+rad*Math.sin(phi)*Math.cos(theta));
+  camera.lookAt(panX,panY,panZ);
+}
+camUpdate();
+
+cvEl.addEventListener('mousedown',e=>{drag=true;rDrag=e.button===2;pm={x:e.clientX,y:e.clientY};});
+cvEl.addEventListener('contextmenu',e=>e.preventDefault());
+window.addEventListener('mouseup',()=>drag=false);
+window.addEventListener('mousemove',e=>{
+  if(!drag)return;
+  const dx=(e.clientX-pm.x)*.005,dy=(e.clientY-pm.y)*.005;
+  if(rDrag){
+    // right-drag pan in camera-right and camera-up
+    const right=new THREE.Vector3();
+    right.crossVectors(camera.getWorldDirection(new THREE.Vector3()),new THREE.Vector3(0,1,0)).normalize();
+    panX-=right.x*dx*3; panZ-=right.z*dx*3; panY+=dy*3;
+  } else {
+    theta-=dx; phi=Math.max(.08,Math.min(Math.PI/2-.03,phi+dy));
+  }
+  pm={x:e.clientX,y:e.clientY}; camUpdate();
+});
+cvEl.addEventListener('wheel',e=>{rad=Math.max(1.5,Math.min(40,rad+e.deltaY*.025));camUpdate();});
+let lt=null;
+cvEl.addEventListener('touchstart',e=>{lt=e.touches[0];},{passive:true});
+cvEl.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  const t=e.touches[0];
+  theta-=(t.clientX-lt.clientX)*.006;
+  phi=Math.max(.08,Math.min(Math.PI/2-.03,phi+(t.clientY-lt.clientY)*.006));
+  lt=t;camUpdate();
+},{passive:false});
+
+// ── Sprite util ───────────────────────────────────────────────────────────
+function mkSp(txt,o={}){
+  const fs=o.fs||48,col=o.col||'#fff',bg=o.bg||'rgba(0,0,0,0)';
+  const cv=document.createElement('canvas');cv.width=256;cv.height=128;
+  const x=cv.getContext('2d');
+  x.fillStyle=bg;x.fillRect(0,0,256,128);
+  x.font=`bold ${fs}px Segoe UI Emoji,Segoe UI,sans-serif`;
+  x.fillStyle=col;x.textAlign='center';x.textBaseline='middle';
+  x.fillText(txt,128,64);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial(
+    {map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));
+  sp.scale.set(o.sw||.9,o.sh||.45,1);
+  return sp;
+}
+
+// ── Floor ─────────────────────────────────────────────────────────────────
+function buildFloor(){
+  ZGRID.forEach(([zone,cx,cz,wf,df])=>{
+    const zw=wf*ROOM_W,zd=df*ROOM_D,x0=cx*ROOM_W,z0=cz*ROOM_D;
+    const col=ZCOLS[zone]||'#ccc';
+    const m=new THREE.Mesh(
+      new THREE.PlaneGeometry(zw-.04,zd-.04),
+      new THREE.MeshLambertMaterial({color:new THREE.Color(col),
+        transparent:true,opacity:.72,side:THREE.DoubleSide}));
+    m.rotation.x=-Math.PI/2;m.position.set(x0+zw/2,.001,z0+zd/2);scene.add(m);
+    const el=new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.PlaneGeometry(zw,zd)),
+      new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.18}));
+    el.rotation.x=-Math.PI/2;el.position.set(x0+zw/2,.002,z0+zd/2);scene.add(el);
+    const sh=zone.replace('North','N').replace('South','S')
+              .replace('East','E').replace('West','W').replace('-','');
+    const sp=mkSp(sh,{fs:30,col:'#111',sw:.65,sh:.32});
+    sp.position.set(x0+zw/2,.05,z0+zd/2);scene.add(sp);
+  });
+}
+
+// ── Compass ───────────────────────────────────────────────────────────────
+function buildCompass(){
+  // Wall circles
+  [['N',ROOM_W/2,1.5,-.5,'#4488ff'],
+   ['S',ROOM_W/2,1.5,ROOM_D+.5,'#ff4444'],
+   ['W',-.5,1.5,ROOM_D/2,'#ffaa00'],
+   ['E',ROOM_W+.5,1.5,ROOM_D/2,'#00cc55']
+  ].forEach(([t,x,y,z,col])=>{
+    const cv=document.createElement('canvas');cv.width=140;cv.height=140;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='rgba(8,6,28,.94)';
+    ctx.beginPath();ctx.arc(70,70,66,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle=col;ctx.lineWidth=5;
+    ctx.beginPath();ctx.arc(70,70,64,0,Math.PI*2);ctx.stroke();
+    ctx.font='bold 72px Segoe UI,sans-serif';
+    ctx.fillStyle=col;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(t,70,73);
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial(
+      {map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));
+    sp.scale.set(.9,.9,1);sp.position.set(x,y,z);scene.add(sp);
+  });
+  // Floor banners
+  [['↑ NORTH',ROOM_W/2,-.9,'#4488ff'],
+   ['SOUTH ↓',ROOM_W/2,ROOM_D+.9,'#ff4444'],
+   ['← WEST', -.9,ROOM_D/2,'#ffaa00'],
+   ['EAST →',  ROOM_W+.9,ROOM_D/2,'#00cc55']
+  ].forEach(([t,x,z,col])=>{
+    const cv=document.createElement('canvas');cv.width=300;cv.height=84;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='rgba(8,6,28,.9)';ctx.roundRect(0,0,300,84,14);ctx.fill();
+    ctx.strokeStyle=col;ctx.lineWidth=3;ctx.roundRect(2,2,296,80,12);ctx.stroke();
+    ctx.font='bold 42px Segoe UI Emoji,sans-serif';
+    ctx.fillStyle=col;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(t,150,42);
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial(
+      {map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));
+    sp.scale.set(1.9,.54,1);sp.position.set(x,.04,z);scene.add(sp);
+  });
+}
+
+// ── Furniture ─────────────────────────────────────────────────────────────
+const fGrp=new THREE.Group();scene.add(fGrp);
+const ray=new THREE.Raycaster();
+const mV=new THREE.Vector2(-9,-9);
+const mmap=new Map();     // box.uuid → item
+const bmap=new Map();     // item.id  → {box, outlineMesh, labelSp}
+let focusedId=null;
+
+// Outline material for focused item
+const outlineMat=new THREE.MeshBasicMaterial(
+  {color:0x00ffd0,side:THREE.BackSide});
+
+function buildFurniture(data){
+  fGrp.clear();mmap.clear();bmap.clear();focusedId=null;
+  data.forEach(item=>{
+    const hw=ROOM_W/2;
+    // item.px is already in [0,ROOM_W], Three.js needs centred on origin
+    const px=item.px-hw, py=item.fh/2, pz=item.pz;
+    const geo=new THREE.BoxGeometry(item.fw,item.fh,item.fd);
+    const mat=new THREE.MeshLambertMaterial(
+      {color:new THREE.Color(item.color),transparent:true,opacity:item.opacity});
+    const box=new THREE.Mesh(geo,mat);
+    box.position.set(px,py,pz);box.castShadow=true;
+    fGrp.add(box);mmap.set(box.uuid,item);
+
+    // Edge lines
+    const ec=item.cat==='essential'?0x00ffd0:
+             item.cat==='violation'?0xff4444:0x7788aa;
+    box.add(new THREE.LineSegments(
+      new THREE.EdgesGeometry(geo),
+      new THREE.LineBasicMaterial({color:ec,linewidth:1.5})));
+
+    // Outline mesh (hidden by default, shown on focus)
+    const oScale=1.06;
+    const oGeo=new THREE.BoxGeometry(
+      item.fw*oScale,item.fh*oScale,item.fd*oScale);
+    const oMat=new THREE.MeshBasicMaterial(
+      {color:0x00ffd0,side:THREE.BackSide,transparent:true,opacity:0});
+    const oMesh=new THREE.Mesh(oGeo,oMat);
+    box.add(oMesh);
+
+    // Emoji on top
+    const es=mkSp(item.emoji,{fs:48,sw:.58,sh:.58});
+    es.position.set(0,item.fh/2+.02,0);box.add(es);
+
+    // Number badge
+    const nBg=item.cat==='essential'?'rgba(0,255,208,.95)':
+      item.cat==='violation'?'rgba(180,20,20,.9)':'rgba(59,47,143,.9)';
+    const nFc=item.cat==='essential'?'#000':'#fff';
+    const ns=mkSp(String(item.id),{fs:36,col:nFc,bg:nBg,sw:.32,sh:.32});
+    ns.position.set(item.fw/2+.05,item.fh/2+.30,0);box.add(ns);
+
+    // Name label (always on)
+    const nc=item.cat==='essential'?'#00ffd0':
+      item.cat==='violation'?'#ff9999':'#e2e8f0';
+    const sfx=item.cat==='essential'?' ★':
+      item.cat==='violation'?' ⚠':'';
+    const ls=mkSp(item.name+sfx,
+      {fs:26,col:nc,sw:1.10,sh:.38,bg:'rgba(8,6,28,.9)'});
+    ls.position.set(0,item.fh/2+.55,0);box.add(ls);
+
+    // Focus label (hidden by default — large, bright, shown on click)
+    const fl=mkSp('▶ '+item.id+'. '+item.name,
+      {fs:36,col:'#00ffd0',sw:1.6,sh:.50,bg:'rgba(0,60,50,.95)'});
+    fl.position.set(0,item.fh+.85,0);
+    fl.visible=false;box.add(fl);
+
+    bmap.set(item.id,{box,oMesh,focusLabel:fl,mat});
+  });
+}
+
+// ── Focus / unfocus ───────────────────────────────────────────────────────
+function setFocus(id){
+  // Unfocus previous
+  if(focusedId!==null){
+    const prev=bmap.get(focusedId);
+    if(prev){
+      prev.oMesh.material.opacity=0;
+      prev.focusLabel.visible=false;
+      prev.mat.opacity=prev.mat._origOpacity||.88;
+    }
+    document.querySelectorAll('.irow.focused')
+      .forEach(r=>r.classList.remove('focused'));
+  }
+
+  if(id===focusedId){focusedId=null;return;} // toggle off
+
+  focusedId=id;
+  const ent=bmap.get(id);
+  if(!ent) return;
+
+  // Highlight outline
+  ent.oMesh.material.opacity=.5;
+  ent.focusLabel.visible=true;
+  ent._origOpacity=ent.mat.opacity;
+  ent.mat.opacity=1.0;
+
+  // Highlight sidebar row
+  document.querySelectorAll('.irow').forEach(r=>{
+    r.classList.remove('focused','active');
+    if(parseInt(r.dataset.id)===id){
+      r.classList.add('focused');
+      r.scrollIntoView({block:'nearest',behavior:'smooth'});
+    }
+  });
+
+  // Animate camera pan toward item
+  const hw=ROOM_W/2;
+  const item=mmap.get(ent.box.uuid);
+  if(item){
+    const tx=item.px-hw, tz=item.pz;
+    const steps=30;let s=0;
+    const ox=panX,oz=panZ;
+    const anim=()=>{
+      s++;
+      const t=s/steps;
+      const ease=t<.5?2*t*t:(4-2*t)*t-1;
+      panX=ox+(tx-ox)*ease;panZ=oz+(tz-oz)*ease;
+      camUpdate();
+      if(s<steps) requestAnimationFrame(anim);
+    };
+    requestAnimationFrame(anim);
+  }
+
+  // Pulse (opacity flash)
+  let p=0;const pAnim=()=>{
+    p++;ent.mat.opacity=1-Math.abs(Math.sin(p*.25))*.3;
+    if(p<25&&focusedId===id) requestAnimationFrame(pAnim);
+    else ent.mat.opacity=1.0;
+  };
+  requestAnimationFrame(pAnim);
+}
+
+// ── Sidebar ───────────────────────────────────────────────────────────────
+function buildSidebar(data){
+  const list=document.getElementById('ilist');
+  list.innerHTML='';
+  document.getElementById('sb-count').textContent=data.length+' items';
+
+  data.forEach(item=>{
+    const row=document.createElement('div');
+    row.className='irow';row.dataset.id=item.id;
+
+    const nBg=item.cat==='essential'?'#00ffd0':
+      item.cat==='violation'?'#7a0d0d':'#3b2f8f';
+    const nFc=item.cat==='essential'?'#000':'#fff';
+    const dir=DIRMAP[item.zone]||item.zone;
+    const dc=DIRCOL[item.zone]||'#888';
+
+    row.innerHTML=`
+      <div class="inum" style="background:${nBg};color:${nFc}">${item.id}</div>
+      <div class="iemoji">${item.emoji}</div>
+      <div class="iinfo">
+        <div class="iname">${item.name}</div>
+        <div class="izone" style="color:${dc}">${dir}&nbsp; ${item.zone||'—'}</div>
+        <div class="istat ${item.cat}">${item.status}</div>
+      </div>`;
+
+    row.addEventListener('click',()=>{
+      setFocus(item.id);
+    });
+    list.appendChild(row);
+  });
+}
+
+// ── Tooltip ───────────────────────────────────────────────────────────────
+const tip=document.getElementById('tip');
+function showTip(item,ex,ey){
+  tip.innerHTML=`
+    <span class="te">${item.emoji}</span>
+    <div class="tn">${item.id}. ${item.name}</div>
+    <div class="tz">&#128205; ${item.zone}</div>
+    <div class="td">&#129517; ${item.compass}</div>
+    <div class="ts ${item.cat}">${item.status}</div>`;
+  tip.style.cssText+=`;display:block;left:${ex+14}px;top:${ey+14}px`;
+}
+function hideTip(){tip.style.display='none';}
+
+cvEl.addEventListener('mousemove',e=>{
+  if(drag){hideTip();return;}
+  mV.x=(e.clientX/W())*2-1;mV.y=-(e.clientY/H())*2+1;
+  ray.setFromCamera(mV,camera);
+  const hits=ray.intersectObjects(fGrp.children,true);
+  const hit=hits.find(h=>mmap.has(h.object.uuid));
+  if(hit){
+    const item=mmap.get(hit.object.uuid);
+    showTip(item,e.clientX,e.clientY);
+    document.querySelectorAll('.irow').forEach(r=>{
+      if(parseInt(r.dataset.id)===item.id&&focusedId!==item.id)
+        r.classList.add('active');
+      else if(focusedId!==parseInt(r.dataset.id))
+        r.classList.remove('active');
+    });
+  } else {
+    hideTip();
+    document.querySelectorAll('.irow:not(.focused)')
+      .forEach(r=>r.classList.remove('active'));
+  }
+});
+
+// Click on 3D box also focuses it
+cvEl.addEventListener('click',e=>{
+  mV.x=(e.clientX/W())*2-1;mV.y=-(e.clientY/H())*2+1;
+  ray.setFromCamera(mV,camera);
+  const hits=ray.intersectObjects(fGrp.children,true);
+  const hit=hits.find(h=>mmap.has(h.object.uuid));
+  if(hit) setFocus(mmap.get(hit.object.uuid).id);
+});
+
+// ── Toggle ────────────────────────────────────────────────────────────────
+let showCur=true;
+const pill=document.getElementById('mode-pill');
+document.getElementById('toggle-btn').addEventListener('click',()=>{
+  showCur=!showCur;
+  const data=showCur?CURRENT:OPTIMISED;
+  buildFurniture(data);buildSidebar(data);
+  pill.textContent=showCur?'CURRENT':'OPTIMISED';
+  pill.style.color=showCur?'#aac4ff':'#00ffd0';
+  document.getElementById('toggle-btn').textContent=
+    showCur?'⇄ Current Layout':'✨ Vastu-Optimised';
+});
+
+// ── Build ─────────────────────────────────────────────────────────────────
+buildFloor();buildCompass();
+buildFurniture(CURRENT);buildSidebar(CURRENT);
+
+(function loop(){requestAnimationFrame(loop);renderer.render(scene,camera);})();
+window.addEventListener('resize',()=>{
+  camera.aspect=W()/H();camera.updateProjectionMatrix();
+  renderer.setSize(W(),H());
+});
+</script>
+</body>
+</html>

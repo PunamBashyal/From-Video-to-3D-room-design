@@ -1,0 +1,158 @@
+{
+  "run_id": "0818f72f-d6f1-43fd-bafd-9c09f168d307",
+  "video_info": {
+    "filename": "4dce01f4-aed5-4b02-954d-db732c18165d_room.mp4",
+    "path": "media/temp_videos/4dce01f4-aed5-4b02-954d-db732c18165d_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.324711799621582,
+    "depth_m": 3.3267014026641846,
+    "height_m": 2.5
+  },
+  "detected_objects": 4,
+  "user_selected_furniture": [
+    "desk",
+    "dustbin"
+  ],
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 75.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "desk",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.6234923601150513,
+        0.0713922530412674,
+        1.3189868927001953
+      ],
+      "recommended_position_3d": [
+        0.5271989703178406,
+        -0.10796119272708893,
+        1.3306434154510498
+      ],
+      "movement_distance_m": 0.20390181448496597,
+      "action_needed": false,
+      "vastu_rationale": "East faces the rising Sun - ideal for study and work desks. North (Kuber) brings professional success. North-East (Ishanya) is the zone of intellect and knowledge in Vastu.",
+      "vastu_score": 82.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 17.3
+      }
+    },
+    {
+      "object": "dustbin",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.5759991407394409,
+        0.6689022183418274,
+        1.2873029708862305
+      ],
+      "recommended_position_3d": [
+        -0.45497235655784607,
+        0.5599674582481384,
+        1.2877826690673828
+      ],
+      "movement_distance_m": 0.16283271955093334,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 82.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 17.8
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        0.0009307053405791521,
+        0.6319488883018494,
+        1.2896231412887573
+      ],
+      "recommended_position_3d": [
+        -0.021291308104991913,
+        0.6608269214630127,
+        1.2895960807800293
+      ],
+      "movement_distance_m": 0.036438433186726384,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.6,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.1,
+        "movement_stability": 19.5
+      }
+    },
+    {
+      "object": "chair",
+      "is_essential": false,
+      "current_zone": "South-East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.5244140625,
+        0.8041015267372131,
+        1.2918212413787842
+      ],
+      "recommended_position_3d": [
+        0.5820908546447754,
+        0.4240933656692505,
+        1.3006675243377686
+      ],
+      "movement_distance_m": 0.38446205476295925,
+      "action_needed": true,
+      "vastu_rationale": "Work chairs face East (rising Sun, concentration) or North (Kuber, prosperity). West is acceptable for reading where natural light falls from behind. North-West (Vayavya) supports movement and dynamic activity.",
+      "vastu_score": 78.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 13.4,
+        "movement_stability": 14.9
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.6958548560399482,
+    "final_fitness": 0.04091260514916497,
+    "improvement": 0.6549422508907833
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/0818f72f-d6f1-43fd-bafd-9c09f168d307/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/0818f72f-d6f1-43fd-bafd-9c09f168d307/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/0818f72f-d6f1-43fd-bafd-9c09f168d307/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/0818f72f-d6f1-43fd-bafd-9c09f168d307/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/0818f72f-d6f1-43fd-bafd-9c09f168d307/visualizations/06_layout_comparison_2d.png"
+  }
+}

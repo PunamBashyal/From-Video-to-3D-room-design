@@ -1,0 +1,263 @@
+{
+  "run_id": "55c74c27-2c3b-4a10-8657-4b3b23e69a21",
+  "video_info": {
+    "filename": "03771f09-3f41-41b8-b185-0c4df52a969a_room 1.mp4",
+    "path": "C:\\Users\\Lenovo\\Desktop\\colorful-room - Copy\\backend\\media\\temp_videos\\03771f09-3f41-41b8-b185-0c4df52a969a_room 1.mp4",
+    "room_type": "Bedroom",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30.000283403486943,
+    "duration": 8.233255555555555,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 935.3074360871938,
+    "fy": 935.3074360871938,
+    "cx": 540.0,
+    "cy": 960.0,
+    "width": 1080,
+    "height": 1920,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.295114517211914,
+    "depth_m": 3.303934335708618,
+    "height_m": 2.5
+  },
+  "detected_objects": 8,
+  "user_selected_furniture": [
+    "dustbin",
+    "chair",
+    "wardrobe"
+  ],
+  "initial_violations": 3,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 62.5,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "chair",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.4877643883228302,
+        0.1953677535057068,
+        1.050166130065918
+      ],
+      "recommended_position_3d": [
+        0.491030216217041,
+        0.1950695812702179,
+        1.0500668287277222
+      ],
+      "movement_distance_m": 0.003280914395772826,
+      "action_needed": false,
+      "vastu_rationale": "Work chairs face East or North. West is acceptable for reading.",
+      "vastu_score": 81.5,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 11.5,
+        "movement_stability": 20.0
+      }
+    },
+    {
+      "object": "dustbin",
+      "is_essential": true,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        0.022058971226215363,
+        0.620959997177124,
+        1.0315959453582764
+      ],
+      "recommended_position_3d": [
+        0.06022937223315239,
+        0.7476537227630615,
+        1.031069040298462
+      ],
+      "movement_distance_m": 0.13231990494561757,
+      "action_needed": false,
+      "vastu_rationale": "Same as trash can.",
+      "vastu_score": 83.2,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.2
+      }
+    },
+    {
+      "object": "wardrobe",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.4053816497325897,
+        0.5114215016365051,
+        1.0331238508224487
+      ],
+      "recommended_position_3d": [
+        -0.4070108234882355,
+        0.46339160203933716,
+        1.0333439111709595
+      ],
+      "movement_distance_m": 0.04805802627030273,
+      "action_needed": false,
+      "vastu_rationale": "Heavy storage cabinets must sit in South-West to ground the space.",
+      "vastu_score": 84.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 19.4
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.008946430869400501,
+        0.5640116930007935,
+        1.0330448150634766
+      ],
+      "recommended_position_3d": [
+        0.009642889723181725,
+        0.39317506551742554,
+        1.0403608083724976
+      ],
+      "movement_distance_m": 0.17200069734766327,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North.",
+      "vastu_score": 83.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.6,
+        "movement_stability": 17.7
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.4241475760936737,
+        0.04683433473110199,
+        1.0576539039611816
+      ],
+      "recommended_position_3d": [
+        0.502190351486206,
+        -0.1569853574037552,
+        1.0576868057250977
+      ],
+      "movement_distance_m": 0.21825018390700907,
+      "action_needed": false,
+      "vastu_rationale": "Portable work device \u2014 follows desk rules.",
+      "vastu_score": 76.2,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 9.1,
+        "movement_stability": 17.1
+      }
+    },
+    {
+      "object": "tv",
+      "is_essential": false,
+      "current_zone": "Center",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.008176506496965885,
+        0.18111521005630493,
+        1.0476092100143433
+      ],
+      "recommended_position_3d": [
+        0.20267845690250397,
+        0.26677677035331726,
+        1.0457278490066528
+      ],
+      "movement_distance_m": 0.22759889723360197,
+      "action_needed": true,
+      "vastu_rationale": "TV faces East so viewers face West (auspicious).",
+      "vastu_score": 81.2,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.2,
+        "movement_stability": 17.0
+      }
+    },
+    {
+      "object": "microwave",
+      "is_essential": false,
+      "current_zone": "North",
+      "recommended_zone": "South-East",
+      "current_position_3d": [
+        0.17331254482269287,
+        -0.8676863312721252,
+        1.0508947372436523
+      ],
+      "recommended_position_3d": [
+        0.3786807954311371,
+        0.5357807278633118,
+        1.0341298580169678
+      ],
+      "movement_distance_m": 1.418512236680294,
+      "action_needed": true,
+      "vastu_rationale": "Fire-element appliance \u2014 same as oven.",
+      "vastu_score": 56.5,
+      "vastu_score_label": "Fair",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 5.4,
+        "movement_stability": 1.1
+      }
+    },
+    {
+      "object": "dining table",
+      "is_essential": false,
+      "current_zone": "East",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        0.3498348891735077,
+        0.31997212767601013,
+        1.0506926774978638
+      ],
+      "recommended_position_3d": [
+        -0.2515614926815033,
+        0.1406906694173813,
+        1.050173282623291
+      ],
+      "movement_distance_m": 0.6275505709938239,
+      "action_needed": true,
+      "vastu_rationale": "West (Varun) governs nourishment. North-West supports digestion.",
+      "vastu_score": 68.7,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 7.1,
+        "movement_stability": 11.6
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 36.20565228074428,
+    "final_fitness": 0.32950795252477094,
+    "improvement": 35.87614432821951
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/55c74c27-2c3b-4a10-8657-4b3b23e69a21/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/55c74c27-2c3b-4a10-8657-4b3b23e69a21/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/55c74c27-2c3b-4a10-8657-4b3b23e69a21/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/55c74c27-2c3b-4a10-8657-4b3b23e69a21/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/55c74c27-2c3b-4a10-8657-4b3b23e69a21/visualizations/06_layout_comparison_2d.png"
+  }
+}

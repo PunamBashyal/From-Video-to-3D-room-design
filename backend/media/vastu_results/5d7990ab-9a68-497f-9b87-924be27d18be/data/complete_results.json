@@ -1,0 +1,367 @@
+{
+  "run_id": "5d7990ab-9a68-497f-9b87-924be27d18be",
+  "video_info": {
+    "filename": "caaf4871-bb0f-40e2-83a4-f2bdd9750d7d_room.mp4",
+    "path": "C:\\Users\\Lenovo\\Desktop\\colorful-room - Copy\\backend\\media\\temp_videos\\caaf4871-bb0f-40e2-83a4-f2bdd9750d7d_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.3113789558410645,
+    "depth_m": 3.3164455890655518,
+    "height_m": 2.5
+  },
+  "detected_objects": 12,
+  "user_selected_furniture": [
+    "desk",
+    "tv",
+    "dustbin"
+  ],
+  "initial_violations": 7,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 41.7,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "desk",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.4891364574432373,
+        -0.031304731965065,
+        1.084427833557129
+      ],
+      "recommended_position_3d": [
+        0.4920366704463959,
+        -0.1087101474404335,
+        1.0859979391098022
+      ],
+      "movement_distance_m": 0.07747564011884409,
+      "action_needed": false,
+      "vastu_rationale": "East faces the rising Sun \u2014 ideal for study and work desks.",
+      "vastu_score": 84.0,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 19.0
+      }
+    },
+    {
+      "object": "dustbin",
+      "is_essential": true,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        0.07007431983947754,
+        0.6283329725265503,
+        1.0788646936416626
+      ],
+      "recommended_position_3d": [
+        -0.022626977413892746,
+        0.7580434083938599,
+        1.071894884109497
+      ],
+      "movement_distance_m": 0.1595835390328834,
+      "action_needed": false,
+      "vastu_rationale": "Same as trash can.",
+      "vastu_score": 82.9,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 17.9
+      }
+    },
+    {
+      "object": "tv",
+      "is_essential": true,
+      "current_zone": "Center",
+      "recommended_zone": "South-East",
+      "current_position_3d": [
+        -0.1836780607700348,
+        -0.1377585381269455,
+        1.1065729856491089
+      ],
+      "recommended_position_3d": [
+        0.24011971056461334,
+        0.40165287256240845,
+        1.0805103778839111
+      ],
+      "movement_distance_m": 0.6864754041432337,
+      "action_needed": true,
+      "vastu_rationale": "TV faces East so viewers face West (auspicious).",
+      "vastu_score": 69.7,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 8.9,
+        "movement_stability": 10.8
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        0.022423595190048218,
+        0.577163815498352,
+        1.080731987953186
+      ],
+      "recommended_position_3d": [
+        -0.1556120663881302,
+        0.4343428313732147,
+        1.0825302600860596
+      ],
+      "movement_distance_m": 0.22824934629198015,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North.",
+      "vastu_score": 80.9,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 13.9,
+        "movement_stability": 17.0
+      }
+    },
+    {
+      "object": "suitcase",
+      "is_essential": false,
+      "current_zone": "Center",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        -0.09745730459690094,
+        -0.07863932847976685,
+        1.0978927612304688
+      ],
+      "recommended_position_3d": [
+        -0.5032260417938232,
+        -0.0849083811044693,
+        1.1219565868377686
+      ],
+      "movement_distance_m": 0.40652999496968834,
+      "action_needed": true,
+      "vastu_rationale": "Luggage in North-West activates travel energy.",
+      "vastu_score": 71.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 6.8,
+        "movement_stability": 14.6
+      }
+    },
+    {
+      "object": "book",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.020395411178469658,
+        0.848449170589447,
+        1.0709322690963745
+      ],
+      "recommended_position_3d": [
+        0.26363661885261536,
+        -0.3102918565273285,
+        1.1041158437728882
+      ],
+      "movement_distance_m": 1.1844611444292836,
+      "action_needed": true,
+      "vastu_rationale": "Books represent knowledge \u2014 North-East/East.",
+      "vastu_score": 60.8,
+      "vastu_score_label": "Fair",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 6.6,
+        "movement_stability": 4.2
+      }
+    },
+    {
+      "object": "chair",
+      "is_essential": false,
+      "current_zone": "East",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        0.3619339168071747,
+        0.03461116924881935,
+        1.0961976051330566
+      ],
+      "recommended_position_3d": [
+        -0.39948365092277527,
+        0.27819088101387024,
+        1.0863326787948608
+      ],
+      "movement_distance_m": 0.7994905285261334,
+      "action_needed": true,
+      "vastu_rationale": "Work chairs face East or North. West is acceptable for reading.",
+      "vastu_score": 68.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 9.5,
+        "movement_stability": 9.3
+      }
+    },
+    {
+      "object": "couch",
+      "is_essential": false,
+      "current_zone": "East",
+      "recommended_zone": "North-East",
+      "current_position_3d": [
+        0.544672966003418,
+        0.037092424929142,
+        1.082037329673767
+      ],
+      "recommended_position_3d": [
+        0.4292078912258148,
+        -1.1070743799209595,
+        1.0802868604660034
+      ],
+      "movement_distance_m": 1.1499795324077446,
+      "action_needed": true,
+      "vastu_rationale": "Same as sofa. Couches should remain in the energetically active Northern arc.",
+      "vastu_score": 60.2,
+      "vastu_score_label": "Fair",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 5.5,
+        "movement_stability": 4.7
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "North",
+      "current_position_3d": [
+        0.09853186458349228,
+        0.43107688426971436,
+        1.0835695266723633
+      ],
+      "recommended_position_3d": [
+        0.05009128153324127,
+        -0.6128798127174377,
+        1.1045336723327637
+      ],
+      "movement_distance_m": 1.0452901849122296,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device \u2014 follows desk rules.",
+      "vastu_score": 67.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 11.7,
+        "movement_stability": 6.1
+      }
+    },
+    {
+      "object": "backpack",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        -0.08106881380081177,
+        1.0172206163406372,
+        1.0698308944702148
+      ],
+      "recommended_position_3d": [
+        -0.3914487659931183,
+        -0.3810487687587738,
+        1.1126335859298706
+      ],
+      "movement_distance_m": 1.4329427966340367,
+      "action_needed": true,
+      "vastu_rationale": "Travel bags belong in the zone of movement.",
+      "vastu_score": 57.6,
+      "vastu_score_label": "Fair",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 6.7,
+        "movement_stability": 0.9
+      }
+    },
+    {
+      "object": "keyboard",
+      "is_essential": false,
+      "current_zone": "South-West",
+      "recommended_zone": "North",
+      "current_position_3d": [
+        -0.3467877209186554,
+        0.9985426664352417,
+        1.069810390472412
+      ],
+      "recommended_position_3d": [
+        0.07550818473100662,
+        -1.1239033937454224,
+        1.0967086553573608
+      ],
+      "movement_distance_m": 2.1642168622757545,
+      "action_needed": true,
+      "vastu_rationale": "Follows computer/desk zone rules.",
+      "vastu_score": 57.1,
+      "vastu_score_label": "Fair",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 7.1,
+        "movement_stability": 0.0
+      }
+    },
+    {
+      "object": "cell phone",
+      "is_essential": false,
+      "current_zone": "South-West",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.2287473976612091,
+        1.0066815614700317,
+        1.0699129104614258
+      ],
+      "recommended_position_3d": [
+        0.25938066840171814,
+        0.04958964139223099,
+        1.1010903120040894
+      ],
+      "movement_distance_m": 1.0748330022489527,
+      "action_needed": true,
+      "vastu_rationale": "Mobile charging in the knowledge zone.",
+      "vastu_score": 63.0,
+      "vastu_score_label": "Fair",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 7.3,
+        "movement_stability": 5.7
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 87.24358758080274,
+    "final_fitness": 1.2902526055222119,
+    "improvement": 85.95333497528053
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/5d7990ab-9a68-497f-9b87-924be27d18be/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/5d7990ab-9a68-497f-9b87-924be27d18be/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/5d7990ab-9a68-497f-9b87-924be27d18be/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/5d7990ab-9a68-497f-9b87-924be27d18be/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/5d7990ab-9a68-497f-9b87-924be27d18be/visualizations/06_layout_comparison_2d.png"
+  }
+}

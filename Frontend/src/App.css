@@ -1,0 +1,348 @@
+/* =========================
+   GLOBAL PAGE CONTAINER
+========================= */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  
+  background: linear-gradient(135deg, #f472b6, #8b5cf6, #6366f1);
+  font-family: 'Arial', sans-serif;
+  color: white;
+  text-align: center;
+  top: 0;
+  position: relative;
+  overflow: visible; /* allow images outside inner-box */
+}
+
+/* =========================
+   HEADER
+========================= */
+.header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  z-index: 10;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  gap: 1rem;
+}
+
+/* =========================
+   CENTER GLASS CARD
+========================= */
+.inner-box {
+  position: relative;
+  z-index: 1; /* above side images */
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 2rem 3rem;
+  border-radius: 1.1rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  max-width: 200px;
+  height: 300px;
+  width: 90%;
+  top: 0;
+  
+  animation: fadeIn 1s ease-in-out;
+}
+/* Page wrapper */
+.page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Background layer */
+.background {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  opacity: 0.8;
+}
+
+/* Foreground layer */
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* Room cards */
+.corner-room {
+  position: absolute;
+  width: 220px;
+  background: rgba(220, 231, 233, 0.9);
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  text-decoration-color: #111;
+}
+.corner-room p {
+  margin-top: 10px;
+  font-weight: 600;
+  color: black; /* change text color to black */
+}
+
+/* Image */
+.corner-room img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Button */
+.btn {
+  margin-top: 10px;
+  padding: 8px 20px;
+  border: none;
+  background: #007bff;
+  color: rgb(240, 182, 182);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Corner positions */
+.corner-1 { top: 30px; left: 50px; }
+.corner-2 { top: 30px; right: 50px; }
+.corner-3 { bottom: 30px; left: 50px; }
+.corner-4 { bottom: 30px; right: 50px; }
+.corner-5 {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* perfectly center */
+}
+
+.background-images {
+  position: absolute;
+  top: 40px;
+  right: 20px;              /* fixed position */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Image style */
+.background-images img {
+  width: 300px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 12px;
+  opacity: 0.7;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+
+  /* BOUNCE EFFECT */
+  animation: bounceLR 4s ease-in-out infinite;
+}
+
+/* LEFT ↔ RIGHT small bounce */
+@keyframes bounceLR {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(25px); }
+  100% { transform: translateX(0); }
+}
+
+
+/* FULL INNER BOX (behind, decorative) */
+
+
+/* SMALL FOREGROUND BOX (text and actions) */
+.foreground-box {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(236, 221, 221, 0.85);
+  padding: 2rem 3rem;
+  border-radius: 15px;
+  max-width: 300px;
+  width: 90%;
+  height: 200px;
+  margin-top: 200px; /* distance from top */
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+/* TEXT */
+.foreground-box h1 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #111;
+}
+
+.foreground-box p {
+  font-size: 1rem;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.side-images {
+  position: absolute;
+  top: 0;
+  right: 30px;        /* RIGHT SIDE */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1;         /* BEHIND foreground */
+  pointer-events: none;
+}
+
+.side-images img {
+  width: 160px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  opacity: 0.45;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+  background: linear-gradient(to right, #5634d3, #055296);
+  color: white;
+  font-size: 1.1rem;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  top: 5px;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+/* ================= VIDEO STEP INNER BOX ================= */
+.video-step, .video-preview-step {
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 25px 30px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+/* HEADINGS */
+.video-step h2,
+.video-preview-step h2 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+.or-divider {
+  margin: 15px 0;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Upload styling */
+.video-upload input[type="file"] {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+/* Video capture */
+.video-capture {
+  margin-top: 15px;
+}
+
+.capture-preview {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+}
+
+.capture-buttons {
+  margin-top: 15px;
+}
+
+.stop-btn {
+  background-color: #e74c3c;
+}
+
+/* Video preview */
+.video-preview {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 12px;
+  margin-top: 15px;
+  border: 2px solid #ccc;
+}
+
+/* NEXT BUTTON */
+.next-btn {
+  margin-top: 20px;
+}
+
+
+/* =========================
+   TITLES
+========================= */
+h1,
+h2 {
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+/* =========================
+   RESPONSIVE (MOBILE)
+========================= */
+@media (max-width: 1024px) {
+  .side-images.left {
+    left: -100px;
+  }
+  .side-images.right {
+    right: -100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .side-images {
+    display: none; /* hide side images on mobile */
+    top:0;
+    justify-content: left;
+
+  }
+
+  .inner-box {
+    width: 95%;
+    padding: 1.5rem 2rem;
+  }
+}

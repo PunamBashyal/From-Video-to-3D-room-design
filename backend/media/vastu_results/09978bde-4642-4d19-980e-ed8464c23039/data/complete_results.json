@@ -1,0 +1,179 @@
+{
+  "run_id": "09978bde-4642-4d19-980e-ed8464c23039",
+  "video_info": {
+    "filename": "room.mp4",
+    "path": "media/temp_videos/room.mp4",
+    "room_type": "Study Room",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 5,
+  "user_selected_furniture": {
+    "studyTable": 1,
+    "tableLamp": 1,
+    "bookShelf": 1
+  },
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 80.0,
+  "final_compliance_pct": 100.0,
+  "weighted_vastu_score": 98,
+  "post_optimization_weighted_score": 100,
+  "violation_summary": {
+    "Critical": 0,
+    "Major": 0,
+    "Minor": 1
+  },
+  "vastu_validation_log": [
+    {
+      "rule_id": "GEN001",
+      "rule_description": "Toilet must not be within 2m of any eating/sleeping area",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "Waste energy from toilets contaminates food and sleep spaces"
+    },
+    {
+      "rule_id": "GEN002",
+      "rule_description": "Brahmasthan (room center) must be kept clear of heavy permanent furniture",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "The sacred center of the home must remain open for energy to circulate freely"
+    }
+  ],
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "tableLamp",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.3959904611110687,
+        0.5210400819778442,
+        1.1551589965820312
+      ],
+      "recommended_position_3d": [
+        -0.40257400274276733,
+        0.5716280341148376,
+        1.1537160873413086
+      ],
+      "movement_distance_m": 0.05103494791716758,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance."
+    },
+    {
+      "object": "bookShelf",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.4167790114879608,
+        0.508470356464386,
+        1.1550118923187256
+      ],
+      "recommended_position_3d": [
+        -0.6159052848815918,
+        0.5241283178329468,
+        1.15253746509552
+      ],
+      "movement_distance_m": 0.19975626973874275,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance."
+    },
+    {
+      "object": "studyTable",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        -0.5485329627990723,
+        0.669044017791748,
+        1.151620626449585
+      ],
+      "recommended_position_3d": [
+        -0.4579676389694214,
+        0.20794138312339783,
+        1.1720913648605347
+      ],
+      "movement_distance_m": 0.47035812814232636,
+      "action_needed": true,
+      "vastu_rationale": "General Vastu guidance."
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.023322194814682007,
+        0.6288818717002869,
+        1.1558582782745361
+      ],
+      "movement_distance_m": 0.019712195226064974,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness."
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.22758455574512482,
+        0.24823898077011108,
+        1.1618881225585938
+      ],
+      "movement_distance_m": 0.6558726663260289,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output."
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 1.081217562865657,
+    "final_fitness": 0.20289105560863402,
+    "improvement": 0.878326507257023
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/09978bde-4642-4d19-980e-ed8464c23039/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/09978bde-4642-4d19-980e-ed8464c23039/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/09978bde-4642-4d19-980e-ed8464c23039/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/09978bde-4642-4d19-980e-ed8464c23039/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/09978bde-4642-4d19-980e-ed8464c23039/visualizations/06_layout_comparison_2d.png"
+  }
+}

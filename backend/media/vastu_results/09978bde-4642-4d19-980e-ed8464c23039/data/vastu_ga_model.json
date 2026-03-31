@@ -1,0 +1,711 @@
+{
+  "version": "3.0",
+  "created_at": "2026-03-20T12:42:50.860011",
+  "video_filename": "room.mp4",
+  "vastu_rules": {
+    "bed": [
+      "South-West",
+      "South",
+      "West"
+    ],
+    "sofa": [
+      "North",
+      "North-East",
+      "East",
+      "West"
+    ],
+    "couch": [
+      "North",
+      "North-East",
+      "East",
+      "West"
+    ],
+    "chair": [
+      "West",
+      "East",
+      "North",
+      "North-West"
+    ],
+    "bench": [
+      "East",
+      "North",
+      "West"
+    ],
+    "dining table": [
+      "West",
+      "North-West"
+    ],
+    "desk": [
+      "East",
+      "North",
+      "North-East"
+    ],
+    "cabinet": [
+      "South-West",
+      "South",
+      "West"
+    ],
+    "refrigerator": [
+      "South-East",
+      "South",
+      "West"
+    ],
+    "oven": [
+      "South-East"
+    ],
+    "microwave": [
+      "South-East",
+      "South"
+    ],
+    "sink": [
+      "North-East",
+      "North",
+      "East"
+    ],
+    "toaster": [
+      "South-East",
+      "South"
+    ],
+    "kettle": [
+      "South-East",
+      "South"
+    ],
+    "tv": [
+      "East",
+      "South-East"
+    ],
+    "laptop": [
+      "East",
+      "North",
+      "North-East"
+    ],
+    "computer": [
+      "East",
+      "North"
+    ],
+    "monitor": [
+      "East",
+      "North"
+    ],
+    "cell phone": [
+      "East",
+      "North",
+      "North-East"
+    ],
+    "toilet": [
+      "West",
+      "North-West",
+      "South"
+    ],
+    "bathtub": [
+      "East",
+      "North-East",
+      "North"
+    ],
+    "potted plant": [
+      "North-East",
+      "East",
+      "North"
+    ],
+    "vase": [
+      "East",
+      "North-East",
+      "North"
+    ],
+    "clock": [
+      "North",
+      "East",
+      "North-East"
+    ],
+    "mirror": [
+      "North",
+      "East"
+    ],
+    "book": [
+      "East",
+      "North-East",
+      "North"
+    ],
+    "lamp": [
+      "South-East",
+      "East",
+      "North-East"
+    ],
+    "chandelier": [
+      "Center"
+    ],
+    "curtain": [
+      "East",
+      "North",
+      "West"
+    ],
+    "carpet": [
+      "Center",
+      "East",
+      "North"
+    ],
+    "blanket": [
+      "South-West",
+      "South"
+    ],
+    "bicycle": [
+      "West",
+      "North-West"
+    ],
+    "umbrella": [
+      "West",
+      "North-West",
+      "East"
+    ],
+    "backpack": [
+      "West",
+      "North-West"
+    ],
+    "suitcase": [
+      "West",
+      "North-West"
+    ]
+  },
+  "vastu_rules_full": {
+    "bed": {
+      "zones": [
+        "South-West",
+        "South",
+        "West"
+      ],
+      "rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness."
+    },
+    "sofa": {
+      "zones": [
+        "North",
+        "North-East",
+        "East",
+        "West"
+      ],
+      "rationale": "Lightweight upholstered seating belongs in the lighter Northern arc. North-East (Ishanya) invites divine prosperity energy into the sitting area. South-West is reserved for heavy structural furniture only."
+    },
+    "couch": {
+      "zones": [
+        "North",
+        "North-East",
+        "East",
+        "West"
+      ],
+      "rationale": "Same as sofa. Couches are lighter seating and should remain in the energetically active Northern arc to promote conversation and positivity."
+    },
+    "chair": {
+      "zones": [
+        "West",
+        "East",
+        "North",
+        "North-West"
+      ],
+      "rationale": "Work chairs face East (rising Sun, concentration) or North (Kuber, prosperity). West is acceptable for reading where natural light falls from behind. North-West (Vayavya) supports movement and dynamic activity."
+    },
+    "bench": {
+      "zones": [
+        "East",
+        "North",
+        "West"
+      ],
+      "rationale": "Open benches carry the same energy as chairs. East for focus, North for prosperity flow. Avoid South-West to keep the Earth corner free for heavier, anchoring furniture."
+    },
+    "dining table": {
+      "zones": [
+        "West",
+        "North-West"
+      ],
+      "rationale": "West (Varun - water/prosperity) governs nourishment. North-West (Vayavya) supports movement and healthy digestion. Eating here aligns meal energy with prosperity and gratitude."
+    },
+    "desk": {
+      "zones": [
+        "East",
+        "North",
+        "North-East"
+      ],
+      "rationale": "East faces the rising Sun - ideal for study and work desks. North (Kuber) brings professional success. North-East (Ishanya) is the zone of intellect and knowledge in Vastu."
+    },
+    "cabinet": {
+      "zones": [
+        "South-West",
+        "South",
+        "West"
+      ],
+      "rationale": "Heavy storage cabinets must sit in South-West to ground the space. South wall storage is also acceptable. Never place heavy cabinets in North-East - this blocks sacred energy flow."
+    },
+    "refrigerator": {
+      "zones": [
+        "South-East",
+        "South",
+        "West"
+      ],
+      "rationale": "South-East (Agni corner) governs all appliances. Though the fridge is cool, it runs on electricity (fire element). Placing it here balances fire-water polarity in the kitchen. Never place in North-East (sacred water zone)."
+    },
+    "oven": {
+      "zones": [
+        "South-East"
+      ],
+      "rationale": "The oven is quintessential Agni (fire). South-East is the fire corner in every classical Vastu text. Cooking here amplifies food energy and digestion quality."
+    },
+    "microwave": {
+      "zones": [
+        "South-East",
+        "South"
+      ],
+      "rationale": "A fire-element appliance - same prescription as oven. South-East (Agni corner) or South keeps electromagnetic and thermal energy properly contained."
+    },
+    "sink": {
+      "zones": [
+        "North-East",
+        "North",
+        "East"
+      ],
+      "rationale": "North-East is the Jal (water) zone. Sinks and wash basins here ensure water flows in an auspicious direction (out through North/East). Water energy in this quadrant invites prosperity and health."
+    },
+    "toaster": {
+      "zones": [
+        "South-East",
+        "South"
+      ],
+      "rationale": "Fire-element small appliance. Same as oven: South-East contains and amplifies the Agni energy appropriately."
+    },
+    "kettle": {
+      "zones": [
+        "South-East",
+        "South"
+      ],
+      "rationale": "Though a kettle heats water, its heating element makes it a fire appliance. South-East placement harnesses Agni energy for quick, nourishing heat."
+    },
+    "tv": {
+      "zones": [
+        "East",
+        "South-East"
+      ],
+      "rationale": "TV faces East so viewers face West (auspicious viewing direction). South-East also acceptable as screens emit electromagnetic energy that aligns well with the Agni corner."
+    },
+    "laptop": {
+      "zones": [
+        "East",
+        "North",
+        "North-East"
+      ],
+      "rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output."
+    },
+    "computer": {
+      "zones": [
+        "East",
+        "North"
+      ],
+      "rationale": "Desktop computers represent sustained work energy. East (Sun - concentration) and North (Kuber - career success) are ideal."
+    },
+    "monitor": {
+      "zones": [
+        "East",
+        "North"
+      ],
+      "rationale": "Same as desktop - the display is part of the workspace. East/North placement maximises productivity and success energy."
+    },
+    "cell phone": {
+      "zones": [
+        "East",
+        "North",
+        "North-East"
+      ],
+      "rationale": "Mobile charging stations should occupy the knowledge zone (North-East/North/East) to infuse communication with positive energy."
+    },
+    "toilet": {
+      "zones": [
+        "West",
+        "North-West",
+        "South"
+      ],
+      "rationale": "Toilets discharge waste energy and must never be in North-East (sacred) or South-West (master stabilising corner). West and North-West are the prescribed zones in all classical texts."
+    },
+    "bathtub": {
+      "zones": [
+        "East",
+        "North-East",
+        "North"
+      ],
+      "rationale": "Bathing is a purification ritual. East (dawn, renewal) and North-East (sacred water) are ideal. Water flowing out toward these directions is considered auspicious."
+    },
+    "potted plant": {
+      "zones": [
+        "North-East",
+        "East",
+        "North"
+      ],
+      "rationale": "Living plants represent growth and Prana (life force). North-East and East provide morning Sun, stimulating plant vitality. Avoid South-West - plants there drain Earth energy and can cause lethargy."
+    },
+    "vase": {
+      "zones": [
+        "East",
+        "North-East",
+        "North"
+      ],
+      "rationale": "Vases hold water and flowers (Jal element). North-East, North, and East are the water/prosperity zones. Fill with fresh flowers for maximum positive energy flow."
+    },
+    "clock": {
+      "zones": [
+        "North",
+        "East",
+        "North-East"
+      ],
+      "rationale": "Clocks represent time flow and should not be in inauspicious zones. North (Kuber) and East (movement/Sun) are ideal. South wall clocks are considered inauspicious - they face descending time."
+    },
+    "mirror": {
+      "zones": [
+        "North",
+        "East"
+      ],
+      "rationale": "Mirrors double whatever energy they reflect. North wall mirrors double prosperity (Kuber). East mirrors double morning light and positive energy. Avoid South - they reflect and amplify negative downward energy."
+    },
+    "book": {
+      "zones": [
+        "East",
+        "North-East",
+        "North"
+      ],
+      "rationale": "Books represent knowledge (Goddess Saraswati). North-East (Ishanya) and East are zones of intellect and learning. Placing books here honours knowledge and attracts wisdom."
+    },
+    "lamp": {
+      "zones": [
+        "South-East",
+        "East",
+        "North-East"
+      ],
+      "rationale": "Lamps represent Agni (fire/light). South-East is the primary fire corner. East-facing lamps symbolise the rising Sun and new beginnings. Avoid South-West - fire there aggravates conflict and instability."
+    },
+    "chandelier": {
+      "zones": [
+        "Center"
+      ],
+      "rationale": "The chandelier belongs at the Brahmasthan (sacred center). Central placement disperses light equally to all eight directions, energising the entire home uniformly."
+    },
+    "curtain": {
+      "zones": [
+        "East",
+        "North",
+        "West"
+      ],
+      "rationale": "Curtains regulate light and privacy. East and North curtains should be light-coloured and thin to allow morning energy in. West curtains can be heavier to manage afternoon heat."
+    },
+    "carpet": {
+      "zones": [
+        "Center",
+        "East",
+        "North"
+      ],
+      "rationale": "A carpet at the Brahmasthan (Center) anchors and stabilises room energy. East and North carpets invite positive energy flow at entry points."
+    },
+    "blanket": {
+      "zones": [
+        "South-West",
+        "South"
+      ],
+      "rationale": "Blankets are associated with rest and the bed zone. Store or use them in South-West (stability/rest corner) for deep, undisturbed sleep."
+    },
+    "bicycle": {
+      "zones": [
+        "West",
+        "North-West"
+      ],
+      "rationale": "Vehicles represent movement (Vayu - wind element). North-West (Vayavya - wind deity) is ideal for all moving objects. Storing a bicycle here encourages regular use and healthy movement."
+    },
+    "umbrella": {
+      "zones": [
+        "West",
+        "North-West",
+        "East"
+      ],
+      "rationale": "Umbrellas represent shelter and rain (Jal). North-West (wind) or near the entrance (East/North) are practical and energetically appropriate in Vastu."
+    },
+    "backpack": {
+      "zones": [
+        "West",
+        "North-West"
+      ],
+      "rationale": "Travel bags belong in the zone of movement (North-West). Storing a backpack in South-West (Earth stability) anchors you energetically and subconsciously discourages travel and exploration."
+    },
+    "suitcase": {
+      "zones": [
+        "West",
+        "North-West"
+      ],
+      "rationale": "Same as backpack. Luggage stored in North-West activates travel energy and ensures smooth, auspicious journeys."
+    }
+  },
+  "room_specific_rules": {
+    "bedroom": [
+      {
+        "rule_id": "BED001",
+        "description": "Bed must not be placed under a chandelier/ceiling fan",
+        "affected_objects": [
+          "bed",
+          "chandelier"
+        ],
+        "min_distance_m": 1.0,
+        "severity": "Major",
+        "rationale": "Ceiling fixtures over the bed create oppressive energy that disrupts sleep"
+      },
+      {
+        "rule_id": "BED002",
+        "description": "North-East corner must be kept free of heavy furniture",
+        "forbidden_zones": [
+          "North-East"
+        ],
+        "forbidden_objects": [
+          "cabinet",
+          "wardrobe",
+          "bed"
+        ],
+        "severity": "Critical",
+        "rationale": "North-East is the sacred Ishanya corner; heavy objects block positive energy flow"
+      }
+    ],
+    "kitchen": [
+      {
+        "rule_id": "KIT001",
+        "description": "Sink (water) and oven/stove (fire) must be at least 1m apart to avoid element conflict",
+        "affected_objects": [
+          "sink",
+          "oven"
+        ],
+        "min_distance_m": 1.0,
+        "severity": "Critical",
+        "rationale": "Fire and water elements in close proximity create energetic imbalance that harms health"
+      },
+      {
+        "rule_id": "KIT002",
+        "description": "Refrigerator must not be placed in the North-East corner",
+        "forbidden_zones": [
+          "North-East"
+        ],
+        "forbidden_objects": [
+          "refrigerator"
+        ],
+        "severity": "Critical",
+        "rationale": "Large appliances in the sacred water zone block prosperity"
+      }
+    ],
+    "living_room": [
+      {
+        "rule_id": "LIV001",
+        "description": "Main seating (sofa/couch) must not block the North-East entrance",
+        "forbidden_objects": [
+          "sofa",
+          "couch"
+        ],
+        "forbidden_zones": [
+          "North-East"
+        ],
+        "severity": "Major",
+        "rationale": "Blocking the sacred entrance traps positive energy from entering the home"
+      }
+    ],
+    "generic": [
+      {
+        "rule_id": "GEN001",
+        "description": "Toilet must not be within 2m of any eating/sleeping area",
+        "affected_objects": [
+          "toilet",
+          "bed",
+          "dining table"
+        ],
+        "min_distance_m": 2.0,
+        "severity": "Critical",
+        "rationale": "Waste energy from toilets contaminates food and sleep spaces"
+      },
+      {
+        "rule_id": "GEN002",
+        "description": "Brahmasthan (room center) must be kept clear of heavy permanent furniture",
+        "forbidden_zones": [
+          "Center"
+        ],
+        "forbidden_objects": [
+          "cabinet",
+          "bed",
+          "sofa",
+          "refrigerator"
+        ],
+        "allowed_central_objects": [
+          "chandelier",
+          "carpet"
+        ],
+        "severity": "Critical",
+        "rationale": "The sacred center of the home must remain open for energy to circulate freely"
+      }
+    ]
+  },
+  "vastu_validation_log": [
+    {
+      "rule_id": "GEN001",
+      "rule_description": "Toilet must not be within 2m of any eating/sleeping area",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "Waste energy from toilets contaminates food and sleep spaces"
+    },
+    {
+      "rule_id": "GEN002",
+      "rule_description": "Brahmasthan (room center) must be kept clear of heavy permanent furniture",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "The sacred center of the home must remain open for energy to circulate freely"
+    }
+  ],
+  "ga_config": {
+    "generations": 100,
+    "population_size": 50,
+    "mutation_rate": 0.3,
+    "mutation_sigma": 0.15,
+    "elite_ratio": 0.3
+  },
+  "fitness_weights": {
+    "vastu_penalty": 10,
+    "movement_penalty": 0.2,
+    "overlap_penalty": 5,
+    "min_separation": 0.15
+  },
+  "training_history": {
+    "fitness_history": [
+      1.081217562865657,
+      0.9092364498625578,
+      0.6174883989614166,
+      0.6174883989614166,
+      0.41221369406312225,
+      0.41221369406312225,
+      0.41221369406312225,
+      0.41221369406312225,
+      0.4008422147897804,
+      0.3831396413579602,
+      0.3768771192787035,
+      0.3768771192787035,
+      0.3540677866345635,
+      0.3540677866345635,
+      0.32879665096759136,
+      0.32879665096759136,
+      0.32879665096759136,
+      0.31729670876030786,
+      0.3167957473986664,
+      0.3167957473986664,
+      0.3120809928459643,
+      0.30462002899146,
+      0.30462002899146,
+      0.30462002899146,
+      0.27305902337146987,
+      0.27305902337146987,
+      0.27305902337146987,
+      0.27305902337146987,
+      0.27305902337146987,
+      0.27305902337146987,
+      0.27305902337146987,
+      0.25594468942575893,
+      0.25594468942575893,
+      0.25594468942575893,
+      0.25594468942575893,
+      0.25594468942575893,
+      0.25594468942575893,
+      0.25594468942575893,
+      0.25594468942575893,
+      0.25499927691110813,
+      0.2512875770290536,
+      0.2512875770290536,
+      0.2512875770290536,
+      0.24056079122801616,
+      0.24056079122801616,
+      0.24056079122801616,
+      0.23557358725358013,
+      0.2201466875868598,
+      0.2201466875868598,
+      0.2201466875868598,
+      0.2201466875868598,
+      0.2201466875868598,
+      0.2201466875868598,
+      0.2201466875868598,
+      0.2201466875868598,
+      0.2201466875868598,
+      0.21987326273399949,
+      0.21987326273399949,
+      0.21987326273399949,
+      0.21964269744862402,
+      0.21964269744862402,
+      0.21964269744862402,
+      0.21952715157577418,
+      0.21470705515994776,
+      0.21470705515994776,
+      0.21470705515994776,
+      0.21470705515994776,
+      0.21470705515994776,
+      0.21470705515994776,
+      0.21470705515994776,
+      0.21470705515994776,
+      0.20890407675561568,
+      0.20890407675561568,
+      0.20890407675561568,
+      0.20890407675561568,
+      0.20890407675561568,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20290832868238373,
+      0.20289105560863402,
+      0.20289105560863402,
+      0.20289105560863402,
+      0.20289105560863402,
+      0.20289105560863402,
+      0.20289105560863402,
+      0.20289105560863402,
+      0.20289105560863402,
+      0.20289105560863402,
+      0.20289105560863402
+    ],
+    "initial_fitness": 1.081217562865657,
+    "final_fitness": 0.20289105560863402
+  },
+  "best_layout": {
+    "bed": {
+      "cx": 0.4825258725921985,
+      "cy": 0.7654586084295563
+    },
+    "laptop": {
+      "cx": 0.6696325332646837,
+      "cy": 0.6042408525156312
+    },
+    "studyTable": {
+      "cx": 0.16162056804421385,
+      "cy": 0.5865589031283891
+    },
+    "tableLamp": {
+      "cx": 0.1978118699609691,
+      "cy": 0.7417390940776027
+    },
+    "bookShelf": {
+      "cx": 0.03720407130468937,
+      "cy": 0.7218783059124033
+    }
+  },
+  "statistics": {
+    "initial_violations": 1,
+    "final_violations": 0,
+    "objects_analyzed": 5,
+    "changes_needed": 2,
+    "initial_weighted_score": 98,
+    "post_optimization_score": 100
+  }
+}

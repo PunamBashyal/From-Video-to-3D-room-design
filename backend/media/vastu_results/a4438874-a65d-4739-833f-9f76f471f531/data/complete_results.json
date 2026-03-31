@@ -1,0 +1,158 @@
+{
+  "run_id": "a4438874-a65d-4739-833f-9f76f471f531",
+  "video_info": {
+    "filename": "bc69c083-174c-4c58-9bbe-ec07a5f684d9_room.mp4",
+    "path": "media/temp_videos/bc69c083-174c-4c58-9bbe-ec07a5f684d9_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 4,
+  "user_selected_furniture": {
+    "beds": 1,
+    "tables": 1
+  },
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 75.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "beds",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.48268455266952515,
+        0.5534228086471558,
+        1.1531506776809692
+      ],
+      "recommended_position_3d": [
+        -0.504547655582428,
+        0.8137543797492981,
+        1.1482290029525757
+      ],
+      "movement_distance_m": 0.2612943647758636,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 81.5,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 16.5
+      }
+    },
+    {
+      "object": "tables",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.5239074230194092,
+        0.6195412874221802,
+        1.1522974967956543
+      ],
+      "recommended_position_3d": [
+        -0.4064159393310547,
+        0.5049784779548645,
+        1.1554609537124634
+      ],
+      "movement_distance_m": 0.16413072080509442,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 82.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 17.8
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.003218546276912093,
+        0.6566277742385864,
+        1.1549614667892456
+      ],
+      "movement_distance_m": 0.014612122174206354,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.0,
+        "movement_stability": 19.8
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.23938044905662537,
+        0.34180188179016113,
+        1.1548006534576416
+      ],
+      "movement_distance_m": 0.5763480046304452,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output.",
+      "vastu_score": 74.7,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 12.4,
+        "movement_stability": 12.3
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.4182310119688352,
+    "final_fitness": 0.10852874448052718,
+    "improvement": 0.30970226748830804
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/a4438874-a65d-4739-833f-9f76f471f531/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/a4438874-a65d-4739-833f-9f76f471f531/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/a4438874-a65d-4739-833f-9f76f471f531/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/a4438874-a65d-4739-833f-9f76f471f531/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/a4438874-a65d-4739-833f-9f76f471f531/visualizations/06_layout_comparison_2d.png"
+  }
+}

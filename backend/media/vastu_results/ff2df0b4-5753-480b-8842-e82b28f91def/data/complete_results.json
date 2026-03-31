@@ -1,0 +1,138 @@
+{
+  "run_id": "ff2df0b4-5753-480b-8842-e82b28f91def",
+  "video_info": {
+    "filename": "room.mp4",
+    "path": "media/temp_videos/room.mp4",
+    "room_type": "bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 2,
+  "user_selected_furniture": [],
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 50.0,
+  "final_compliance_pct": 100.0,
+  "weighted_vastu_score": 98,
+  "post_optimization_weighted_score": 100,
+  "violation_summary": {
+    "Critical": 0,
+    "Major": 0,
+    "Minor": 1
+  },
+  "vastu_validation_log": [
+    {
+      "rule_id": "BED001",
+      "rule_description": "Bed must not be placed under a chandelier/ceiling fan",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Major",
+      "evaluation_notes": "No issues found",
+      "rationale": "Ceiling fixtures over the bed create oppressive energy that disrupts sleep"
+    },
+    {
+      "rule_id": "BED002",
+      "rule_description": "North-East corner must be kept free of heavy furniture",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "North-East is the sacred Ishanya corner; heavy objects block positive energy flow"
+    },
+    {
+      "rule_id": "GEN001",
+      "rule_description": "Toilet must not be within 2m of any eating/sleeping area",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "Waste energy from toilets contaminates food and sleep spaces"
+    },
+    {
+      "rule_id": "GEN002",
+      "rule_description": "Brahmasthan (room center) must be kept clear of heavy permanent furniture",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "The sacred center of the home must remain open for energy to circulate freely"
+    }
+  ],
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.013055343180894852,
+        0.6591974496841431,
+        1.1548840999603271
+      ],
+      "movement_distance_m": 0.013861819643259226,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness."
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.21442532539367676,
+        0.3684406876564026,
+        1.1549303531646729
+      ],
+      "movement_distance_m": 0.541217561711006,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output."
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.15488771964174602,
+    "final_fitness": 0.056462229956931516,
+    "improvement": 0.09842548968481452
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/ff2df0b4-5753-480b-8842-e82b28f91def/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/ff2df0b4-5753-480b-8842-e82b28f91def/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/ff2df0b4-5753-480b-8842-e82b28f91def/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/ff2df0b4-5753-480b-8842-e82b28f91def/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/ff2df0b4-5753-480b-8842-e82b28f91def/visualizations/06_layout_comparison_2d.png"
+  }
+}

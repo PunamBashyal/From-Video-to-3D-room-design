@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Vastu 3D Room Viewer</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0d0d1a;font-family:'Segoe UI',sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+#hdr{background:linear-gradient(135deg,#1a1a3a,#12122a);border-bottom:2px solid #3b2f8f;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0;}
+#hdr-title{color:#e2e8f0;font-weight:800;font-size:16px;}
+#hdr-sub{color:#555;font-size:11px;margin-top:2px;}
+#close-btn{margin-left:auto;background:#1e1e3a;color:#7c6fe0;border:1px solid #3b2f8f;border-radius:8px;padding:8px 18px;cursor:pointer;font-weight:700;font-size:13px;}
+#close-btn:hover{background:#2a2a4a;}
+#tabbar{background:#0a0a1e;border-bottom:2px solid #3b2f8f;display:flex;padding:0 16px;gap:4px;flex-shrink:0;}
+.tab{padding:10px 20px;background:transparent;color:#555;border:none;border-bottom:3px solid transparent;border-radius:8px 8px 0 0;font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .15s;}
+.tab.active{background:#1a1a3a;}
+.tab .badge{border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700;background:#ffffff11;color:#444;}
+#content{flex:1;overflow:hidden;position:relative;}
+.panel{display:none;height:100%;flex-direction:column;}
+.panel.active{display:flex;}
+.sub-hdr{padding:6px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0;font-size:11px;color:#555;}
+.viewer{flex:1;border:none;display:block;background:#0d0d1a;}
+.hint{background:#080818;padding:4px 18px;font-size:10px;color:#333;text-align:center;flex-shrink:0;}
+#cmp-panel{height:100%;overflow-y:auto;background:linear-gradient(135deg,#12122a,#0d1a10);}
+.cmp-inner{padding:36px;max-width:860px;margin:0 auto;}
+.cmp-title{color:#a0e080;font-weight:800;font-size:20px;margin-bottom:28px;}
+.ratio-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:28px;}
+.ratio-card{flex:1;min-width:130px;border-radius:14px;padding:22px;text-align:center;}
+.ratio-label{font-size:10px;color:#555;margin-bottom:8px;text-transform:uppercase;letter-spacing:1.5px;}
+.ratio-num{font-size:56px;font-weight:900;line-height:1;}
+.ratio-sub{font-size:11px;color:#555;margin-top:8px;}
+.arrow{font-size:32px;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:24px;}
+.stat-card{background:#1e1e3a;border-radius:12px;padding:16px;text-align:center;}
+.stat-icon{font-size:26px;margin-bottom:8px;}
+.stat-num{font-size:32px;font-weight:800;}
+.stat-lbl{font-size:11px;color:#555;margin-top:5px;}
+.prog-box{background:#1e1e3a;border-radius:12px;padding:20px;}
+.prog-hdr{display:flex;justify-content:space-between;font-size:12px;color:#666;margin-bottom:8px;}
+.prog-bar{position:relative;height:16px;background:#0d0d1a;border-radius:8px;overflow:hidden;margin-bottom:8px;}
+.prog-fill{position:absolute;left:0;top:0;height:100%;border-radius:8px;}
+.prog-note{text-align:center;font-size:12px;font-weight:700;}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <span style="font-size:22px">&#127968;</span>
+  <div>
+    <div id="hdr-title">Vastu 3D Room Viewer</div>
+    <div id="hdr-sub">Drag to rotate &middot; Scroll to zoom &middot; Click sidebar items to highlight</div>
+  </div>
+  <button id="close-btn" onclick="window.close()">&#10005; Close</button>
+</div>
+<div id="tabbar">
+  <button class="tab active" style="color:#7c6fe0;border-bottom-color:#7c6fe0" onclick="switchTab('cur',this)">
+    &#127968; Current Layout <span class="badge" id="cur-badge">0 detected</span>
+  </button>
+  <button class="tab" style="color:#555" onclick="switchTab('opt',this)">
+    &#10024; Vastu-Optimised <span class="badge" id="opt-badge">0 items</span>
+  </button>
+  <button class="tab" style="color:#555" onclick="switchTab('cmp',this)">
+    &#128202; Comparison <span class="badge" id="cmp-badge">0%</span>
+  </button>
+</div>
+<div id="content">
+  <div class="panel active" id="panel-cur">
+    <div class="sub-hdr" style="background:#0a0a1e;border-bottom:1px solid #3b2f8f22">Furniture detected by YOLO at their current positions.</div>
+    <iframe id="iframe-cur" class="viewer" sandbox="allow-scripts" title="Current 3D"></iframe>
+    <div class="hint">&#128433; Drag: rotate &nbsp;&middot;&nbsp; Scroll: zoom &nbsp;&middot;&nbsp; Right-drag: pan &nbsp;&middot;&nbsp; Click sidebar to highlight</div>
+  </div>
+  <div class="panel" id="panel-opt">
+    <div class="sub-hdr" style="background:#0a1a15;border-bottom:1px solid #00b8a522">All furniture repositioned to Vastu-correct zones by the genetic algorithm.</div>
+    <iframe id="iframe-opt" class="viewer" sandbox="allow-scripts" title="Optimised 3D"></iframe>
+    <div class="hint">&#128433; Drag: rotate &nbsp;&middot;&nbsp; Scroll: zoom &nbsp;&middot;&nbsp; Right-drag: pan &nbsp;&middot;&nbsp; Click sidebar to highlight</div>
+  </div>
+  <div class="panel" id="panel-cmp">
+    <div id="cmp-panel"><div class="cmp-inner" id="cmp-content"></div></div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+var ROOM_W=4.307061195373535,ROOM_D=3.313124179840088,ROOM_H=2.5;
+var ZCOLS={"North-West": "#c3b1e1", "North": "#aec6cf", "North-East": "#a8d8a8", "West": "#f4a460", "Center": "#eeeeee", "East": "#ffd966", "South-West": "#c8a882", "South": "#ff9999", "South-East": "#ffb347"};
+var ZCOMP={"North-East": "North-East corner (Ishanya) \u2014 knowledge & prosperity", "North": "North wall (Kubera) \u2014 career & wealth", "North-West": "North-West corner (Vayavya) \u2014 movement & travel", "East": "East wall (Surya) \u2014 health & new beginnings", "Center": "Center (Brahmasthan) \u2014 sacred energy hub", "West": "West wall (Varun) \u2014 nourishment & gains", "South-East": "South-East corner (Agni) \u2014 fire & energy", "South": "South wall (Yama) \u2014 stability", "South-West": "South-West corner (Nairutya) \u2014 earth & stability"};
+var CUR_DATA=[{"id": 1, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 3.337972426414489, "py": 0, "pz": 1.4577746391296387, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Essential"}, {"id": 2, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": 2.1535305976867676, "py": 0, "pz": 2.5676712393760677, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#966464", "opacity": 0.88, "cat": "detected", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2713 Detected"}, {"id": 3, "name": "suitcase", "emoji": "\ud83d\udce6", "px": 1.8951069259643554, "py": 0, "pz": 0.5466654896736145, "fw": 0.5, "fh": 0.7, "fd": 0.25, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "North", "compass": "North wall (Kubera) \u2014 career & wealth", "status": "\u26a0 Move needed"}, {"id": 4, "name": "book", "emoji": "\ud83d\udce6", "px": 2.1535305976867676, "py": 0, "pz": 2.7664586901664734, "fw": 0.15, "fh": 0.05, "fd": 0.2, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u26a0 Move needed"}];
+var OPT_DATA=[{"id": 1, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 3.337972426414489, "py": 0, "pz": 1.4577746391296387, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Essential"}, {"id": 2, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": 2.1535305976867676, "py": 0, "pz": 2.5676712393760677, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#966464", "opacity": 0.88, "cat": "detected", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Vastu-correct"}, {"id": 3, "name": "suitcase", "emoji": "\ud83d\udce6", "px": 0.4522414255142213, "py": 0, "pz": 0.5466654896736145, "fw": 0.5, "fh": 0.7, "fd": 0.25, "color": "#786450", "opacity": 0.88, "cat": "detected", "zone": "North-West", "compass": "North-West corner (Vayavya) \u2014 movement & travel", "status": "\u2605 Vastu-correct"}, {"id": 4, "name": "book", "emoji": "\ud83d\udce6", "px": 3.5963960981369016, "py": 0, "pz": 1.656562089920044, "fw": 0.15, "fh": 0.05, "fd": 0.2, "color": "#b48c64", "opacity": 0.88, "cat": "detected", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Vastu-correct"}];
+var ZGRID=[["North-West",0,0,1/3,1/3],["North",1/3,0,1/3,1/3],["North-East",2/3,0,1/3,1/3],["West",0,1/3,1/3,1/3],["Center",1/3,1/3,1/3,1/3],["East",2/3,1/3,1/3,1/3],["South-West",0,2/3,1/3,1/3],["South",1/3,2/3,1/3,1/3],["South-East",2/3,2/3,1/3,1/3]];
+var DIRMAP={"North":"↑N","South":"↓S","East":"→E","West":"←W","North-East":"↗NE","North-West":"↖NW","South-East":"↘SE","South-West":"↙SW","Center":"⊕C"};
+var DIRCOL={"North":"#4488ff","North-East":"#4488ff","North-West":"#4488ff","South":"#ff4444","South-East":"#ff4444","South-West":"#ff4444","East":"#00cc55","West":"#ffaa00","Center":"#aaa"};
+
+function switchTab(key,btn){
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.classList.remove('active');t.style.color='#555';t.style.borderBottomColor='transparent';
+  });
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  var colors={cur:'#7c6fe0',opt:'#00b8a5',cmp:'#4caf50'};
+  btn.style.color=colors[key]||'#7c6fe0';
+  btn.style.borderBottomColor=colors[key]||'#7c6fe0';
+  document.getElementById('panel-'+key).classList.add('active');
+}
+
+function viewer3DScript(){
+  return [
+    'var DATA=__DATA__;var ZCOLS_=__ZCOLS__;var ZGRID_=__ZGRID__;var DIRMAP_=__DIRMAP__;var DIRCOL_=__DIRCOL__;var RW=__RW__;var RD=__RD__;',
+    'var cvEl=document.getElementById("cv");',
+    'var W=function(){return cvEl.clientWidth;},H=function(){return window.innerHeight;};',
+    'var renderer=new THREE.WebGLRenderer({antialias:true});',
+    'renderer.setPixelRatio(window.devicePixelRatio);renderer.setSize(W(),H());renderer.shadowMap.enabled=true;',
+    'cvEl.appendChild(renderer.domElement);',
+    'var scene=new THREE.Scene();scene.background=new THREE.Color(0x0d0d1a);scene.fog=new THREE.FogExp2(0x0d0d1a,.038);',
+    'var camera=new THREE.PerspectiveCamera(45,W()/H(),.1,120);',
+    'scene.add(new THREE.AmbientLight(0xffffff,.52));',
+    'var dl=new THREE.DirectionalLight(0xffffff,.88);dl.position.set(6,10,6);dl.castShadow=true;scene.add(dl);',
+    'scene.add(new THREE.HemisphereLight(0x334466,0x0d0d1a,.42));',
+    'var drag=false,rDrag=false,pm={x:0,y:0};',
+    'var theta=0.55,phi=1.05,rad=Math.sqrt(RW*RW+RD*RD)*1.9;',
+    'var panX=RW/2,panY=0,panZ=RD/2;',
+    'function camUp(){camera.position.set(panX+rad*Math.sin(phi)*Math.sin(theta),panY+rad*Math.cos(phi),panZ+rad*Math.sin(phi)*Math.cos(theta));camera.lookAt(panX,panY,panZ);}camUp();',
+    'cvEl.addEventListener("mousedown",function(e){drag=true;rDrag=e.button===2;pm={x:e.clientX,y:e.clientY};});',
+    'cvEl.addEventListener("contextmenu",function(e){e.preventDefault();});',
+    'window.addEventListener("mouseup",function(){drag=false;});',
+    'window.addEventListener("mousemove",function(e){if(!drag)return;var dx=(e.clientX-pm.x)*.005,dy=(e.clientY-pm.y)*.005;if(rDrag){var r=new THREE.Vector3();r.crossVectors(camera.getWorldDirection(new THREE.Vector3()),new THREE.Vector3(0,1,0)).normalize();panX-=r.x*dx*3;panZ-=r.z*dx*3;panY+=dy*3;}else{theta-=dx;phi=Math.max(.08,Math.min(Math.PI/2-.03,phi+dy));}pm={x:e.clientX,y:e.clientY};camUp();});',
+    'cvEl.addEventListener("wheel",function(e){rad=Math.max(1.5,Math.min(40,rad+e.deltaY*.025));camUp();});',
+    'function mkSp(txt,o){o=o||{};var fs=o.fs||48,col=o.col||"#fff",bg=o.bg||"rgba(0,0,0,0)";var cv=document.createElement("canvas");cv.width=256;cv.height=128;var x=cv.getContext("2d");x.fillStyle=bg;x.fillRect(0,0,256,128);x.font="bold "+fs+"px Segoe UI Emoji,Segoe UI,sans-serif";x.fillStyle=col;x.textAlign="center";x.textBaseline="middle";x.fillText(txt,128,64);var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));sp.scale.set(o.sw||.9,o.sh||.45,1);return sp;}',
+    'function buildFloor(){ZGRID_.forEach(function(g){var zone=g[0],cx=g[1],cz=g[2],wf=g[3],df=g[4];var zw=wf*RW,zd=df*RD,x0=cx*RW,z0=cz*RD;var col=ZCOLS_[zone]||"#ccc";var m=new THREE.Mesh(new THREE.PlaneGeometry(zw-.04,zd-.04),new THREE.MeshLambertMaterial({color:new THREE.Color(col),transparent:true,opacity:.70,side:THREE.DoubleSide}));m.rotation.x=-Math.PI/2;m.position.set(x0+zw/2,.001,z0+zd/2);scene.add(m);var el=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(zw,zd)),new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.16}));el.rotation.x=-Math.PI/2;el.position.set(x0+zw/2,.002,z0+zd/2);scene.add(el);var sh=zone.replace("North","N").replace("South","S").replace("East","E").replace("West","W").replace("-","");var sp=mkSp(sh,{fs:26,col:"#111",sw:.58,sh:.28});sp.position.set(x0+zw/2,.04,z0+zd/2);scene.add(sp);});}',
+    'function buildCompass(){[["N",RW/2,1.4,-.4,"#4488ff"],["S",RW/2,1.4,RD+.4,"#ff4444"],["W",-.4,1.4,RD/2,"#ffaa00"],["E",RW+.4,1.4,RD/2,"#00cc55"]].forEach(function(a){var t=a[0],x=a[1],y=a[2],z=a[3],col=a[4];var cv=document.createElement("canvas");cv.width=120;cv.height=120;var ctx=cv.getContext("2d");ctx.fillStyle="rgba(8,6,28,.94)";ctx.beginPath();ctx.arc(60,60,57,0,Math.PI*2);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.beginPath();ctx.arc(60,60,55,0,Math.PI*2);ctx.stroke();ctx.font="bold 58px Segoe UI,sans-serif";ctx.fillStyle=col;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(t,60,63);var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));sp.scale.set(.8,.8,1);sp.position.set(x,y,z);scene.add(sp);});}',
+    'var fGrp=new THREE.Group();scene.add(fGrp);',
+    'var ray=new THREE.Raycaster(),mV=new THREE.Vector2(-9,-9);',
+    'var mmap={},bmap={};var focId=null;',
+    'DATA.forEach(function(item){var hw=RW/2;var px=item.px-hw,py=item.fh/2,pz=item.pz;var geo=new THREE.BoxGeometry(item.fw,item.fh,item.fd);var mat=new THREE.MeshLambertMaterial({color:new THREE.Color(item.color),transparent:true,opacity:item.opacity});var box=new THREE.Mesh(geo,mat);box.position.set(px,py,pz);box.castShadow=true;fGrp.add(box);mmap[box.uuid]=item;var ec=item.cat==="essential"?0x00ffd0:item.cat==="violation"?0xff4444:0x7788aa;box.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:ec,linewidth:1.5})));var oGeo=new THREE.BoxGeometry(item.fw*1.07,item.fh*1.07,item.fd*1.07);var oMat=new THREE.MeshBasicMaterial({color:0x00ffd0,side:THREE.BackSide,transparent:true,opacity:0});var oMesh=new THREE.Mesh(oGeo,oMat);box.add(oMesh);var es=mkSp(item.emoji,{fs:44,sw:.54,sh:.54});es.position.set(0,item.fh/2+.02,0);box.add(es);var nBg=item.cat==="essential"?"rgba(0,255,208,.95)":item.cat==="violation"?"rgba(180,20,20,.9)":"rgba(59,47,143,.9)";var nFc=item.cat==="essential"?"#000":"#fff";var ns=mkSp(String(item.id),{fs:32,col:nFc,bg:nBg,sw:.28,sh:.28});ns.position.set(item.fw/2+.05,item.fh/2+.26,0);box.add(ns);var nc=item.cat==="essential"?"#00ffd0":item.cat==="violation"?"#ff9999":"#e2e8f0";var sfx=item.cat==="essential"?" \u2605":item.cat==="violation"?" \u26a0":"";var ls=mkSp(item.name+sfx,{fs:22,col:nc,sw:1.0,sh:.34,bg:"rgba(8,6,28,.9)"});ls.position.set(0,item.fh/2+.50,0);box.add(ls);var fl=mkSp("\u25b6 "+item.id+". "+item.name,{fs:30,col:"#00ffd0",sw:1.5,sh:.44,bg:"rgba(0,55,45,.96)"});fl.position.set(0,item.fh+.78,0);fl.visible=false;box.add(fl);bmap[item.id]={box:box,oMesh:oMesh,focusLabel:fl,mat:mat};});',
+    'function setFocus(id){if(focId!==null){var p=bmap[focId];if(p){p.oMesh.material.opacity=0;p.focusLabel.visible=false;p.mat.opacity=p._orig||.88;}document.querySelectorAll(".ir.focused").forEach(function(r){r.classList.remove("focused");});}if(id===focId){focId=null;return;}focId=id;var e=bmap[id];if(!e)return;e.oMesh.material.opacity=.55;e.focusLabel.visible=true;e._orig=e.mat.opacity;e.mat.opacity=1.0;document.querySelectorAll(".ir").forEach(function(r){r.classList.remove("focused","active");if(parseInt(r.dataset.id)===id){r.classList.add("focused");r.scrollIntoView({block:"nearest",behavior:"smooth"});}});var item=mmap[e.box.uuid];if(item){var tx=item.px-RW/2,tz=item.pz,ox=panX,oz=panZ,s=0;function go(){s++;var t=s/30,ease=t<.5?2*t*t:(4-2*t)*t-1;panX=ox+(tx-ox)*ease;panZ=oz+(tz-oz)*ease;camUp();if(s<30)requestAnimationFrame(go);}requestAnimationFrame(go);}var p2=0;function pulse(){p2++;e.mat.opacity=1-Math.abs(Math.sin(p2*.25))*.35;if(p2<28&&focId===id)requestAnimationFrame(pulse);else e.mat.opacity=1.0;}requestAnimationFrame(pulse);}',
+    'var list=document.getElementById("ilist");document.getElementById("sb-count").textContent=DATA.length+" items";',
+    'DATA.forEach(function(item){var row=document.createElement("div");row.className="ir";row.dataset.id=item.id;var nBg=item.cat==="essential"?"#00ffd0":item.cat==="violation"?"#7a0d0d":"#3b2f8f";var nFc=item.cat==="essential"?"#000":"#fff";var dir=DIRMAP_[item.zone]||item.zone;var dc=DIRCOL_[item.zone]||"#888";row.innerHTML="<div class=\\"in\\" style=\\"background:"+nBg+";color:"+nFc+"\\">"+item.id+"</div><div class=\\"ie\\">"+item.emoji+"</div><div class=\\"ii\\"><div class=\\"iname\\">"+item.name+"</div><div class=\\"izone\\" style=\\"color:"+dc+"\\">"+dir+" "+(item.zone||"-")+"</div><div class=\\"istat "+item.cat+"\\">"+item.status+"</div></div>";row.addEventListener("click",function(){setFocus(item.id);});list.appendChild(row);});',
+    'var tip=document.getElementById("tip");',
+    'function showTip(item,ex,ey){tip.innerHTML="<span class=\\"te\\">"+item.emoji+"</span><div class=\\"tn\\">"+item.id+". "+item.name+"</div><div class=\\"tz\\">"+item.zone+"</div><div class=\\"ts "+item.cat+"\\">"+item.status+"</div>";tip.style.display="block";tip.style.left=(ex+12)+"px";tip.style.top=(ey+12)+"px";}',
+    'function hideTip(){tip.style.display="none";}',
+    'cvEl.addEventListener("mousemove",function(e){if(drag){hideTip();return;}mV.x=(e.clientX/W())*2-1;mV.y=-(e.clientY/H())*2+1;ray.setFromCamera(mV,camera);var hits=ray.intersectObjects(fGrp.children,true);var hit=null;for(var h=0;h<hits.length;h++){if(mmap[hits[h].object.uuid]){hit=hits[h];break;}}if(hit){var item=mmap[hit.object.uuid];showTip(item,e.clientX,e.clientY);document.querySelectorAll(".ir").forEach(function(r){if(parseInt(r.dataset.id)===item.id&&focId!==item.id)r.classList.add("active");else if(focId!==parseInt(r.dataset.id))r.classList.remove("active");});}else{hideTip();document.querySelectorAll(".ir:not(.focused)").forEach(function(r){r.classList.remove("active");});}});',
+    'cvEl.addEventListener("click",function(e){mV.x=(e.clientX/W())*2-1;mV.y=-(e.clientY/H())*2+1;ray.setFromCamera(mV,camera);var hits=ray.intersectObjects(fGrp.children,true);for(var h=0;h<hits.length;h++){if(mmap[hits[h].object.uuid]){setFocus(mmap[hits[h].object.uuid].id);break;}}});',
+    'buildFloor();buildCompass();',
+    '(function loop(){requestAnimationFrame(loop);renderer.render(scene,camera);})();',
+    'window.addEventListener("resize",function(){camera.aspect=W()/H();camera.updateProjectionMatrix();renderer.setSize(W(),H());});'
+  ].join('\n');
+}
+
+function build3DHTML(data){
+  var dataStr=JSON.stringify(data);
+  var zcolsStr=JSON.stringify(ZCOLS);
+  var zgridStr=JSON.stringify(ZGRID);
+  var dirmapStr=JSON.stringify(DIRMAP);
+  var dircolStr=JSON.stringify(DIRCOL);
+  var script=viewer3DScript()
+    .replace('__DATA__',dataStr)
+    .replace('__ZCOLS__',zcolsStr)
+    .replace('__ZGRID__',zgridStr)
+    .replace('__DIRMAP__',dirmapStr)
+    .replace('__DIRCOL__',dircolStr)
+    .replace('__RW__',String(ROOM_W))
+    .replace('__RD__',String(ROOM_D));
+  var css=[
+    '*{margin:0;padding:0;box-sizing:border-box;}',
+    'body{background:#0d0d1a;font-family:Segoe UI,sans-serif;display:flex;height:100vh;overflow:hidden;}',
+    '#cv{flex:1;position:relative;}',
+    '#tip{position:absolute;display:none;pointer-events:none;background:rgba(8,6,28,.97);border:1.5px solid #7c6fe0;border-radius:12px;padding:10px 14px;color:#e8eaf6;font-size:12px;z-index:200;max-width:220px;}',
+    '#tip .tn{font-size:13px;font-weight:800;color:#fff;margin-bottom:3px;}',
+    '#tip .te{font-size:20px;float:right;margin-left:6px;}',
+    '#tip .tz{color:#ffd966;font-size:10px;margin-bottom:2px;}',
+    '#tip .ts{font-size:10px;font-weight:700;}',
+    '#tip .ts.essential{color:#00ffd0;}#tip .ts.violation{color:#ff6666;}#tip .ts.detected{color:#88aacc;}',
+    '#inst{position:absolute;bottom:8px;left:8px;z-index:50;background:rgba(8,6,28,.85);border:1px solid #3b2f8f;border-radius:7px;padding:5px 9px;color:#555;font-size:9px;line-height:1.7;}',
+    '#sb{width:240px;flex-shrink:0;background:#0a0a1e;border-left:2px solid #3b2f8f;display:flex;flex-direction:column;overflow:hidden;}',
+    '#sb-head{padding:8px 11px;background:#141430;border-bottom:1px solid #3b2f8f;font-size:11px;font-weight:700;color:#aac4ff;display:flex;align-items:center;gap:7px;}',
+    '#sb-count{margin-left:auto;background:#3b2f8f;color:#aac4ff;border-radius:9px;padding:1px 6px;font-size:9px;}',
+    '#cstrip{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:4px 6px;border-bottom:1px solid #3b2f8f;background:#0d0d22;}',
+    '.cb{display:flex;align-items:center;justify-content:center;gap:2px;padding:3px 4px;border-radius:4px;font-size:9px;font-weight:800;}',
+    '#ilist{flex:1;overflow-y:auto;padding:2px 0;}',
+    '#ilist::-webkit-scrollbar{width:3px;}#ilist::-webkit-scrollbar-thumb{background:#3b2f8f;border-radius:2px;}',
+    '.ir{display:flex;align-items:center;gap:6px;padding:6px 8px;cursor:pointer;border-left:3px solid transparent;transition:background .12s;position:relative;}',
+    '.ir:hover{background:#131330;}.ir.active{background:#181840;border-left-color:#7c6fe0;}.ir.focused{background:#1a1a50;border-left-color:#00ffd0;}',
+    '.ir.focused::after{content:"\\25BA";position:absolute;right:6px;color:#00ffd0;font-size:12px;font-weight:900;}',
+    '.in{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;}',
+    '.ie{font-size:15px;flex-shrink:0;}.ii{flex:1;min-width:0;}',
+    '.iname{font-size:10px;font-weight:600;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}',
+    '.izone{font-size:8px;margin-top:1px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}',
+    '.istat{font-size:8px;font-weight:700;margin-top:1px;}',
+    '.istat.essential{color:#00ffd0;}.istat.violation{color:#ff6666;}.istat.detected{color:#88aacc;}',
+    '#sb-leg{padding:6px 9px;border-top:1px solid #3b2f8f;font-size:9px;color:#555;}',
+    '.lr{display:flex;align-items:center;gap:5px;margin-bottom:2px;}',
+    '.ls{width:11px;height:7px;border-radius:2px;flex-shrink:0;}'
+  ].join('');
+  var body='<div id="cv"><div id="tip"></div><div id="inst">Drag:rotate|Scroll:zoom|Right:pan<br>Click item to highlight</div></div>'
+    +'<div id="sb"><div id="sb-head">Furniture<span id="sb-count">0</span></div>'
+    +'<div id="cstrip">'
+    +'<div class="cb" style="background:#0a1428;color:#4488ff">N</div>'
+    +'<div class="cb" style="background:#280a0a;color:#ff4444">S</div>'
+    +'<div class="cb" style="background:#201800;color:#ffaa00">W</div>'
+    +'<div class="cb" style="background:#0a2010;color:#00cc55">E</div>'
+    +'</div><div id="ilist"></div>'
+    +'<div id="sb-leg">'
+    +'<div class="lr"><div class="ls" style="background:#00b8a5;border:1px solid #00ffd0"></div>Essential</div>'
+    +'<div class="lr"><div class="ls" style="background:#7a0d0d;border:1px solid #ff4444"></div>Violation</div>'
+    +'<div class="lr"><div class="ls" style="background:#6688aa;border:1px solid #7788aa"></div>Detected</div>'
+    +'</div></div>';
+  return '<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>'+css+'</style></head><body>'
+    +body
+    +'<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>'
+    +'<script>'+script+'<\/script>'
+    +'</body></html>';
+}
+
+document.getElementById('iframe-cur').srcdoc=build3DHTML(CUR_DATA);
+document.getElementById('iframe-opt').srcdoc=build3DHTML(OPT_DATA);
+document.getElementById('cur-badge').textContent=CUR_DATA.length+' detected';
+document.getElementById('opt-badge').textContent=OPT_DATA.length+' items';
+
+function buildComparison(cmp){
+  if(!cmp)return;
+  var pos=(cmp.improvement||0)>=0;
+  var ic=pos?'#00ffd0':'#ff4444';
+  var ib=pos?'#0d2010':'#2a0a0a';
+  var note=pos?'Compliance improved by '+cmp.improvement+'% after Vastu optimisation':'Review recommendations to improve compliance';
+  document.getElementById('cmp-badge').textContent=(pos?'+':'')+cmp.improvement+'%';
+  var sh='';
+  var st=[['&#128269;','Detected by YOLO',cmp.detected_count,'#7c6fe0'],['&#128230;','Total (+ essential)',cmp.total_count,'#1565c0'],['&#9989;','Compliant zones',cmp.compliant_count,'#2e7d32'],['&#9888;','Zone violations',cmp.violation_count,'#b71c1c']];
+  for(var s=0;s<st.length;s++){sh+='<div class="stat-card" style="border:1.5px solid '+st[s][3]+'44"><div class="stat-icon">'+st[s][0]+'</div><div class="stat-num" style="color:'+st[s][3]+'">'+st[s][2]+'</div><div class="stat-lbl">'+st[s][1]+'</div></div>';}
+  document.getElementById('cmp-content').innerHTML=
+    '<div class="cmp-title">&#128202; Vastu Compliance Comparison</div>'
+    +'<div class="ratio-row">'
+    +'<div class="ratio-card" style="background:#1e1e3a;border:1.5px solid #3b2f8f"><div class="ratio-label">Before Optimisation</div><div class="ratio-num" style="color:#e65100">'+cmp.compliance_before+'%</div><div class="ratio-sub">Vastu Compliant</div></div>'
+    +'<div class="arrow" style="color:#3b2f8f">&rarr;</div>'
+    +'<div class="ratio-card" style="background:#0d2010;border:1.5px solid #2e7d32"><div class="ratio-label">After Optimisation</div><div class="ratio-num" style="color:#00ffd0">'+cmp.compliance_after+'%</div><div class="ratio-sub">Vastu Compliant</div></div>'
+    +'<div class="arrow" style="color:'+ic+'">'+(pos?'&#8593;':'&#8595;')+'</div>'
+    +'<div class="ratio-card" style="background:'+ib+';border:1.5px solid '+ic+'"><div class="ratio-label">Improvement</div><div class="ratio-num" style="color:'+ic+'">'+(pos?'+':'')+cmp.improvement+'%</div><div class="ratio-sub">'+(pos?'Better compliance':'Needs review')+'</div></div>'
+    +'</div>'
+    +'<div class="stat-grid">'+sh+'</div>'
+    +'<div class="prog-box">'
+    +'<div class="prog-hdr"><span>Before: <b style="color:#e65100">'+cmp.compliance_before+'%</b></span><span>After: <b style="color:#00ffd0">'+cmp.compliance_after+'%</b></span></div>'
+    +'<div class="prog-bar"><div class="prog-fill" style="width:'+cmp.compliance_before+'%;background:#e65100;opacity:.6"></div><div class="prog-fill" style="width:'+cmp.compliance_after+'%;background:linear-gradient(90deg,#2e7d32,#00ffd0)"></div></div>'
+    +'<div class="prog-note" style="color:'+ic+'">'+note+'</div>'
+    +'</div>';
+}
+
+</script>
+<script>buildComparison({"compliance_before": 50.0, "compliance_after": 100.0, "improvement": 50.0, "detected_count": 3, "total_count": 4, "compliant_count": 2, "violation_count": 2});</script>
+</body>
+</html>

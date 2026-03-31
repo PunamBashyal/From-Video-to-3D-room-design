@@ -1,0 +1,159 @@
+{
+  "run_id": "d8a072fc-8397-48cb-b775-6c6e69df79cb",
+  "video_info": {
+    "filename": "e3ce7707-2476-4350-8bd3-59bd202de4b5_room.mp4",
+    "path": "media/temp_videos/e3ce7707-2476-4350-8bd3-59bd202de4b5_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 4,
+  "user_selected_furniture": [
+    "bed",
+    "desk",
+    "wardrobe"
+  ],
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 75.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "bed",
+      "is_essential": true,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        0.00616875384002924,
+        0.6319419741630554,
+        1.155469298362732
+      ],
+      "movement_distance_m": 0.0229929042406125,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.7,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.0,
+        "movement_stability": 19.7
+      }
+    },
+    {
+      "object": "desk",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.5001029372215271,
+        0.05001029744744301,
+        1.1549383401870728
+      ],
+      "recommended_position_3d": [
+        0.40885183215141296,
+        0.02818891778588295,
+        1.1572716236114502
+      ],
+      "movement_distance_m": 0.09385297543706023,
+      "action_needed": false,
+      "vastu_rationale": "East faces the rising Sun - ideal for study and work desks. North (Kuber) brings professional success. North-East (Ishanya) is the zone of intellect and knowledge in Vastu.",
+      "vastu_score": 83.7,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.7
+      }
+    },
+    {
+      "object": "wardrobe",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.41162100434303284,
+        0.631983757019043,
+        1.1522400379180908
+      ],
+      "recommended_position_3d": [
+        -0.42707622051239014,
+        0.5097109079360962,
+        1.1546958684921265
+      ],
+      "movement_distance_m": 0.12327020902680019,
+      "action_needed": false,
+      "vastu_rationale": "Heavy storage cabinets must sit in South-West to ground the space. South wall storage is also acceptable. Never place heavy cabinets in North-East - this blocks sacred energy flow.",
+      "vastu_score": 83.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.4
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.22012117505073547,
+        0.36883780360221863,
+        1.1548165082931519
+      ],
+      "movement_distance_m": 0.5434632003752732,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output.",
+      "vastu_score": 75.2,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 12.4,
+        "movement_stability": 12.8
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.5652908695180671,
+    "final_fitness": 0.06964806308438268,
+    "improvement": 0.4956428064336844
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/d8a072fc-8397-48cb-b775-6c6e69df79cb/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/d8a072fc-8397-48cb-b775-6c6e69df79cb/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/d8a072fc-8397-48cb-b775-6c6e69df79cb/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/d8a072fc-8397-48cb-b775-6c6e69df79cb/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/d8a072fc-8397-48cb-b775-6c6e69df79cb/visualizations/06_layout_comparison_2d.png"
+  }
+}

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Vastu 3D Interactive Room</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0d0d1a; font-family:'Segoe UI',sans-serif; overflow:hidden; }
+  #canvas-container { width:100vw; height:100vh; position:relative; }
+  #toggle-btn {
+    position:absolute; top:16px; left:50%; transform:translateX(-50%);
+    background:linear-gradient(135deg,#3b2f8f,#1565c0);
+    color:white; border:2px solid #7c6fe0; border-radius:30px;
+    padding:10px 28px; font-size:15px; font-weight:700; cursor:pointer;
+    z-index:100; letter-spacing:.5px; box-shadow:0 4px 18px #0008;
+    transition:all .2s;
+  }
+  #toggle-btn:hover { background:linear-gradient(135deg,#5544bb,#1e88e5); }
+  #mode-label {
+    position:absolute; top:62px; left:50%; transform:translateX(-50%);
+    color:#aac4ff; font-size:12px; letter-spacing:1px; z-index:100;
+    background:#0008; padding:3px 14px; border-radius:12px;
+  }
+  #tooltip {
+    position:absolute; display:none; pointer-events:none;
+    background:rgba(10,8,35,0.96); border:1.5px solid #7c6fe0;
+    border-radius:12px; padding:10px 16px; color:#e8eaf6;
+    font-size:13px; z-index:200; max-width:260px;
+    box-shadow:0 6px 24px #000a;
+  }
+  #tooltip .t-name  { font-size:17px; font-weight:800; color:#fff; margin-bottom:4px; }
+  #tooltip .t-emoji { font-size:28px; float:right; margin-left:8px; }
+  #tooltip .t-zone  { color:#ffd966; font-size:12px; margin-bottom:2px; }
+  #tooltip .t-dir   { color:#94a3b8; font-size:11px; margin-bottom:4px; }
+  #tooltip .t-stat  { font-size:12px; font-weight:700; }
+  #tooltip .t-stat.ghost     { color:#00ffff; }
+  #tooltip .t-stat.essential { color:#00ffd0; }
+  #tooltip .t-stat.violation { color:#ff6666; }
+  #tooltip .t-stat.detected  { color:#88aacc; }
+  #legend {
+    position:absolute; bottom:18px; left:18px; z-index:100;
+    background:rgba(10,8,35,0.92); border:1.5px solid #3b2f8f;
+    border-radius:12px; padding:12px 16px; color:#ccc; font-size:11.5px;
+    min-width:220px;
+  }
+  #legend h4 { color:white; font-size:13px; margin-bottom:8px; }
+  .leg-row { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+  .leg-swatch { width:18px; height:14px; border-radius:3px; flex-shrink:0; }
+  #instructions {
+    position:absolute; bottom:18px; right:18px; z-index:100;
+    background:rgba(10,8,35,0.88); border:1px solid #3b2f8f;
+    border-radius:10px; padding:10px 14px; color:#888; font-size:11px;
+  }
+</style>
+</head>
+<body>
+<div id="canvas-container">
+  <button id="toggle-btn">⇄ Toggle Layout</button>
+  <div id="mode-label">CURRENT LAYOUT</div>
+  <div id="tooltip"></div>
+  <div id="legend">
+    <h4>🗺 Furniture Legend</h4>
+    <div class="leg-row"><div class="leg-swatch" style="background:#00b8a5;border:2px solid #00ffd0"></div><span>★ Essential (detected + placed)</span></div>
+    <div class="leg-row"><div class="leg-swatch" style="background:#00dddd;opacity:.4;border:2px dashed #00ffff"></div><span>➕ Essential (not found in video)</span></div>
+    <div class="leg-row"><div class="leg-swatch" style="background:#7a0d0d;border:2px solid #ff4444"></div><span>⚠ Vastu violation</span></div>
+    <div class="leg-row"><div class="leg-swatch" style="background:#6688aa;border:2px solid #7788aa"></div><span>Detected (compliant)</span></div>
+  </div>
+  <div id="instructions">
+    🖱 Drag to orbit &nbsp;|&nbsp; Scroll to zoom<br>
+    Right-drag to pan &nbsp;|&nbsp; Hover box for info
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ── Data injected from Python ─────────────────────────────────────────────
+const ROOM_W    = 4.09251594543457;
+const ROOM_D    = 3.1480891704559326;
+const ROOM_H    = 2.5;
+const ZONE_COLS = {"North-West": "#c3b1e1", "North": "#aec6cf", "North-East": "#a8d8a8", "West": "#f4a460", "Center": "#eeeeee", "East": "#ffd966", "South-West": "#c8a882", "South": "#ff9999", "South-East": "#ffb347"};
+const ZONE_DIR  = {"North-East": "North-East corner (Ishanya) \u2014 knowledge & prosperity", "North": "North wall (Kubera) \u2014 career & wealth", "North-West": "North-West corner (Vayavya) \u2014 movement & travel", "East": "East wall (Surya) \u2014 health & new beginnings", "Center": "Center (Brahmasthan) \u2014 sacred energy hub", "West": "West wall (Varun) \u2014 nourishment & gains", "South-East": "South-East corner (Agni) \u2014 fire & energy", "South": "South wall (Yama) \u2014 stability", "South-West": "South-West corner (Nairutya) \u2014 earth & stability"};
+const CURRENT   = [{"id": 1, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": 0.06285198777914047, "py": 0, "pz": 0.7775917053222656, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Essential"}, {"id": 2, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 0.3450419008731842, "py": 0, "pz": 0.7902547121047974, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Essential"}, {"id": 3, "name": "dustbin", "emoji": "\ud83d\uddd1\ufe0f", "px": -0.3616348206996918, "py": 0, "pz": 0.7709168195724487, "fw": 0.8, "fh": 0.8, "fd": 0.8, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South-West", "compass": "South-West corner (Nairutya) \u2014 earth & stability", "status": "\u2605 Essential"}];
+const OPTIMISED = [{"id": 1, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": 0.059327371418476105, "py": 0, "pz": 0.7775917053222656, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Essential"}, {"id": 2, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 0.3597969114780426, "py": 0, "pz": 0.7911219596862793, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Essential"}, {"id": 3, "name": "dustbin", "emoji": "\ud83d\uddd1\ufe0f", "px": -0.3459323048591614, "py": 0, "pz": 0.7712054252624512, "fw": 0.8, "fh": 0.8, "fd": 0.8, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South-West", "compass": "South-West corner (Nairutya) \u2014 earth & stability", "status": "\u2605 Essential"}];
+
+const ZONE_GRID = [
+  ['North-West', 0,   0,   1/3, 1/3],
+  ['North',      1/3, 0,   1/3, 1/3],
+  ['North-East', 2/3, 0,   1/3, 1/3],
+  ['West',       0,   1/3, 1/3, 1/3],
+  ['Center',     1/3, 1/3, 1/3, 1/3],
+  ['East',       2/3, 1/3, 1/3, 1/3],
+  ['South-West', 0,   2/3, 1/3, 1/3],
+  ['South',      1/3, 2/3, 1/3, 1/3],
+  ['South-East', 2/3, 2/3, 1/3, 1/3],
+];
+
+// ── Three.js setup ────────────────────────────────────────────────────────
+const container = document.getElementById('canvas-container');
+const renderer  = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
+container.appendChild(renderer.domElement);
+
+const scene  = new THREE.Scene();
+scene.background = new THREE.Color(0x0d0d1a);
+scene.fog        = new THREE.Fog(0x0d0d1a, 18, 35);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
+camera.position.set(ROOM_W * 0.9, ROOM_H * 2.2, ROOM_D * 1.5);
+camera.lookAt(0, 0, ROOM_D / 2);
+
+// ── Lights ────────────────────────────────────────────────────────────────
+scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+dirLight.position.set(5, 10, 5);
+dirLight.castShadow = true;
+scene.add(dirLight);
+scene.add(new THREE.HemisphereLight(0x334466, 0x0d0d1a, 0.4));
+
+// ── Orbit Controls (inline — no separate import needed) ───────────────────
+let isDragging=false, isRightDrag=false;
+let prevMouse={x:0,y:0};
+let theta=0.6, phi=1.1, radius=Math.sqrt(ROOM_W*ROOM_W+ROOM_D*ROOM_D)*1.8;
+let panX=0, panY=0;
+
+function updateCamera() {
+  const cx = radius*Math.sin(phi)*Math.sin(theta) + panX;
+  const cy = radius*Math.cos(phi)                 + panY;
+  const cz = radius*Math.sin(phi)*Math.cos(theta);
+  camera.position.set(cx, cy, cz);
+  camera.lookAt(panX, panY, ROOM_D/2);
+}
+updateCamera();
+
+container.addEventListener('mousedown', e=>{
+  isDragging=true; isRightDrag=(e.button===2);
+  prevMouse={x:e.clientX,y:e.clientY};
+});
+container.addEventListener('contextmenu', e=>e.preventDefault());
+window.addEventListener('mouseup', ()=>isDragging=false);
+window.addEventListener('mousemove', e=>{
+  if(!isDragging) return;
+  const dx=(e.clientX-prevMouse.x)*0.005;
+  const dy=(e.clientY-prevMouse.y)*0.005;
+  if(isRightDrag) { panX-=dx*2; panY+=dy*2; }
+  else { theta-=dx; phi=Math.max(0.15,Math.min(Math.PI/2-0.05,phi+dy)); }
+  prevMouse={x:e.clientX,y:e.clientY};
+  updateCamera();
+});
+container.addEventListener('wheel', e=>{
+  radius=Math.max(2,Math.min(30,radius+e.deltaY*0.02));
+  updateCamera();
+});
+
+// ── Touch support ─────────────────────────────────────────────────────────
+let lastTouch=null;
+container.addEventListener('touchstart', e=>{ lastTouch=e.touches[0]; });
+container.addEventListener('touchmove', e=>{
+  e.preventDefault();
+  const t=e.touches[0];
+  const dx=(t.clientX-lastTouch.clientX)*0.006;
+  const dy=(t.clientY-lastTouch.clientY)*0.006;
+  theta-=dx; phi=Math.max(0.15,Math.min(Math.PI/2-0.05,phi+dy));
+  lastTouch=t; updateCamera();
+}, {passive:false});
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+function hexToThree(h) {
+  return new THREE.Color(h);
+}
+function makeTextSprite(txt, opts={} ) {
+  const fs   = opts.fontSize||48;
+  const col  = opts.color||'white';
+  const bg   = opts.bg||'rgba(0,0,0,0)';
+  const c    = document.createElement('canvas');
+  c.width=256; c.height=128;
+  const ctx=c.getContext('2d');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,256,128);
+  ctx.font=`bold ${fs}px Segoe UI Emoji,Segoe UI,sans-serif`;
+  ctx.fillStyle=col; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(txt,128,64);
+  const tex=new THREE.CanvasTexture(c);
+  const mat=new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false});
+  const sp =new THREE.Sprite(mat);
+  sp.scale.set(opts.sw||0.9, opts.sh||0.45, 1);
+  return sp;
+}
+
+// ── Floor ─────────────────────────────────────────────────────────────────
+function buildFloor() {
+  const hw=ROOM_W/2;
+  ZONE_GRID.forEach(([zone,cx,cz,wf,df])=>{
+    const zw=wf*ROOM_W, zd=df*ROOM_D;
+    const x0=-hw+cx*ROOM_W, z0=cz*ROOM_D;
+    const col = ZONE_COLS[zone]||'#eeeeee';
+    const geo = new THREE.PlaneGeometry(zw-0.04, zd-0.04);
+    const mat = new THREE.MeshLambertMaterial({
+      color: hexToThree(col), transparent:true, opacity:0.72, side:THREE.DoubleSide
+    });
+    const mesh=new THREE.Mesh(geo,mat);
+    mesh.rotation.x=-Math.PI/2;
+    mesh.position.set(x0+zw/2, 0.001, z0+zd/2);
+    scene.add(mesh);
+
+    // Zone grid lines
+    const edges=new THREE.EdgesGeometry(new THREE.PlaneGeometry(zw,zd));
+    const lineMat=new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.25});
+    const lines=new THREE.LineSegments(edges,lineMat);
+    lines.rotation.x=-Math.PI/2;
+    lines.position.set(x0+zw/2,0.002,z0+zd/2);
+    scene.add(lines);
+
+    // Zone label sprite on floor
+    const short = zone.replace('North','N').replace('South','S')
+                      .replace('East','E').replace('West','W')
+                      .replace('-','');
+    const sp=makeTextSprite(short, {fontSize:38,color:'#111',sw:0.8,sh:0.4});
+    sp.position.set(x0+zw/2, 0.05, z0+zd/2);
+    scene.add(sp);
+  });
+}
+
+// ── Compass wall arrows ───────────────────────────────────────────────────
+function buildCompass() {
+  const hw=ROOM_W/2;
+  const arrows=[
+    { txt:'↑ NORTH', x:0,      y:1.2, z:-0.3,    col:'#4488ff', rx:0 },
+    { txt:'↓ SOUTH', x:0,      y:1.2, z:ROOM_D+0.3, col:'#ff4444', rx:0 },
+    { txt:'← WEST',  x:-hw-0.2,y:1.2, z:ROOM_D/2,  col:'#ff9900', rx:0 },
+    { txt:'EAST →',  x: hw+0.2,y:1.2, z:ROOM_D/2,  col:'#00bb55', rx:0 },
+  ];
+  arrows.forEach(a=>{
+    const c=document.createElement('canvas');
+    c.width=380; c.height=110;
+    const ctx=c.getContext('2d');
+    ctx.fillStyle='rgba(18,18,42,0.88)';
+    ctx.roundRect(0,0,380,110,22); ctx.fill();
+    ctx.strokeStyle=a.col; ctx.lineWidth=4;
+    ctx.roundRect(2,2,376,106,20); ctx.stroke();
+    ctx.font='bold 54px Segoe UI Emoji,Segoe UI,sans-serif';
+    ctx.fillStyle=a.col; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(a.txt,190,56);
+    const tex=new THREE.CanvasTexture(c);
+    const mat=new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false});
+    const sp=new THREE.Sprite(mat);
+    sp.scale.set(2.2,0.65,1);
+    sp.position.set(a.x,a.y,a.z);
+    scene.add(sp);
+  });
+}
+
+// ── Furniture boxes ───────────────────────────────────────────────────────
+let furnitureGroup = new THREE.Group();
+scene.add(furnitureGroup);
+const raycaster = new THREE.Raycaster();
+const mouse     = new THREE.Vector2(-9,-9);
+const meshData  = new Map(); // mesh.uuid → item data
+
+function buildFurniture(dataset) {
+  furnitureGroup.clear();
+  meshData.clear();
+
+  dataset.forEach(item=>{
+    const hw=ROOM_W/2;
+    const px=item.px-hw, py=item.fh/2, pz=item.pz;
+    const col  = hexToThree(item.color);
+    const geo  = new THREE.BoxGeometry(item.fw, item.fh, item.fd);
+    const mat  = new THREE.MeshLambertMaterial({
+      color:col, transparent:true, opacity:item.opacity
+    });
+    const box  = new THREE.Mesh(geo, mat);
+    box.position.set(px, py, pz);
+    box.castShadow=true; box.receiveShadow=true;
+    furnitureGroup.add(box);
+    meshData.set(box.uuid, item);
+
+    // Edge outline
+    const edgeCol = item.cat==='ghost'     ? 0x00ffff
+                  : item.cat==='essential' ? 0x00ffd0
+                  : item.cat==='violation' ? 0xff4444
+                  :                          0x7788aa;
+    const edgeLW  = item.cat==='ghost'||item.cat==='essential' ? 2 : 1;
+    const edgeGeo = new THREE.EdgesGeometry(geo);
+    const edgeMat = new THREE.LineBasicMaterial({color:edgeCol,linewidth:edgeLW});
+    const edges   = new THREE.LineSegments(edgeGeo, edgeMat);
+    box.add(edges);
+
+    // ── Emoji sprite on TOP face ──────────────────────────────────────
+    const emojiSp = makeTextSprite(item.emoji, {fontSize:64, sw:0.7, sh:0.7});
+    emojiSp.position.set(0, item.fh/2+0.01, 0);
+    box.add(emojiSp);
+
+    // ── Number badge ──────────────────────────────────────────────────
+    const numSp = makeTextSprite(String(item.id), {
+      fontSize:38,
+      color: item.cat==='essential'?'#000':'#fff',
+      bg:    item.cat==='ghost'    ?'rgba(0,85,102,0.9)'
+           : item.cat==='essential'?'rgba(0,255,208,0.95)'
+           : item.cat==='violation'?'rgba(200,20,20,0.9)'
+           :                        'rgba(59,47,143,0.9)',
+      sw:0.38, sh:0.38,
+    });
+    numSp.position.set(item.fw/2+0.05, item.fh/2+0.38, 0);
+    box.add(numSp);
+
+    // ── Name label ────────────────────────────────────────────────────
+    const nameCol = item.cat==='ghost'    ?'#00ffff'
+                  : item.cat==='essential'?'#00ffd0'
+                  : item.cat==='violation'?'#ff9999'
+                  :                        '#dddddd';
+    const suffix  = item.cat==='ghost'    ?' ➕'
+                  : item.cat==='essential'?' ★'
+                  : item.cat==='violation'?' ⚠'
+                  :                        '';
+    const nameSp  = makeTextSprite(item.name+suffix, {
+      fontSize:28, color:nameCol, sw:1.1, sh:0.38,
+      bg:'rgba(15,10,40,0.85)'
+    });
+    nameSp.position.set(0, item.fh/2+0.62, 0);
+    box.add(nameSp);
+  });
+}
+
+// ── Tooltip ───────────────────────────────────────────────────────────────
+const tooltip = document.getElementById('tooltip');
+function showTooltip(item, ex, ey) {
+  tooltip.innerHTML=`
+    <span class="t-emoji">${item.emoji}</span>
+    <div class="t-name">${item.id}. ${item.name}</div>
+    <div class="t-zone">📍 Zone: ${item.zone}</div>
+    <div class="t-dir">🧭 ${item.compass}</div>
+    <div class="t-stat ${item.cat}">${item.status}</div>
+  `;
+  tooltip.style.display='block';
+  tooltip.style.left=(ex+16)+'px';
+  tooltip.style.top =(ey+16)+'px';
+}
+function hideTooltip() { tooltip.style.display='none'; }
+
+container.addEventListener('mousemove', e=>{
+  if(isDragging){ hideTooltip(); return; }
+  mouse.x=( e.clientX/window.innerWidth)*2-1;
+  mouse.y=-(e.clientY/window.innerHeight)*2+1;
+  raycaster.setFromCamera(mouse,camera);
+  const hits=raycaster.intersectObjects(furnitureGroup.children,true);
+  const box=hits.find(h=>meshData.has(h.object.uuid));
+  if(box) showTooltip(meshData.get(box.object.uuid), e.clientX, e.clientY);
+  else    hideTooltip();
+});
+
+// ── Toggle current / optimised ────────────────────────────────────────────
+let showingCurrent=true;
+const modeLabel=document.getElementById('mode-label');
+document.getElementById('toggle-btn').addEventListener('click',()=>{
+  showingCurrent=!showingCurrent;
+  buildFurniture(showingCurrent ? CURRENT : OPTIMISED);
+  modeLabel.textContent=showingCurrent?'CURRENT LAYOUT':'✨ VASTU-OPTIMISED LAYOUT';
+});
+
+// ── Build scene ───────────────────────────────────────────────────────────
+buildFloor();
+buildCompass();
+buildFurniture(CURRENT);
+
+// ── Animate ───────────────────────────────────────────────────────────────
+(function animate(){
+  requestAnimationFrame(animate);
+  renderer.render(scene,camera);
+})();
+
+window.addEventListener('resize',()=>{
+  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,window.innerHeight);
+});
+</script>
+</body>
+</html>

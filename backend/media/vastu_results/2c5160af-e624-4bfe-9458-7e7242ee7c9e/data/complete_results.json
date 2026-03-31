@@ -1,0 +1,159 @@
+{
+  "run_id": "2c5160af-e624-4bfe-9458-7e7242ee7c9e",
+  "video_info": {
+    "filename": "1a581d82-7b69-4570-9657-a8ec7dad9e8b_room.mp4",
+    "path": "C:\\Users\\Lenovo\\Desktop\\colorful-room - Copy\\backend\\media\\temp_videos\\1a581d82-7b69-4570-9657-a8ec7dad9e8b_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.09251594543457,
+    "depth_m": 3.1480891704559326,
+    "height_m": 2.5
+  },
+  "detected_objects": 4,
+  "user_selected_furniture": [
+    "wardrobe",
+    "dustbin",
+    "chair"
+  ],
+  "initial_violations": 0,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 100.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 0,
+  "recommendations": [
+    {
+      "object": "wardrobe",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.3533620238304138,
+        0.38118577003479004,
+        0.7710752487182617
+      ],
+      "recommended_position_3d": [
+        -0.38522499799728394,
+        0.36310648918151855,
+        0.7697740793228149
+      ],
+      "movement_distance_m": 0.03665791266187627,
+      "action_needed": false,
+      "vastu_rationale": "Heavy storage cabinets must sit in South-West to ground the space. South wall storage is also acceptable. Never place heavy cabinets in North-East - this blocks sacred energy flow.",
+      "vastu_score": 84.5,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 19.5
+      }
+    },
+    {
+      "object": "dustbin",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.26760971546173096,
+        0.3484501838684082,
+        0.7725228071212769
+      ],
+      "recommended_position_3d": [
+        -0.2604643404483795,
+        0.28402748703956604,
+        0.7725545167922974
+      ],
+      "movement_distance_m": 0.06481775417496022,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 84.1,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 19.1
+      }
+    },
+    {
+      "object": "chair",
+      "is_essential": true,
+      "current_zone": "West",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        -0.34758055210113525,
+        0.01112257782369852,
+        0.7705948352813721
+      ],
+      "recommended_position_3d": [
+        -0.34583359956741333,
+        0.0473148413002491,
+        0.7705562114715576
+      ],
+      "movement_distance_m": 0.036234421073198055,
+      "action_needed": false,
+      "vastu_rationale": "Work chairs face East (rising Sun, concentration) or North (Kuber, prosperity). West is acceptable for reading where natural light falls from behind. North-West (Vayavya) supports movement and dynamic activity.",
+      "vastu_score": 84.5,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 19.5
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        0.06285198777914047,
+        0.38160133361816406,
+        0.7775917053222656
+      ],
+      "recommended_position_3d": [
+        0.06745918095111847,
+        0.3827460706233978,
+        0.7774631977081299
+      ],
+      "movement_distance_m": 0.004749017365936147,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 84.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.5,
+        "movement_stability": 19.9
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.8672804721365934,
+    "final_fitness": 0.08774994884880283,
+    "improvement": 0.7795305232877906
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/2c5160af-e624-4bfe-9458-7e7242ee7c9e/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/2c5160af-e624-4bfe-9458-7e7242ee7c9e/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/2c5160af-e624-4bfe-9458-7e7242ee7c9e/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/2c5160af-e624-4bfe-9458-7e7242ee7c9e/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/2c5160af-e624-4bfe-9458-7e7242ee7c9e/visualizations/06_layout_comparison_2d.png"
+  }
+}

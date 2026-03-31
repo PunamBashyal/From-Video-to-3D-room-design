@@ -1,0 +1,211 @@
+{
+  "run_id": "da542322-c38c-40d6-83e9-70acb76cb2ed",
+  "video_info": {
+    "filename": "b8e95e70-38ac-40bc-8e72-cf9f5625d722_room 2.mp4",
+    "path": "C:\\Users\\Lenovo\\Desktop\\colorful-room - Copy\\backend\\media\\temp_videos\\b8e95e70-38ac-40bc-8e72-cf9f5625d722_room 2.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.971181556195965,
+    "duration": 5.205,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.307061195373535,
+    "depth_m": 3.313124179840088,
+    "height_m": 2.5
+  },
+  "detected_objects": 6,
+  "user_selected_furniture": [
+    "desk",
+    "tv",
+    "chair"
+  ],
+  "initial_violations": 2,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 66.7,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "desk",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.5983880758285522,
+        -0.054897986352443695,
+        1.521377682685852
+      ],
+      "recommended_position_3d": [
+        0.5788649320602417,
+        -0.17544734477996826,
+        1.521958351135254
+      ],
+      "movement_distance_m": 0.12212140736060177,
+      "action_needed": false,
+      "vastu_rationale": "East faces the rising Sun \u2014 ideal for study and work desks.",
+      "vastu_score": 83.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.4
+      }
+    },
+    {
+      "object": "tv",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.6800702810287476,
+        0.027422189712524414,
+        1.5198920965194702
+      ],
+      "recommended_position_3d": [
+        0.746770441532135,
+        0.197611466050148,
+        1.517029047012329
+      ],
+      "movement_distance_m": 0.1828154759422243,
+      "action_needed": false,
+      "vastu_rationale": "TV faces East so viewers face West (auspicious).",
+      "vastu_score": 82.6,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 17.6
+      }
+    },
+    {
+      "object": "chair",
+      "is_essential": true,
+      "current_zone": "West",
+      "recommended_zone": "West",
+      "current_position_3d": [
+        -0.5389301776885986,
+        -0.09898718446493149,
+        1.5240074396133423
+      ],
+      "recommended_position_3d": [
+        -0.5843795537948608,
+        -0.11792067438364029,
+        1.5244274139404297
+      ],
+      "movement_distance_m": 0.049237173023902764,
+      "action_needed": false,
+      "vastu_rationale": "Work chairs face East or North. West is acceptable for reading.",
+      "vastu_score": 84.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 19.3
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.0035383885260671377,
+        0.5734911561012268,
+        1.508595585823059
+      ],
+      "recommended_position_3d": [
+        -0.05909216031432152,
+        0.5880075693130493,
+        1.5082483291625977
+      ],
+      "movement_distance_m": 0.05742010448985667,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North.",
+      "vastu_score": 91.0,
+      "vastu_score_label": "Excellent",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 21.8,
+        "movement_stability": 19.2
+      }
+    },
+    {
+      "object": "suitcase",
+      "is_essential": false,
+      "current_zone": "North",
+      "recommended_zone": "North-West",
+      "current_position_3d": [
+        -0.09844431281089783,
+        -0.9396207332611084,
+        1.5241167545318604
+      ],
+      "recommended_position_3d": [
+        -0.31255847215652466,
+        -0.8731623291969299,
+        1.5562580823898315
+      ],
+      "movement_distance_m": 0.22648323924634178,
+      "action_needed": true,
+      "vastu_rationale": "Luggage in North-West activates travel energy.",
+      "vastu_score": 89.1,
+      "vastu_score_label": "Excellent",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 22.1,
+        "movement_stability": 17.0
+      }
+    },
+    {
+      "object": "book",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.1629352867603302,
+        1.4005906581878662,
+        1.507644534111023
+      ],
+      "recommended_position_3d": [
+        0.33681464195251465,
+        0.4787551760673523,
+        1.511938214302063
+      ],
+      "movement_distance_m": 1.048593859906893,
+      "action_needed": true,
+      "vastu_rationale": "Books represent knowledge \u2014 North-East/East.",
+      "vastu_score": 64.7,
+      "vastu_score_label": "Fair",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 8.7,
+        "movement_stability": 6.0
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 30.71025950307168,
+    "final_fitness": 0.2069240759884348,
+    "improvement": 30.503335427083243
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/da542322-c38c-40d6-83e9-70acb76cb2ed/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/da542322-c38c-40d6-83e9-70acb76cb2ed/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/da542322-c38c-40d6-83e9-70acb76cb2ed/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/da542322-c38c-40d6-83e9-70acb76cb2ed/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/da542322-c38c-40d6-83e9-70acb76cb2ed/visualizations/06_layout_comparison_2d.png"
+  }
+}

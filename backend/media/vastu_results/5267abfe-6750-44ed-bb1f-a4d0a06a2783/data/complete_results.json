@@ -1,0 +1,185 @@
+{
+  "run_id": "5267abfe-6750-44ed-bb1f-a4d0a06a2783",
+  "video_info": {
+    "filename": "541ab8ed-259d-47e0-be9f-8364df4eec82_room.mp4",
+    "path": "C:\\Users\\Lenovo\\Desktop\\colorful-room - Copy\\backend\\media\\temp_videos\\541ab8ed-259d-47e0-be9f-8364df4eec82_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.324711799621582,
+    "depth_m": 3.3267014026641846,
+    "height_m": 2.5
+  },
+  "detected_objects": 5,
+  "user_selected_furniture": [
+    "wardrobe",
+    "desk",
+    "tv"
+  ],
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 80.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "wardrobe",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.5945404171943665,
+        0.6409888863563538,
+        1.2872178554534912
+      ],
+      "recommended_position_3d": [
+        -0.5146877765655518,
+        0.7179833650588989,
+        1.2876473665237427
+      ],
+      "movement_distance_m": 0.11092690586972476,
+      "action_needed": false,
+      "vastu_rationale": "Heavy storage cabinets must sit in South-West to ground the space. South wall storage is also acceptable. Never place heavy cabinets in North-East - this blocks sacred energy flow.",
+      "vastu_score": 83.5,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.5
+      }
+    },
+    {
+      "object": "desk",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.4939980208873749,
+        -0.06714535504579544,
+        1.3291335105895996
+      ],
+      "recommended_position_3d": [
+        0.4765441119670868,
+        0.024462416768074036,
+        1.3242675065994263
+      ],
+      "movement_distance_m": 0.0933825507690386,
+      "action_needed": false,
+      "vastu_rationale": "East faces the rising Sun - ideal for study and work desks. North (Kuber) brings professional success. North-East (Ishanya) is the zone of intellect and knowledge in Vastu.",
+      "vastu_score": 83.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.8
+      }
+    },
+    {
+      "object": "tv",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.5258892178535461,
+        -0.033465676009655,
+        1.324897289276123
+      ],
+      "recommended_position_3d": [
+        0.7119392156600952,
+        -0.034657035022974014,
+        1.3212699890136719
+      ],
+      "movement_distance_m": 0.18608916767858766,
+      "action_needed": false,
+      "vastu_rationale": "TV faces East so viewers face West (auspicious viewing direction). South-East also acceptable as screens emit electromagnetic energy that aligns well with the Agni corner.",
+      "vastu_score": 82.5,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 17.5
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        0.0009307053405791521,
+        0.6319488883018494,
+        1.2896231412887573
+      ],
+      "recommended_position_3d": [
+        0.006577556487172842,
+        0.5756857395172119,
+        1.289618730545044
+      ],
+      "movement_distance_m": 0.05654581203315324,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.1,
+        "movement_stability": 19.2
+      }
+    },
+    {
+      "object": "chair",
+      "is_essential": false,
+      "current_zone": "South-East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.5244140625,
+        0.8041015267372131,
+        1.2918212413787842
+      ],
+      "recommended_position_3d": [
+        0.6567716598510742,
+        0.3866685926914215,
+        1.3030874729156494
+      ],
+      "movement_distance_m": 0.43805903252377937,
+      "action_needed": true,
+      "vastu_rationale": "Work chairs face East (rising Sun, concentration) or North (Kuber, prosperity). West is acceptable for reading where natural light falls from behind. North-West (Vayavya) supports movement and dynamic activity.",
+      "vastu_score": 77.6,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 13.4,
+        "movement_stability": 14.2
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.9717852258284514,
+    "final_fitness": 0.11484216319250774,
+    "improvement": 0.8569430626359437
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/5267abfe-6750-44ed-bb1f-a4d0a06a2783/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/5267abfe-6750-44ed-bb1f-a4d0a06a2783/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/5267abfe-6750-44ed-bb1f-a4d0a06a2783/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/5267abfe-6750-44ed-bb1f-a4d0a06a2783/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/5267abfe-6750-44ed-bb1f-a4d0a06a2783/visualizations/06_layout_comparison_2d.png"
+  }
+}

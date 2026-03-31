@@ -1,0 +1,185 @@
+{
+  "run_id": "8890f18d-1960-41f0-9ca9-0de9aaea737d",
+  "video_info": {
+    "filename": "d27cf05f-429c-4dab-a450-b0875633f33f_room.mp4",
+    "path": "C:\\Users\\Lenovo\\Desktop\\colorful-room - Copy\\backend\\media\\temp_videos\\d27cf05f-429c-4dab-a450-b0875633f33f_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.3556036949157715,
+    "depth_m": 3.3504645824432373,
+    "height_m": 2.5
+  },
+  "detected_objects": 5,
+  "user_selected_furniture": [
+    "desk",
+    "dustbin",
+    "sofa"
+  ],
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 80.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "desk",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.4422856569290161,
+        0.03755255416035652,
+        1.1563189029693604
+      ],
+      "recommended_position_3d": [
+        0.5165948867797852,
+        -0.03870752453804016,
+        1.1565265655517578
+      ],
+      "movement_distance_m": 0.10647771770585716,
+      "action_needed": false,
+      "vastu_rationale": "East faces the rising Sun - ideal for study and work desks. North (Kuber) brings professional success. North-East (Ishanya) is the zone of intellect and knowledge in Vastu.",
+      "vastu_score": 83.6,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.6
+      }
+    },
+    {
+      "object": "dustbin",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.41614702343940735,
+        0.5867672562599182,
+        1.1532604694366455
+      ],
+      "recommended_position_3d": [
+        -0.45568880438804626,
+        0.5088140368461609,
+        1.154153823852539
+      ],
+      "movement_distance_m": 0.08741312795954582,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 83.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.8
+      }
+    },
+    {
+      "object": "sofa",
+      "is_essential": true,
+      "current_zone": "North",
+      "recommended_zone": "North",
+      "current_position_3d": [
+        0.07185733318328857,
+        -0.886803925037384,
+        1.1713933944702148
+      ],
+      "recommended_position_3d": [
+        -0.027865814045071602,
+        -0.8156810402870178,
+        1.1778804063796997
+      ],
+      "movement_distance_m": 0.1226590891530541,
+      "action_needed": false,
+      "vastu_rationale": "Lightweight upholstered seating belongs in the lighter Northern arc. North-East (Ishanya) invites divine prosperity energy into the sitting area. South-West is reserved for heavy structural furniture only.",
+      "vastu_score": 83.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.4
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.023022674024105072,
+        0.6629350185394287,
+        1.1547986268997192
+      ],
+      "movement_distance_m": 0.020493132732616437,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.7,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.0,
+        "movement_stability": 19.7
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.22795763611793518,
+        0.34061989188194275,
+        1.1553075313568115
+      ],
+      "movement_distance_m": 0.5721530495259822,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output.",
+      "vastu_score": 74.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 12.4,
+        "movement_stability": 12.4
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 10.649578989307324,
+    "final_fitness": 0.08094084144747736,
+    "improvement": 10.568638147859847
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/8890f18d-1960-41f0-9ca9-0de9aaea737d/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/8890f18d-1960-41f0-9ca9-0de9aaea737d/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/8890f18d-1960-41f0-9ca9-0de9aaea737d/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/8890f18d-1960-41f0-9ca9-0de9aaea737d/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/8890f18d-1960-41f0-9ca9-0de9aaea737d/visualizations/06_layout_comparison_2d.png"
+  }
+}

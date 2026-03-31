@@ -1,0 +1,131 @@
+{
+  "run_id": "2313ee4a-5729-4f9d-a4bd-e4bee95cebd2",
+  "video_info": {
+    "filename": "4c08b144-1092-402a-ba92-0dee82dc49df_room.mp4",
+    "path": "media/temp_videos/4c08b144-1092-402a-ba92-0dee82dc49df_room.mp4",
+    "room_type": "Study Room",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 3,
+  "user_selected_furniture": {
+    "studyTable": 1
+  },
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 66.7,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "studyTable",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.4449095129966736,
+        0.6278629899024963,
+        1.1523079872131348
+      ],
+      "recommended_position_3d": [
+        -0.42145729064941406,
+        0.7149719595909119,
+        1.1501754522323608
+      ],
+      "movement_distance_m": 0.0902359520293703,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 83.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.8
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.01426600106060505,
+        0.6540928483009338,
+        1.1551238298416138
+      ],
+      "movement_distance_m": 0.008916828325953528,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.9,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.0,
+        "movement_stability": 19.9
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.2215220183134079,
+        0.3457264304161072,
+        1.1553198099136353
+      ],
+      "movement_distance_m": 0.5647023942827153,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output.",
+      "vastu_score": 74.9,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 12.4,
+        "movement_stability": 12.5
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.35140368117000653,
+    "final_fitness": 0.06200412935175776,
+    "improvement": 0.2893995518182488
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/2313ee4a-5729-4f9d-a4bd-e4bee95cebd2/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/2313ee4a-5729-4f9d-a4bd-e4bee95cebd2/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/2313ee4a-5729-4f9d-a4bd-e4bee95cebd2/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/2313ee4a-5729-4f9d-a4bd-e4bee95cebd2/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/2313ee4a-5729-4f9d-a4bd-e4bee95cebd2/visualizations/06_layout_comparison_2d.png"
+  }
+}

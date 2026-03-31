@@ -1,0 +1,466 @@
+{
+  "version": "2.2",
+  "created_at": "2026-03-21T17:44:01.315091",
+  "video_filename": "caaf4871-bb0f-40e2-83a4-f2bdd9750d7d_room.mp4",
+  "vastu_rules": {
+    "bed": [
+      "South-West",
+      "South",
+      "West"
+    ],
+    "sofa": [
+      "North",
+      "North-East",
+      "East",
+      "West"
+    ],
+    "couch": [
+      "North",
+      "North-East",
+      "East",
+      "West"
+    ],
+    "chair": [
+      "West",
+      "East",
+      "North",
+      "North-West"
+    ],
+    "bench": [
+      "East",
+      "North",
+      "West"
+    ],
+    "stool": [
+      "East",
+      "North",
+      "West"
+    ],
+    "dining table": [
+      "West",
+      "North-West"
+    ],
+    "table": [
+      "West",
+      "North-West",
+      "East"
+    ],
+    "desk": [
+      "East",
+      "North",
+      "North-East"
+    ],
+    "cabinet": [
+      "South-West",
+      "South",
+      "West"
+    ],
+    "bookcase": [
+      "East",
+      "North-East",
+      "North"
+    ],
+    "shelf": [
+      "East",
+      "North",
+      "West"
+    ],
+    "nightstand": [
+      "South-West",
+      "South",
+      "West"
+    ],
+    "dresser": [
+      "South-West",
+      "South",
+      "West"
+    ],
+    "wardrobe": [
+      "South-West",
+      "South",
+      "West"
+    ],
+    "cupboard": [
+      "South-West",
+      "South",
+      "West"
+    ],
+    "refrigerator": [
+      "South-East",
+      "South",
+      "West"
+    ],
+    "oven": [
+      "South-East"
+    ],
+    "microwave": [
+      "South-East",
+      "South"
+    ],
+    "sink": [
+      "North-East",
+      "North",
+      "East"
+    ],
+    "toaster": [
+      "South-East",
+      "South"
+    ],
+    "kettle": [
+      "South-East",
+      "South"
+    ],
+    "dishwasher": [
+      "North-East",
+      "North",
+      "West"
+    ],
+    "washing machine": [
+      "North-West",
+      "West"
+    ],
+    "dryer": [
+      "South-East",
+      "North-West"
+    ],
+    "tv": [
+      "East",
+      "South-East"
+    ],
+    "television": [
+      "East",
+      "South-East"
+    ],
+    "laptop": [
+      "East",
+      "North",
+      "North-East"
+    ],
+    "computer": [
+      "East",
+      "North"
+    ],
+    "monitor": [
+      "East",
+      "North"
+    ],
+    "cell phone": [
+      "East",
+      "North",
+      "North-East"
+    ],
+    "keyboard": [
+      "East",
+      "North"
+    ],
+    "toilet": [
+      "West",
+      "North-West",
+      "South"
+    ],
+    "bathtub": [
+      "East",
+      "North-East",
+      "North"
+    ],
+    "shower": [
+      "East",
+      "North-East",
+      "North"
+    ],
+    "potted plant": [
+      "North-East",
+      "East",
+      "North"
+    ],
+    "vase": [
+      "East",
+      "North-East",
+      "North"
+    ],
+    "clock": [
+      "North",
+      "East",
+      "North-East"
+    ],
+    "mirror": [
+      "North",
+      "East"
+    ],
+    "book": [
+      "East",
+      "North-East",
+      "North"
+    ],
+    "lamp": [
+      "South-East",
+      "East",
+      "North-East"
+    ],
+    "chandelier": [
+      "Center"
+    ],
+    "light": [
+      "South-East",
+      "East",
+      "Center"
+    ],
+    "curtain": [
+      "East",
+      "North",
+      "West"
+    ],
+    "carpet": [
+      "Center",
+      "East",
+      "North"
+    ],
+    "rug": [
+      "Center",
+      "East",
+      "North"
+    ],
+    "blanket": [
+      "South-West",
+      "South"
+    ],
+    "pillow": [
+      "South-West",
+      "South"
+    ],
+    "cushion": [
+      "North",
+      "East",
+      "West"
+    ],
+    "bicycle": [
+      "West",
+      "North-West"
+    ],
+    "umbrella": [
+      "West",
+      "North-West",
+      "East"
+    ],
+    "backpack": [
+      "West",
+      "North-West"
+    ],
+    "suitcase": [
+      "West",
+      "North-West"
+    ],
+    "fan": [
+      "West",
+      "North-West"
+    ],
+    "air conditioner": [
+      "West",
+      "North-West"
+    ],
+    "trash can": [
+      "South",
+      "West",
+      "South-West"
+    ],
+    "dustbin": [
+      "South",
+      "West",
+      "South-West"
+    ],
+    "bin": [
+      "South",
+      "West",
+      "South-West"
+    ],
+    "painting": [
+      "North",
+      "East",
+      "North-East"
+    ],
+    "picture frame": [
+      "North",
+      "East",
+      "North-East"
+    ],
+    "door": [
+      "North",
+      "North-East",
+      "East"
+    ],
+    "window": [
+      "North",
+      "East",
+      "North-East"
+    ]
+  },
+  "ga_config": {
+    "generations": 100,
+    "population_size": 50,
+    "mutation_rate": 0.3,
+    "mutation_sigma": 0.15,
+    "elite_ratio": 0.3
+  },
+  "training_history": {
+    "fitness_history": [
+      87.24358758080274,
+      71.59736870950985,
+      51.85907934240352,
+      51.85907934240352,
+      36.53088891423957,
+      26.741401894536917,
+      16.910184719345303,
+      16.710017227624903,
+      16.710017227624903,
+      11.812336201333915,
+      11.603010998170893,
+      11.603010998170893,
+      6.755816787722527,
+      1.8195969220799646,
+      1.8195969220799646,
+      1.8195969220799646,
+      1.8195969220799646,
+      1.8195969220799646,
+      1.8195969220799646,
+      1.8195969220799646,
+      1.73772540380856,
+      1.73772540380856,
+      1.6313856901631105,
+      1.6313856901631105,
+      1.5567633131129999,
+      1.5567633131129999,
+      1.5567633131129999,
+      1.5567633131129999,
+      1.5567633131129999,
+      1.5567633131129999,
+      1.5567633131129999,
+      1.5567633131129999,
+      1.5567633131129999,
+      1.552709559492529,
+      1.552709559492529,
+      1.552709559492529,
+      1.545877292956586,
+      1.5192545442025573,
+      1.5192545442025573,
+      1.5192545442025573,
+      1.5192545442025573,
+      1.5089549543813743,
+      1.5089549543813743,
+      1.5089549543813743,
+      1.5089549543813743,
+      1.5089549543813743,
+      1.5089549543813743,
+      1.5089549543813743,
+      1.4839284541587388,
+      1.4839284541587388,
+      1.4606621372000297,
+      1.4606621372000297,
+      1.4566253162341345,
+      1.4566253162341345,
+      1.4566253162341345,
+      1.4566253162341345,
+      1.4566253162341345,
+      1.452572675614671,
+      1.452572675614671,
+      1.452572675614671,
+      1.4401432946193813,
+      1.4021337427312057,
+      1.4021337427312057,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.3333623421094551,
+      1.322612255114094,
+      1.322612255114094,
+      1.322612255114094,
+      1.322612255114094,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.302549123886706,
+      1.2902526055222119,
+      1.2902526055222119,
+      1.2902526055222119
+    ],
+    "initial_fitness": 87.24358758080274,
+    "final_fitness": 1.2902526055222119
+  },
+  "best_layout": {
+    "bed": {
+      "cx": 0.37551016944191073,
+      "cy": 0.6957604279153461
+    },
+    "tv": {
+      "cx": 0.6924551384972012,
+      "cy": 0.6813653231606374
+    },
+    "suitcase": {
+      "cx": 0.11156556391540151,
+      "cy": 0.46307616501918025
+    },
+    "book": {
+      "cx": 0.7067862924534942,
+      "cy": 0.36288402545034515
+    },
+    "chair": {
+      "cx": 0.18153125075456086,
+      "cy": 0.624943119317566
+    },
+    "couch": {
+      "cx": 0.8440798716604524,
+      "cy": 0.0
+    },
+    "laptop": {
+      "cx": 0.5392747893438519,
+      "cy": 0.22927483682871055
+    },
+    "backpack": {
+      "cx": 0.19531334712053902,
+      "cy": 0.33290606503139375
+    },
+    "keyboard": {
+      "cx": 0.5596256919843262,
+      "cy": 0.0
+    },
+    "cell phone": {
+      "cx": 0.704007130387078,
+      "cy": 0.5219735547296296
+    },
+    "desk": {
+      "cx": 0.8923729907776801,
+      "cy": 0.45116025634347745
+    },
+    "dustbin": {
+      "cx": 0.4817187868165709,
+      "cy": 0.8450437663665589
+    }
+  },
+  "statistics": {
+    "initial_violations": 7,
+    "final_violations": 0,
+    "objects_analyzed": 12,
+    "changes_needed": 9
+  }
+}

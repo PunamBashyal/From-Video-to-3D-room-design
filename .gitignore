@@ -1,0 +1,22 @@
+# Python environment
+venv/
+pro/
+Lib/
+__pycache__/
+*.pyc
+
+# Django
+db.sqlite3
+
+# React
+node_modules/
+build/
+
+# ML models
+*.pth
+*.h5
+*.zip
+
+
+# Environment
+.env

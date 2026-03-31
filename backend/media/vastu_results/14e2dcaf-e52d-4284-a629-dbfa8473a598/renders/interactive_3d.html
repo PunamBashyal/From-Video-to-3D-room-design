@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Vastu 3D Room</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0d0d1a;font-family:'Segoe UI',sans-serif;overflow:hidden;display:flex;height:100vh;}
+#canvas-container{flex:1;position:relative;min-width:0;}
+
+/* ── Sidebar ── */
+#sidebar{
+  width:240px;flex-shrink:0;background:#0f0f22;
+  border-left:2px solid #3b2f8f;display:flex;flex-direction:column;overflow:hidden;
+}
+#sidebar-header{
+  padding:10px 14px;background:#1a1a35;border-bottom:1px solid #3b2f8f;
+  font-size:13px;font-weight:700;color:#aac4ff;letter-spacing:.5px;
+  display:flex;align-items:center;gap:8px;
+}
+#layout-badge{
+  margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;
+  background:#3b2f8f;color:#aac4ff;font-weight:600;letter-spacing:.5px;
+}
+#item-list{flex:1;overflow-y:auto;padding:4px 0;}
+#item-list::-webkit-scrollbar{width:4px;}
+#item-list::-webkit-scrollbar-thumb{background:#3b2f8f;border-radius:2px;}
+.item-row{
+  display:flex;align-items:center;gap:8px;padding:7px 10px;
+  cursor:pointer;border-left:3px solid transparent;transition:background .12s;
+}
+.item-row:hover{background:#1e1e3a;}
+.item-row.active{background:#1e1e3a;border-left-color:#7c6fe0;}
+.item-num{
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:800;flex-shrink:0;
+}
+.item-emoji{font-size:17px;flex-shrink:0;}
+.item-info{flex:1;min-width:0;}
+.item-name{font-size:11.5px;font-weight:600;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-zone{font-size:9px;color:#7c6fe0;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-dir{font-size:8.5px;color:#555;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-stat{font-size:9px;font-weight:700;margin-top:2px;}
+.item-stat.essential{color:#00ffd0;}
+.item-stat.violation{color:#ff6666;}
+.item-stat.detected{color:#88aacc;}
+
+/* Compass panel in sidebar */
+#compass-panel{
+  padding:10px 12px;border-top:1px solid #3b2f8f;border-bottom:1px solid #3b2f8f;
+  display:grid;grid-template-columns:1fr 1fr;gap:4px;
+}
+.dir-badge{
+  display:flex;align-items:center;gap:5px;padding:4px 8px;
+  border-radius:6px;font-size:10px;font-weight:700;
+}
+
+/* Legend */
+#sidebar-legend{padding:8px 12px;font-size:10px;color:#888;}
+.leg-row{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.leg-sw{width:13px;height:9px;border-radius:2px;flex-shrink:0;}
+
+/* Top toggle */
+#toggle-btn{
+  position:absolute;top:12px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,#3b2f8f,#1565c0);
+  color:white;border:2px solid #7c6fe0;border-radius:30px;
+  padding:8px 24px;font-size:14px;font-weight:700;cursor:pointer;
+  z-index:100;box-shadow:0 4px 18px #0008;transition:all .2s;white-space:nowrap;
+}
+#toggle-btn:hover{background:linear-gradient(135deg,#5544bb,#1e88e5);}
+
+/* Tooltip */
+#tooltip{
+  position:absolute;display:none;pointer-events:none;
+  background:rgba(10,8,35,0.97);border:1.5px solid #7c6fe0;
+  border-radius:12px;padding:10px 14px;color:#e8eaf6;
+  font-size:12px;z-index:200;max-width:240px;box-shadow:0 6px 24px #000a;
+}
+#tooltip .t-name{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px;}
+#tooltip .t-emoji{font-size:24px;float:right;margin-left:8px;}
+#tooltip .t-zone{color:#ffd966;font-size:11px;margin-bottom:1px;}
+#tooltip .t-dir{color:#94a3b8;font-size:10px;margin-bottom:4px;}
+#tooltip .t-stat{font-size:11px;font-weight:700;}
+#tooltip .t-stat.essential{color:#00ffd0;}
+#tooltip .t-stat.violation{color:#ff6666;}
+#tooltip .t-stat.detected{color:#88aacc;}
+
+#instructions{
+  position:absolute;bottom:12px;left:12px;z-index:100;
+  background:rgba(10,8,35,0.85);border:1px solid #3b2f8f;
+  border-radius:8px;padding:7px 11px;color:#555;font-size:10px;line-height:1.6;
+}
+</style>
+</head>
+<body>
+<div id="canvas-container">
+  <button id="toggle-btn">&#8644; Current Layout</button>
+  <div id="tooltip"></div>
+  <div id="instructions">
+    &#x1f5b1; Drag: orbit &nbsp;|&nbsp; Scroll: zoom &nbsp;|&nbsp; Right-drag: pan<br>
+    Click sidebar item to highlight &amp; focus
+  </div>
+</div>
+
+<div id="sidebar">
+  <div id="sidebar-header">
+    &#x1f4cb; Furniture
+    <span id="layout-badge">CURRENT</span>
+  </div>
+  <div id="compass-panel">
+    <div class="dir-badge" style="background:#0d1a3a;color:#4488ff;border:1px solid #4488ff">&#8593; North</div>
+    <div class="dir-badge" style="background:#1a0d0d;color:#ff4444;border:1px solid #ff4444">&#8595; South</div>
+    <div class="dir-badge" style="background:#1a1000;color:#ffaa00;border:1px solid #ffaa00">&#8592; West</div>
+    <div class="dir-badge" style="background:#0d1a0d;color:#00cc55;border:1px solid #00cc55">&#8594; East</div>
+  </div>
+  <div id="item-list"></div>
+  <div id="sidebar-legend">
+    <div class="leg-row"><div class="leg-sw" style="background:#00b8a5;border:1px solid #00ffd0"></div><span>&#9733; Essential</span></div>
+    <div class="leg-row"><div class="leg-sw" style="background:#7a0d0d;border:1px solid #ff4444"></div><span>&#9888; Vastu violation</span></div>
+    <div class="leg-row"><div class="leg-sw" style="background:#6688aa;border:1px solid #7788aa"></div><span>&#10003; Detected</span></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+
+const ROOM_W=4.3113789558410645, ROOM_D=3.3164455890655518, ROOM_H=2.5;
+const ZONE_COLS={"North-West": "#c3b1e1", "North": "#aec6cf", "North-East": "#a8d8a8", "West": "#f4a460", "Center": "#eeeeee", "East": "#ffd966", "South-West": "#c8a882", "South": "#ff9999", "South-East": "#ffb347"};
+const ZONE_COMPASS_MAP={"North-East": "North-East corner (Ishanya) \u2014 knowledge & prosperity", "North": "North wall (Kubera) \u2014 career & wealth", "North-West": "North-West corner (Vayavya) \u2014 movement & travel", "East": "East wall (Surya) \u2014 health & new beginnings", "Center": "Center (Brahmasthan) \u2014 sacred energy hub", "West": "West wall (Varun) \u2014 nourishment & gains", "South-East": "South-East corner (Agni) \u2014 fire & energy", "South": "South wall (Yama) \u2014 stability", "South-West": "South-West corner (Nairutya) \u2014 earth & stability"};
+const CURRENT=[{"id": 1, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 2.6596004366874695, "py": 0, "pz": 1.0825419425964355, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Essential"}, {"id": 2, "name": "dustbin", "emoji": "\ud83d\uddd1\ufe0f", "px": 2.2218341380357742, "py": 0, "pz": 1.0782674551010132, "fw": 0.35, "fh": 0.5, "fd": 0.35, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Essential"}, {"id": 3, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": 2.1781130731105804, "py": 0, "pz": 1.080731987953186, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#966464", "opacity": 0.88, "cat": "detected", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2713 Detected"}, {"id": 4, "name": "couch", "emoji": "\ud83d\udce6", "px": 2.70036244392395, "py": 0, "pz": 1.082037329673767, "fw": 2.2, "fh": 0.8, "fd": 0.95, "color": "#6496c8", "opacity": 0.88, "cat": "detected", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2713 Detected"}, {"id": 5, "name": "tv", "emoji": "\ud83d\udcfa", "px": 1.9720114171504974, "py": 0, "pz": 1.1065729856491089, "fw": 1.2, "fh": 0.7, "fd": 0.15, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "Center", "compass": "Center (Brahmasthan) \u2014 sacred energy hub", "status": "\u26a0 Move needed"}, {"id": 6, "name": "suitcase", "emoji": "\ud83d\udce6", "px": 2.0582321733236313, "py": 0, "pz": 1.0978927612304688, "fw": 0.5, "fh": 0.7, "fd": 0.25, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "Center", "compass": "Center (Brahmasthan) \u2014 sacred energy hub", "status": "\u26a0 Move needed"}, {"id": 7, "name": "book", "emoji": "\ud83d\udce6", "px": 2.176084889099002, "py": 0, "pz": 1.0709322690963745, "fw": 0.15, "fh": 0.05, "fd": 0.2, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u26a0 Move needed"}, {"id": 8, "name": "chair", "emoji": "\ud83e\ude91", "px": 2.517623394727707, "py": 0, "pz": 1.0961976051330566, "fw": 0.5, "fh": 0.9, "fd": 0.5, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u26a0 Move needed"}, {"id": 9, "name": "laptop", "emoji": "\ud83d\udce6", "px": 2.2542213425040245, "py": 0, "pz": 1.0835695266723633, "fw": 0.35, "fh": 0.02, "fd": 0.25, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u26a0 Move needed"}, {"id": 10, "name": "backpack", "emoji": "\ud83d\udce6", "px": 2.0746206641197205, "py": 0, "pz": 1.0698308944702148, "fw": 0.3, "fh": 0.5, "fd": 0.2, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u26a0 Move needed"}, {"id": 11, "name": "keyboard", "emoji": "\ud83d\udce6", "px": 1.8089017570018768, "py": 0, "pz": 1.069810390472412, "fw": 0.4, "fh": 0.03, "fd": 0.15, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South-West", "compass": "South-West corner (Nairutya) \u2014 earth & stability", "status": "\u26a0 Move needed"}, {"id": 12, "name": "cell phone", "emoji": "\ud83d\udce6", "px": 1.9269420802593231, "py": 0, "pz": 1.0699129104614258, "fw": 0.08, "fh": 0.01, "fd": 0.16, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South-West", "compass": "South-West corner (Nairutya) \u2014 earth & stability", "status": "\u26a0 Move needed"}];
+const OPTIMISED=[{"id": 1, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 2.559326410293579, "py": 0, "pz": 1.0936392545700073, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Vastu-correct position"}, {"id": 2, "name": "dustbin", "emoji": "\ud83d\uddd1\ufe0f", "px": 2.0749233067035675, "py": 0, "pz": 1.0793209075927734, "fw": 0.35, "fh": 0.5, "fd": 0.35, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Vastu-correct position"}, {"id": 3, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": 2.2887574434280396, "py": 0, "pz": 1.083306908607483, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#966464", "opacity": 0.88, "cat": "detected", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Vastu-correct position"}, {"id": 4, "name": "couch", "emoji": "\ud83d\udce6", "px": 2.7809276580810547, "py": 0, "pz": 1.082944393157959, "fw": 2.2, "fh": 0.8, "fd": 0.95, "color": "#6496c8", "opacity": 0.88, "cat": "detected", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Vastu-correct position"}, {"id": 5, "name": "tv", "emoji": "\ud83d\udcfa", "px": 2.4176557660102844, "py": 0, "pz": 1.074210286140442, "fw": 1.2, "fh": 0.7, "fd": 0.15, "color": "#1e1e1e", "opacity": 0.88, "cat": "detected", "zone": "South-East", "compass": "South-East corner (Agni) \u2014 fire & energy", "status": "\u2605 Vastu-correct position"}, {"id": 6, "name": "suitcase", "emoji": "\ud83d\udce6", "px": 1.9365320950746536, "py": 0, "pz": 1.096509337425232, "fw": 0.5, "fh": 0.7, "fd": 0.25, "color": "#786450", "opacity": 0.88, "cat": "detected", "zone": "West", "compass": "West wall (Varun) \u2014 nourishment & gains", "status": "\u2605 Vastu-correct position"}, {"id": 7, "name": "book", "emoji": "\ud83d\udce6", "px": 2.3682619780302048, "py": 0, "pz": 1.1040723323822021, "fw": 0.15, "fh": 0.05, "fd": 0.2, "color": "#b48c64", "opacity": 0.88, "cat": "detected", "zone": "North-East", "compass": "North-East corner (Ishanya) \u2014 knowledge & prosperity", "status": "\u2605 Vastu-correct position"}, {"id": 8, "name": "chair", "emoji": "\ud83e\ude91", "px": 2.05630012601614, "py": 0, "pz": 1.1030402183532715, "fw": 0.5, "fh": 0.9, "fd": 0.5, "color": "#8b5a3c", "opacity": 0.88, "cat": "detected", "zone": "North", "compass": "North wall (Kubera) \u2014 career & wealth", "status": "\u2605 Vastu-correct position"}, {"id": 9, "name": "laptop", "emoji": "\ud83d\udce6", "px": 2.7858309745788574, "py": 0, "pz": 1.0914371013641357, "fw": 0.35, "fh": 0.02, "fd": 0.25, "color": "#3c3c3c", "opacity": 0.88, "cat": "detected", "zone": "North-East", "compass": "North-East corner (Ishanya) \u2014 knowledge & prosperity", "status": "\u2605 Vastu-correct position"}, {"id": 10, "name": "backpack", "emoji": "\ud83d\udce6", "px": 1.6563007533550262, "py": 0, "pz": 1.0770995616912842, "fw": 0.3, "fh": 0.5, "fd": 0.2, "color": "#6478b4", "opacity": 0.88, "cat": "detected", "zone": "West", "compass": "West wall (Varun) \u2014 nourishment & gains", "status": "\u2605 Vastu-correct position"}, {"id": 11, "name": "keyboard", "emoji": "\ud83d\udce6", "px": 1.973867416381836, "py": 0, "pz": 1.1115906238555908, "fw": 0.4, "fh": 0.03, "fd": 0.15, "color": "#464646", "opacity": 0.88, "cat": "detected", "zone": "North", "compass": "North wall (Kubera) \u2014 career & wealth", "status": "\u2605 Vastu-correct position"}, {"id": 12, "name": "cell phone", "emoji": "\ud83d\udce6", "px": 2.518286854028702, "py": 0, "pz": 1.0827653408050537, "fw": 0.08, "fh": 0.01, "fd": 0.16, "color": "#282828", "opacity": 0.88, "cat": "detected", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Vastu-correct position"}];
+
+const ZONE_GRID=[
+  ['North-West',0,0,1/3,1/3],['North',1/3,0,1/3,1/3],['North-East',2/3,0,1/3,1/3],
+  ['West',0,1/3,1/3,1/3],['Center',1/3,1/3,1/3,1/3],['East',2/3,1/3,1/3,1/3],
+  ['South-West',0,2/3,1/3,1/3],['South',1/3,2/3,1/3,1/3],['South-East',2/3,2/3,1/3,1/3],
+];
+
+// ── Renderer setup ────────────────────────────────────────────────────────
+const cont   = document.getElementById('canvas-container');
+const sidebar= document.getElementById('sidebar');
+const W = () => cont.clientWidth, H = () => window.innerHeight;
+
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(W(), H());
+renderer.shadowMap.enabled = true;
+cont.appendChild(renderer.domElement);
+
+const scene  = new THREE.Scene();
+scene.background = new THREE.Color(0x0d0d1a);
+scene.fog        = new THREE.Fog(0x0d0d1a, 18, 40);
+
+const camera = new THREE.PerspectiveCamera(45, W()/H(), 0.1, 100);
+scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+const dl = new THREE.DirectionalLight(0xffffff, 0.85);
+dl.position.set(5,10,5); dl.castShadow=true; scene.add(dl);
+scene.add(new THREE.HemisphereLight(0x334466, 0x0d0d1a, 0.4));
+
+// ── Camera orbit ──────────────────────────────────────────────────────────
+let drag=false, rDrag=false, prev={x:0,y:0};
+let theta=0.6, phi=1.05, radius=Math.sqrt(ROOM_W*ROOM_W+ROOM_D*ROOM_D)*1.85;
+let panX=0, panY=0;
+
+function updateCam(){
+  camera.position.set(
+    radius*Math.sin(phi)*Math.sin(theta)+panX,
+    radius*Math.cos(phi)+panY,
+    radius*Math.sin(phi)*Math.cos(theta));
+  camera.lookAt(panX, panY, ROOM_D/2);
+}
+updateCam();
+
+cont.addEventListener('mousedown', e=>{drag=true;rDrag=(e.button===2);prev={x:e.clientX,y:e.clientY};});
+cont.addEventListener('contextmenu', e=>e.preventDefault());
+window.addEventListener('mouseup', ()=>drag=false);
+window.addEventListener('mousemove', e=>{
+  if(!drag) return;
+  const dx=(e.clientX-prev.x)*.005, dy=(e.clientY-prev.y)*.005;
+  if(rDrag){panX-=dx*2;panY+=dy*2;}
+  else{theta-=dx; phi=Math.max(.12,Math.min(Math.PI/2-.04,phi+dy));}
+  prev={x:e.clientX,y:e.clientY}; updateCam();
+});
+cont.addEventListener('wheel', e=>{radius=Math.max(2,Math.min(35,radius+e.deltaY*.022));updateCam();});
+let lt=null;
+cont.addEventListener('touchstart',e=>{lt=e.touches[0];});
+cont.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  const t=e.touches[0];
+  theta-=(t.clientX-lt.clientX)*.006;
+  phi=Math.max(.12,Math.min(Math.PI/2-.04,phi+(t.clientY-lt.clientY)*.006));
+  lt=t; updateCam();
+},{passive:false});
+
+// ── Sprite helper ─────────────────────────────────────────────────────────
+function mkSprite(txt, o={}){
+  const fs=o.fs||48, col=o.col||'#ffffff', bg=o.bg||'rgba(0,0,0,0)';
+  const cv=document.createElement('canvas'); cv.width=256; cv.height=128;
+  const ctx=cv.getContext('2d');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,256,128);
+  ctx.font=`bold ${fs}px Segoe UI Emoji,Segoe UI,sans-serif`;
+  ctx.fillStyle=col; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(txt,128,64);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial(
+    {map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));
+  sp.scale.set(o.sw||0.9, o.sh||0.45, 1);
+  return sp;
+}
+
+// ── Floor zones ───────────────────────────────────────────────────────────
+function buildFloor(){
+  const hw=ROOM_W/2;
+  ZONE_GRID.forEach(([zone,cx,cz,wf,df])=>{
+    const zw=wf*ROOM_W, zd=df*ROOM_D, x0=-hw+cx*ROOM_W, z0=cz*ROOM_D;
+    const col=ZONE_COLS[zone]||'#cccccc';
+    // Coloured tile
+    const m=new THREE.Mesh(
+      new THREE.PlaneGeometry(zw-.04,zd-.04),
+      new THREE.MeshLambertMaterial({color:new THREE.Color(col),transparent:true,opacity:0.70,side:THREE.DoubleSide}));
+    m.rotation.x=-Math.PI/2; m.position.set(x0+zw/2,.001,z0+zd/2); scene.add(m);
+    // Grid lines
+    const el=new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.PlaneGeometry(zw,zd)),
+      new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.18}));
+    el.rotation.x=-Math.PI/2; el.position.set(x0+zw/2,.002,z0+zd/2); scene.add(el);
+    // Zone short label
+    const sh=zone.replace('North','N').replace('South','S')
+               .replace('East','E').replace('West','W').replace('-','');
+    const sp=mkSprite(sh,{fs:32,col:'#111111',sw:.7,sh:.35});
+    sp.position.set(x0+zw/2,.05,z0+zd/2); scene.add(sp);
+  });
+}
+
+// ── Compass arrows on floor edges + wall labels ────────────────────────────
+function buildCompass(){
+  const hw=ROOM_W/2;
+
+  // Big wall letter labels
+  const walls=[
+    {txt:'N',x:0,      y:1.4, z:-.45,   col:'#4488ff'},
+    {txt:'S',x:0,      y:1.4, z:ROOM_D+.45, col:'#ff4444'},
+    {txt:'W',x:-hw-.4, y:1.4, z:ROOM_D/2,   col:'#ffaa00'},
+    {txt:'E',x: hw+.4, y:1.4, z:ROOM_D/2,   col:'#00cc55'},
+  ];
+  walls.forEach(({txt,x,y,z,col})=>{
+    const cv=document.createElement('canvas');cv.width=160;cv.height=160;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='rgba(10,8,35,.92)';
+    ctx.beginPath();ctx.arc(80,80,76,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle=col;ctx.lineWidth=5;
+    ctx.beginPath();ctx.arc(80,80,74,0,Math.PI*2);ctx.stroke();
+    ctx.font='bold 80px Segoe UI,sans-serif';
+    ctx.fillStyle=col;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(txt,80,82);
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial(
+      {map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));
+    sp.scale.set(1.0,1.0,1);sp.position.set(x,y,z);scene.add(sp);
+  });
+
+  // Floor direction arrows (flat on ground just outside room)
+  const arrows=[
+    {txt:'↑ NORTH', x:0,      z:-.8,       col:'#4488ff', ry:0},
+    {txt:'SOUTH ↓', x:0,      z:ROOM_D+.8, col:'#ff4444', ry:0},
+    {txt:'← WEST',  x:-hw-.7, z:ROOM_D/2,  col:'#ffaa00', ry:0},
+    {txt:'EAST →',  x: hw+.7, z:ROOM_D/2,  col:'#00cc55', ry:0},
+  ];
+  arrows.forEach(({txt,x,z,col})=>{
+    const cv=document.createElement('canvas');cv.width=320;cv.height=90;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='rgba(10,8,35,.88)';ctx.roundRect(0,0,320,90,16);ctx.fill();
+    ctx.strokeStyle=col;ctx.lineWidth=3;ctx.roundRect(2,2,316,86,14);ctx.stroke();
+    ctx.font='bold 46px Segoe UI Emoji,sans-serif';
+    ctx.fillStyle=col;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(txt,160,45);
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial(
+      {map:new THREE.CanvasTexture(cv),transparent:true,depthTest:false}));
+    sp.scale.set(2.0,.58,1);sp.position.set(x,.05,z);scene.add(sp);
+  });
+}
+
+// ── Furniture boxes ───────────────────────────────────────────────────────
+const fGroup=new THREE.Group(); scene.add(fGroup);
+const raycaster=new THREE.Raycaster();
+const mouseV=new THREE.Vector2(-9,-9);
+const meshData=new Map();
+let activeId=null;
+
+function buildFurniture(dataset){
+  fGroup.clear(); meshData.clear();
+  dataset.forEach(item=>{
+    const hw=ROOM_W/2;
+    const px=item.px-hw, py=item.fh/2, pz=item.pz;
+    const geo=new THREE.BoxGeometry(item.fw,item.fh,item.fd);
+    const mat=new THREE.MeshLambertMaterial(
+      {color:new THREE.Color(item.color),transparent:true,opacity:item.opacity});
+    const box=new THREE.Mesh(geo,mat);
+    box.position.set(px,py,pz); box.castShadow=true;
+    fGroup.add(box); meshData.set(box.uuid,item);
+
+    // Edge outline
+    const ec=item.cat==='essential'?0x00ffd0:item.cat==='violation'?0xff4444:0x7788aa;
+    box.add(new THREE.LineSegments(
+      new THREE.EdgesGeometry(geo),
+      new THREE.LineBasicMaterial({color:ec,linewidth:item.cat==='essential'?2:1})));
+
+    // Emoji on top face
+    const es=mkSprite(item.emoji,{fs:52,sw:.62,sh:.62});
+    es.position.set(0,item.fh/2+.02,0); box.add(es);
+
+    // Number badge
+    const numBg=item.cat==='essential'?'rgba(0,255,208,.95)'
+      :item.cat==='violation'?'rgba(180,20,20,.9)':'rgba(59,47,143,.9)';
+    const numFc=item.cat==='essential'?'#000':'#fff';
+    const ns=mkSprite(String(item.id),{fs:38,col:numFc,bg:numBg,sw:.34,sh:.34});
+    ns.position.set(item.fw/2+.04,item.fh/2+.32,0); box.add(ns);
+
+    // Name label (always visible)
+    const nc=item.cat==='essential'?'#00ffd0':item.cat==='violation'?'#ff9999':'#e2e8f0';
+    const sfx=item.cat==='essential'?'\u2605':item.cat==='violation'?'\u26a0':'';
+    const lsp=mkSprite((sfx?sfx+' ':'')+item.name,
+      {fs:28,col:nc,sw:1.12,sh:.40,bg:'rgba(10,8,35,.88)'});
+    lsp.position.set(0,item.fh/2+.58,0); box.add(lsp);
+  });
+}
+
+// ── Sidebar list ──────────────────────────────────────────────────────────
+function buildSidebar(dataset){
+  const list=document.getElementById('item-list');
+  list.innerHTML='';
+  dataset.forEach(item=>{
+    const row=document.createElement('div');
+    row.className='item-row'; row.dataset.id=item.id;
+    const numBg=item.cat==='essential'?'#00ffd0'
+      :item.cat==='violation'?'#7a0d0d':'#3b2f8f';
+    const numFc=item.cat==='essential'?'#000':'#fff';
+    // Compass short
+    const dirMap={'North':'↑N','South':'↓S','East':'→E','West':'←W',
+                  'North-East':'↗NE','North-West':'↖NW',
+                  'South-East':'↘SE','South-West':'↙SW','Center':'⊕C'};
+    const dir=dirMap[item.zone]||item.zone;
+    // Direction colour
+    const dirCol=item.zone.includes('North')?'#4488ff'
+      :item.zone.includes('South')?'#ff4444'
+      :item.zone==='East'?'#00cc55'
+      :item.zone==='West'?'#ffaa00':'#888';
+    row.innerHTML=`
+      <div class="item-num" style="background:${numBg};color:${numFc}">${item.id}</div>
+      <div class="item-emoji">${item.emoji}</div>
+      <div class="item-info">
+        <div class="item-name">${item.name}</div>
+        <div class="item-zone" style="color:${dirCol};font-weight:700">${dir} &nbsp;${item.zone}</div>
+        <div class="item-dir" style="color:#555">${item.compass.split('\u2014')[0].trim()}</div>
+        <div class="item-stat ${item.cat}">${item.status}</div>
+      </div>`;
+    row.addEventListener('click',()=>focusItem(item.id, row));
+    list.appendChild(row);
+  });
+}
+
+function focusItem(id, rowEl){
+  document.querySelectorAll('.item-row').forEach(r=>r.classList.remove('active'));
+  if(rowEl) rowEl.classList.add('active');
+  activeId=id;
+  // Flash + pan to box
+  fGroup.children.forEach(box=>{
+    const d=meshData.get(box.uuid);
+    if(!d||d.id!==id) return;
+    const orig=box.material.opacity;
+    box.material.opacity=1;
+    setTimeout(()=>box.material.opacity=orig,700);
+    // Pan camera toward item
+    const hw=ROOM_W/2;
+    panX=d.px-hw; panY=0; updateCam();
+  });
+}
+
+// ── Tooltip ───────────────────────────────────────────────────────────────
+const tip=document.getElementById('tooltip');
+function showTip(item,ex,ey){
+  tip.innerHTML=`
+    <span class="t-emoji">${item.emoji}</span>
+    <div class="t-name">${item.id}. ${item.name}</div>
+    <div class="t-zone">&#128205; ${item.zone}</div>
+    <div class="t-dir">&#129517; ${item.compass}</div>
+    <div class="t-stat ${item.cat}">${item.status}</div>`;
+  tip.style.display='block';
+  tip.style.left=(ex+14)+'px'; tip.style.top=(ey+14)+'px';
+}
+function hideTip(){tip.style.display='none';}
+
+cont.addEventListener('mousemove',e=>{
+  if(drag){hideTip();return;}
+  mouseV.x=(e.clientX/W())*2-1;
+  mouseV.y=-(e.clientY/H())*2+1;
+  raycaster.setFromCamera(mouseV,camera);
+  const hits=raycaster.intersectObjects(fGroup.children,true);
+  const hit=hits.find(h=>meshData.has(h.object.uuid));
+  if(hit){
+    const item=meshData.get(hit.object.uuid);
+    showTip(item,e.clientX,e.clientY);
+    document.querySelectorAll('.item-row').forEach(r=>
+      r.classList.toggle('active',parseInt(r.dataset.id)===item.id));
+  } else {
+    hideTip();
+    if(!activeId) document.querySelectorAll('.item-row').forEach(r=>r.classList.remove('active'));
+  }
+});
+
+// ── Toggle current / optimised ────────────────────────────────────────────
+let showCurrent=true;
+const badge=document.getElementById('layout-badge');
+document.getElementById('toggle-btn').addEventListener('click',()=>{
+  showCurrent=!showCurrent;
+  const data=showCurrent?CURRENT:OPTIMISED;
+  buildFurniture(data); buildSidebar(data);
+  activeId=null;
+  badge.textContent=showCurrent?'CURRENT':'OPTIMISED';
+  badge.style.background=showCurrent?'#3b2f8f':'#006644';
+  badge.style.color=showCurrent?'#aac4ff':'#00ffd0';
+  document.getElementById('toggle-btn').textContent=
+    showCurrent?'\u21C4 Current Layout':'\u2728 Vastu-Optimised';
+});
+
+// ── Build scene ───────────────────────────────────────────────────────────
+buildFloor();
+buildCompass();
+buildFurniture(CURRENT);
+buildSidebar(CURRENT);
+
+(function loop(){requestAnimationFrame(loop);renderer.render(scene,camera);})();
+
+window.addEventListener('resize',()=>{
+  camera.aspect=W()/H();
+  camera.updateProjectionMatrix();
+  renderer.setSize(W(),H());
+});
+</script>
+</body>
+</html>

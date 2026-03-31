@@ -1,0 +1,185 @@
+{
+  "run_id": "eee523c8-6dd2-4b1d-8005-81065eb69042",
+  "video_info": {
+    "filename": "room_video.mp4",
+    "path": "C:\\Users\\Lenovo\\Desktop\\colorful-room - Copy\\backend\\media\\uploads\\ca2ba97d-1df5-4446-ad89-9434f248c707\\room_video.mp4",
+    "room_type": "Study Room",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 5,
+  "user_selected_furniture": [
+    "studyTable",
+    "tableLamp",
+    "bookShelf"
+  ],
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 80.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "studyTable",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.4003123342990875,
+        0.5087302923202515,
+        1.155602216720581
+      ],
+      "recommended_position_3d": [
+        -0.6652522683143616,
+        0.5596650838851929,
+        1.1522507667541504
+      ],
+      "movement_distance_m": 0.26981244197527154,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 81.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 16.4
+      }
+    },
+    {
+      "object": "tableLamp",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.39957553148269653,
+        0.582714319229126,
+        1.153475284576416
+      ],
+      "recommended_position_3d": [
+        -0.2904362976551056,
+        0.516299843788147,
+        1.1582907438278198
+      ],
+      "movement_distance_m": 0.1278493001794531,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 83.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.3
+      }
+    },
+    {
+      "object": "bookShelf",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.5158961415290833,
+        0.5408588647842407,
+        1.152978539466858
+      ],
+      "recommended_position_3d": [
+        -0.47244083881378174,
+        0.6717320680618286,
+        1.1514382362365723
+      ],
+      "movement_distance_m": 0.13790769088146085,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 83.2,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.2
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.03822540119290352,
+        0.655793309211731,
+        1.155069351196289
+      ],
+      "movement_distance_m": 0.027757828615308625,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.6,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.0,
+        "movement_stability": 19.6
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.22473692893981934,
+        0.34494373202323914,
+        1.1553198099136353
+      ],
+      "movement_distance_m": 0.5668423799684972,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output.",
+      "vastu_score": 74.8,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 12.4,
+        "movement_stability": 12.4
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 6.1563053514774975,
+    "final_fitness": 0.21700917169991776,
+    "improvement": 5.93929617977758
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/eee523c8-6dd2-4b1d-8005-81065eb69042/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/eee523c8-6dd2-4b1d-8005-81065eb69042/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/eee523c8-6dd2-4b1d-8005-81065eb69042/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/eee523c8-6dd2-4b1d-8005-81065eb69042/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/eee523c8-6dd2-4b1d-8005-81065eb69042/visualizations/06_layout_comparison_2d.png"
+  }
+}

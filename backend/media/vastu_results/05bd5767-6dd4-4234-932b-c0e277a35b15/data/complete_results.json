@@ -1,0 +1,128 @@
+{
+  "run_id": "05bd5767-6dd4-4234-932b-c0e277a35b15",
+  "video_info": {
+    "filename": "room.mp4",
+    "path": "media/temp_videos/room.mp4",
+    "room_type": "living_room",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 2,
+  "user_selected_furniture": [],
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 50.0,
+  "final_compliance_pct": 100.0,
+  "weighted_vastu_score": 98,
+  "post_optimization_weighted_score": 100,
+  "violation_summary": {
+    "Critical": 0,
+    "Major": 0,
+    "Minor": 1
+  },
+  "vastu_validation_log": [
+    {
+      "rule_id": "LIV001",
+      "rule_description": "Main seating (sofa/couch) must not block the North-East entrance",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Major",
+      "evaluation_notes": "No issues found",
+      "rationale": "Blocking the sacred entrance traps positive energy from entering the home"
+    },
+    {
+      "rule_id": "GEN001",
+      "rule_description": "Toilet must not be within 2m of any eating/sleeping area",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "Waste energy from toilets contaminates food and sleep spaces"
+    },
+    {
+      "rule_id": "GEN002",
+      "rule_description": "Brahmasthan (room center) must be kept clear of heavy permanent furniture",
+      "affected_objects": [],
+      "verification_completed": true,
+      "validation_result": "Pass",
+      "severity": "Critical",
+      "evaluation_notes": "No issues found",
+      "rationale": "The sacred center of the home must remain open for energy to circulate freely"
+    }
+  ],
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506856583058834,
+        0.6453537940979004,
+        1.1553339958190918
+      ],
+      "recommended_position_3d": [
+        -0.009899647906422615,
+        0.6484001278877258,
+        1.1552271842956543
+      ],
+      "movement_distance_m": 0.004011121457161133,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness."
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.03034631721675396,
+        0.8510762453079224,
+        1.1467933654785156
+      ],
+      "recommended_position_3d": [
+        0.23792770504951477,
+        0.3718237280845642,
+        1.1540850400924683
+      ],
+      "movement_distance_m": 0.549278704126169,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output."
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 0.13446814093024964,
+    "final_fitness": 0.057939890961433836,
+    "improvement": 0.0765282499688158
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/05bd5767-6dd4-4234-932b-c0e277a35b15/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/05bd5767-6dd4-4234-932b-c0e277a35b15/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/05bd5767-6dd4-4234-932b-c0e277a35b15/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/05bd5767-6dd4-4234-932b-c0e277a35b15/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/05bd5767-6dd4-4234-932b-c0e277a35b15/visualizations/06_layout_comparison_2d.png"
+  }
+}

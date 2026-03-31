@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Vastu 3D Interactive Room</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#0d0d1a;font-family:'Segoe UI',sans-serif;overflow:hidden;}
+  #canvas-container{width:100vw;height:100vh;position:relative;}
+  #toggle-btn{
+    position:absolute;top:16px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(135deg,#3b2f8f,#1565c0);
+    color:white;border:2px solid #7c6fe0;border-radius:30px;
+    padding:10px 28px;font-size:15px;font-weight:700;cursor:pointer;
+    z-index:100;box-shadow:0 4px 18px #0008;transition:all .2s;
+  }
+  #toggle-btn:hover{background:linear-gradient(135deg,#5544bb,#1e88e5);}
+  #mode-label{
+    position:absolute;top:62px;left:50%;transform:translateX(-50%);
+    color:#aac4ff;font-size:12px;letter-spacing:1px;z-index:100;
+    background:#0008;padding:3px 14px;border-radius:12px;
+  }
+  #tooltip{
+    position:absolute;display:none;pointer-events:none;
+    background:rgba(10,8,35,0.96);border:1.5px solid #7c6fe0;
+    border-radius:12px;padding:10px 16px;color:#e8eaf6;
+    font-size:13px;z-index:200;max-width:260px;box-shadow:0 6px 24px #000a;
+  }
+  #tooltip .t-name{font-size:17px;font-weight:800;color:#fff;margin-bottom:4px;}
+  #tooltip .t-emoji{font-size:28px;float:right;margin-left:8px;}
+  #tooltip .t-zone{color:#ffd966;font-size:12px;margin-bottom:2px;}
+  #tooltip .t-dir{color:#94a3b8;font-size:11px;margin-bottom:4px;}
+  #tooltip .t-stat{font-size:12px;font-weight:700;}
+  #tooltip .t-stat.ghost{color:#00ffff;}
+  #tooltip .t-stat.essential{color:#00ffd0;}
+  #tooltip .t-stat.violation{color:#ff6666;}
+  #tooltip .t-stat.detected{color:#88aacc;}
+  #legend{
+    position:absolute;bottom:18px;left:18px;z-index:100;
+    background:rgba(10,8,35,0.92);border:1.5px solid #3b2f8f;
+    border-radius:12px;padding:12px 16px;color:#ccc;font-size:11.5px;min-width:240px;
+  }
+  #legend h4{color:white;font-size:13px;margin-bottom:8px;}
+  .leg-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+  .leg-swatch{width:18px;height:14px;border-radius:3px;flex-shrink:0;}
+  #instructions{
+    position:absolute;bottom:18px;right:18px;z-index:100;
+    background:rgba(10,8,35,0.88);border:1px solid #3b2f8f;
+    border-radius:10px;padding:10px 14px;color:#888;font-size:11px;
+  }
+</style>
+</head>
+<body>
+<div id="canvas-container">
+  <button id="toggle-btn">⇄ Toggle Layout</button>
+  <div id="mode-label">CURRENT LAYOUT</div>
+  <div id="tooltip"></div>
+  <div id="legend">
+    <h4>🗺 Furniture Legend</h4>
+    <div class="leg-row"><div class="leg-swatch" style="background:#00b8a5;border:2px solid #00ffd0"></div><span>★ Essential (detected in video)</span></div>
+    <div class="leg-row"><div class="leg-swatch" style="background:#00dddd;opacity:.4;border:2px dashed #00ffff"></div><span>➕ Essential (not found in video)</span></div>
+    <div class="leg-row"><div class="leg-swatch" style="background:#7a0d0d;border:2px solid #ff4444"></div><span>⚠ Vastu violation</span></div>
+    <div class="leg-row"><div class="leg-swatch" style="background:#6688aa;border:2px solid #7788aa"></div><span>✓ Detected (compliant)</span></div>
+  </div>
+  <div id="instructions">🖱 Drag to orbit &nbsp;|&nbsp; Scroll to zoom<br>Right-drag to pan &nbsp;|&nbsp; Hover for info</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const ROOM_W=4.3556036949157715,ROOM_D=3.3504645824432373,ROOM_H=2.5;
+const ZONE_COLS={"North-West": "#c3b1e1", "North": "#aec6cf", "North-East": "#a8d8a8", "West": "#f4a460", "Center": "#eeeeee", "East": "#ffd966", "South-West": "#c8a882", "South": "#ff9999", "South-East": "#ffb347"};
+const CURRENT=[{"id": 1, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": -0.012506856583058834, "py": 0, "pz": 1.1553339958190918, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Essential"}, {"id": 2, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 0.5166927576065063, "py": 0, "pz": 1.1547589302062988, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Essential"}, {"id": 3, "name": "dustbin", "emoji": "\ud83d\uddd1\ufe0f", "px": -0.44547364115715027, "py": 0, "pz": 1.1537690162658691, "fw": 0.8, "fh": 0.8, "fd": 0.8, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South-West", "compass": "South-West corner (Nairutya) \u2014 earth & stability", "status": "\u2605 Essential"}, {"id": 4, "name": "laptop", "emoji": "\ud83d\udce6", "px": -0.03034631721675396, "py": 0, "pz": 1.1467933654785156, "fw": 0.35, "fh": 0.02, "fd": 0.25, "color": "#7a0d0d", "opacity": 0.88, "cat": "violation", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u26a0 Move needed"}];
+const OPTIMISED=[{"id": 1, "name": "bed", "emoji": "\ud83d\udecf\ufe0f", "px": -0.0077140191569924355, "py": 0, "pz": 1.1550923585891724, "fw": 2.0, "fh": 0.6, "fd": 1.8, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South", "compass": "South wall (Yama) \u2014 stability", "status": "\u2605 Essential"}, {"id": 2, "name": "desk", "emoji": "\ud83d\udda5\ufe0f", "px": 0.4881513714790344, "py": 0, "pz": 1.1563677787780762, "fw": 1.4, "fh": 0.75, "fd": 0.7, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2605 Essential"}, {"id": 3, "name": "dustbin", "emoji": "\ud83d\uddd1\ufe0f", "px": -0.46627312898635864, "py": 0, "pz": 1.1528183221817017, "fw": 0.8, "fh": 0.8, "fd": 0.8, "color": "#00b8a5", "opacity": 0.92, "cat": "essential", "zone": "South-West", "compass": "South-West corner (Nairutya) \u2014 earth & stability", "status": "\u2605 Essential"}, {"id": 4, "name": "laptop", "emoji": "\ud83d\udce6", "px": 0.2239760309457779, "py": 0, "pz": 1.1545964479446411, "fw": 0.35, "fh": 0.02, "fd": 0.25, "color": "#3c3c3c", "opacity": 0.88, "cat": "detected", "zone": "East", "compass": "East wall (Surya) \u2014 health & new beginnings", "status": "\u2713 Detected"}];
+const ZONE_GRID=[
+  ['North-West',0,0,1/3,1/3],['North',1/3,0,1/3,1/3],['North-East',2/3,0,1/3,1/3],
+  ['West',0,1/3,1/3,1/3],['Center',1/3,1/3,1/3,1/3],['East',2/3,1/3,1/3,1/3],
+  ['South-West',0,2/3,1/3,1/3],['South',1/3,2/3,1/3,1/3],['South-East',2/3,2/3,1/3,1/3],
+];
+const container=document.getElementById('canvas-container');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.shadowMap.enabled=true;
+container.appendChild(renderer.domElement);
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x0d0d1a);
+scene.fog=new THREE.Fog(0x0d0d1a,18,35);
+const camera=new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,100);
+scene.add(new THREE.AmbientLight(0xffffff,0.55));
+const dl=new THREE.DirectionalLight(0xffffff,0.9);
+dl.position.set(5,10,5);dl.castShadow=true;scene.add(dl);
+scene.add(new THREE.HemisphereLight(0x334466,0x0d0d1a,0.4));
+
+let isDragging=false,isRight=false,prevM={x:0,y:0};
+let theta=0.6,phi=1.1,radius=Math.sqrt(ROOM_W*ROOM_W+ROOM_D*ROOM_D)*1.8,panX=0,panY=0;
+function updateCam(){
+  camera.position.set(radius*Math.sin(phi)*Math.sin(theta)+panX,radius*Math.cos(phi)+panY,radius*Math.sin(phi)*Math.cos(theta));
+  camera.lookAt(panX,panY,ROOM_D/2);
+}
+updateCam();
+container.addEventListener('mousedown',e=>{isDragging=true;isRight=(e.button===2);prevM={x:e.clientX,y:e.clientY};});
+container.addEventListener('contextmenu',e=>e.preventDefault());
+window.addEventListener('mouseup',()=>isDragging=false);
+window.addEventListener('mousemove',e=>{
+  if(!isDragging)return;
+  const dx=(e.clientX-prevM.x)*0.005,dy=(e.clientY-prevM.y)*0.005;
+  if(isRight){panX-=dx*2;panY+=dy*2;}
+  else{theta-=dx;phi=Math.max(0.15,Math.min(Math.PI/2-0.05,phi+dy));}
+  prevM={x:e.clientX,y:e.clientY};updateCam();
+});
+container.addEventListener('wheel',e=>{radius=Math.max(2,Math.min(30,radius+e.deltaY*0.02));updateCam();});
+let lt=null;
+container.addEventListener('touchstart',e=>{lt=e.touches[0];});
+container.addEventListener('touchmove',e=>{
+  e.preventDefault();const t=e.touches[0];
+  const dx=(t.clientX-lt.clientX)*0.006,dy=(t.clientY-lt.clientY)*0.006;
+  theta-=dx;phi=Math.max(0.15,Math.min(Math.PI/2-0.05,phi+dy));lt=t;updateCam();
+},{passive:false});
+
+function hexC(h){return new THREE.Color(h);}
+function sprite(txt,o={}){
+  const fs=o.fontSize||48,col=o.color||'white',bg=o.bg||'rgba(0,0,0,0)';
+  const c=document.createElement('canvas');c.width=256;c.height=128;
+  const x=c.getContext('2d');
+  x.fillStyle=bg;x.fillRect(0,0,256,128);
+  x.font=`bold ${fs}px Segoe UI Emoji,Segoe UI,sans-serif`;
+  x.fillStyle=col;x.textAlign='center';x.textBaseline='middle';x.fillText(txt,128,64);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthTest:false}));
+  sp.scale.set(o.sw||0.9,o.sh||0.45,1);return sp;
+}
+
+function buildFloor(){
+  const hw=ROOM_W/2;
+  ZONE_GRID.forEach(([zone,cx,cz,wf,df])=>{
+    const zw=wf*ROOM_W,zd=df*ROOM_D,x0=-hw+cx*ROOM_W,z0=cz*ROOM_D;
+    const col=ZONE_COLS[zone]||'#eee';
+    const m=new THREE.Mesh(new THREE.PlaneGeometry(zw-0.04,zd-0.04),new THREE.MeshLambertMaterial({color:hexC(col),transparent:true,opacity:0.72,side:THREE.DoubleSide}));
+    m.rotation.x=-Math.PI/2;m.position.set(x0+zw/2,0.001,z0+zd/2);scene.add(m);
+    const el=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(zw,zd)),new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.25}));
+    el.rotation.x=-Math.PI/2;el.position.set(x0+zw/2,0.002,z0+zd/2);scene.add(el);
+    const sh=zone.replace('North','N').replace('South','S').replace('East','E').replace('West','W').replace('-','');
+    const sp=sprite(sh,{fontSize:38,color:'#111',sw:0.8,sh:0.4});
+    sp.position.set(x0+zw/2,0.05,z0+zd/2);scene.add(sp);
+  });
+}
+
+function buildCompass(){
+  const hw=ROOM_W/2;
+  [['↑ NORTH',0,1.2,-0.3,'#4488ff'],['↓ SOUTH',0,1.2,ROOM_D+0.3,'#ff4444'],
+   ['← WEST',-hw-0.2,1.2,ROOM_D/2,'#ff9900'],['EAST →',hw+0.2,1.2,ROOM_D/2,'#00bb55']].forEach(([txt,x,y,z,col])=>{
+    const c=document.createElement('canvas');c.width=380;c.height=110;
+    const cx=c.getContext('2d');
+    cx.fillStyle='rgba(18,18,42,0.88)';cx.roundRect(0,0,380,110,22);cx.fill();
+    cx.strokeStyle=col;cx.lineWidth=4;cx.roundRect(2,2,376,106,20);cx.stroke();
+    cx.font='bold 54px Segoe UI Emoji,Segoe UI,sans-serif';
+    cx.fillStyle=col;cx.textAlign='center';cx.textBaseline='middle';cx.fillText(txt,190,56);
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthTest:false}));
+    sp.scale.set(2.2,0.65,1);sp.position.set(x,y,z);scene.add(sp);
+  });
+}
+
+const fGroup=new THREE.Group();scene.add(fGroup);
+const ray=new THREE.Raycaster(),mouse=new THREE.Vector2(-9,-9),mdata=new Map();
+
+function buildFurniture(data){
+  fGroup.clear();mdata.clear();
+  data.forEach(item=>{
+    const hw=ROOM_W/2,px=item.px-hw,py=item.fh/2,pz=item.pz;
+    const geo=new THREE.BoxGeometry(item.fw,item.fh,item.fd);
+    const mat=new THREE.MeshLambertMaterial({color:hexC(item.color),transparent:true,opacity:item.opacity});
+    const box=new THREE.Mesh(geo,mat);
+    box.position.set(px,py,pz);box.castShadow=true;fGroup.add(box);mdata.set(box.uuid,item);
+    const ec=item.cat==='ghost'?0x00ffff:item.cat==='essential'?0x00ffd0:item.cat==='violation'?0xff4444:0x7788aa;
+    box.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:ec,linewidth:item.cat==='ghost'||item.cat==='essential'?2:1})));
+    const es=sprite(item.emoji,{fontSize:64,sw:0.7,sh:0.7});
+    es.position.set(0,item.fh/2+0.01,0);box.add(es);
+    const ns=sprite(String(item.id),{fontSize:38,color:item.cat==='essential'?'#000':'#fff',
+      bg:item.cat==='ghost'?'rgba(0,85,102,0.9)':item.cat==='essential'?'rgba(0,255,208,0.95)':item.cat==='violation'?'rgba(200,20,20,0.9)':'rgba(59,47,143,0.9)',sw:0.38,sh:0.38});
+    ns.position.set(item.fw/2+0.05,item.fh/2+0.38,0);box.add(ns);
+    const nc=item.cat==='ghost'?'#00ffff':item.cat==='essential'?'#00ffd0':item.cat==='violation'?'#ff9999':'#dddddd';
+    const sfx=item.cat==='ghost'?' ➕':item.cat==='essential'?' ★':item.cat==='violation'?' ⚠':'';
+    const lsp=sprite(item.name+sfx,{fontSize:28,color:nc,sw:1.1,sh:0.38,bg:'rgba(15,10,40,0.85)'});
+    lsp.position.set(0,item.fh/2+0.62,0);box.add(lsp);
+  });
+}
+
+const tip=document.getElementById('tooltip');
+function showTip(item,ex,ey){
+  tip.innerHTML=`<span class="t-emoji">${item.emoji}</span><div class="t-name">${item.id}. ${item.name}</div><div class="t-zone">📍 Zone: ${item.zone}</div><div class="t-dir">🧭 ${item.compass}</div><div class="t-stat ${item.cat}">${item.status}</div>`;
+  tip.style.display='block';tip.style.left=(ex+16)+'px';tip.style.top=(ey+16)+'px';
+}
+function hideTip(){tip.style.display='none';}
+container.addEventListener('mousemove',e=>{
+  if(isDragging){hideTip();return;}
+  mouse.x=(e.clientX/window.innerWidth)*2-1;mouse.y=-(e.clientY/window.innerHeight)*2+1;
+  ray.setFromCamera(mouse,camera);
+  const hits=ray.intersectObjects(fGroup.children,true);
+  const hit=hits.find(h=>mdata.has(h.object.uuid));
+  if(hit) showTip(mdata.get(hit.object.uuid),e.clientX,e.clientY); else hideTip();
+});
+
+let showCurrent=true;
+const ml=document.getElementById('mode-label');
+document.getElementById('toggle-btn').addEventListener('click',()=>{
+  showCurrent=!showCurrent;
+  buildFurniture(showCurrent?CURRENT:OPTIMISED);
+  ml.textContent=showCurrent?'CURRENT LAYOUT':'✨ VASTU-OPTIMISED LAYOUT';
+});
+
+buildFloor();buildCompass();buildFurniture(CURRENT);
+(function loop(){requestAnimationFrame(loop);renderer.render(scene,camera);})();
+window.addEventListener('resize',()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
+</script>
+</body>
+</html>

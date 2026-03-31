@@ -1,0 +1,185 @@
+{
+  "run_id": "c40ffc6f-5a5f-4e7b-95ff-46a08f1f8b57",
+  "video_info": {
+    "filename": "1e32ce76-f4cf-4a2b-82c8-d8e8eaaa8ce3_room.mp4",
+    "path": "media/temp_videos/1e32ce76-f4cf-4a2b-82c8-d8e8eaaa8ce3_room.mp4",
+    "room_type": "Bedroom",
+    "width": 320,
+    "height": 568,
+    "fps": 29.980404964075767,
+    "duration": 5.1033333333333335,
+    "is_panoramic": false
+  },
+  "camera_params": {
+    "fx": 277.1281292110204,
+    "fy": 277.1281292110204,
+    "cx": 160.0,
+    "cy": 284.0,
+    "width": 320,
+    "height": 568,
+    "fov": 60,
+    "is_panoramic": false
+  },
+  "room_dimensions": {
+    "width_m": 4.35560417175293,
+    "depth_m": 3.3504648208618164,
+    "height_m": 2.5
+  },
+  "detected_objects": 5,
+  "user_selected_furniture": {
+    "tables": 1,
+    "wardrobe": 1,
+    "tv": 1
+  },
+  "initial_violations": 1,
+  "optimized_violations": 0,
+  "initial_compliance_pct": 80.0,
+  "final_compliance_pct": 100.0,
+  "improvement_pct": 100.0,
+  "recommendations": [
+    {
+      "object": "tables",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.4655647277832031,
+        0.64430832862854,
+        1.1519739627838135
+      ],
+      "recommended_position_3d": [
+        -0.5162661075592041,
+        0.6054925322532654,
+        1.1524674892425537
+      ],
+      "movement_distance_m": 0.06385561469285643,
+      "action_needed": false,
+      "vastu_rationale": "General Vastu guidance.",
+      "vastu_score": 84.1,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 19.1
+      }
+    },
+    {
+      "object": "wardrobe",
+      "is_essential": true,
+      "current_zone": "South-West",
+      "recommended_zone": "South-West",
+      "current_position_3d": [
+        -0.49506476521492004,
+        0.5657882690429688,
+        1.1529107093811035
+      ],
+      "recommended_position_3d": [
+        -0.31312599778175354,
+        0.6500877737998962,
+        1.1517150402069092
+      ],
+      "movement_distance_m": 0.2005231937261553,
+      "action_needed": false,
+      "vastu_rationale": "Heavy storage cabinets must sit in South-West to ground the space. South wall storage is also acceptable. Never place heavy cabinets in North-East - this blocks sacred energy flow.",
+      "vastu_score": 82.3,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 17.3
+      }
+    },
+    {
+      "object": "tv",
+      "is_essential": true,
+      "current_zone": "East",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        0.44265881180763245,
+        -0.008352053351700306,
+        1.157294511795044
+      ],
+      "recommended_position_3d": [
+        0.5262529850006104,
+        -0.07152824103832245,
+        1.1568841934204102
+      ],
+      "movement_distance_m": 0.10478255982558096,
+      "action_needed": false,
+      "vastu_rationale": "TV faces East so viewers face West (auspicious viewing direction). South-East also acceptable as screens emit electromagnetic energy that aligns well with the Agni corner.",
+      "vastu_score": 83.6,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 15.0,
+        "movement_stability": 18.6
+      }
+    },
+    {
+      "object": "bed",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "South",
+      "current_position_3d": [
+        -0.012506866827607155,
+        0.6453543901443481,
+        1.1553349494934082
+      ],
+      "recommended_position_3d": [
+        -0.026598285883665085,
+        0.6062283515930176,
+        1.1564185619354248
+      ],
+      "movement_distance_m": 0.04160035095594906,
+      "action_needed": false,
+      "vastu_rationale": "South-West (Nairutya) is the stabilising Earth corner. Sleeping with head toward South/West aligns with Earth magnetism for deep, restorative sleep. Avoid North - magnetic pull causes restlessness.",
+      "vastu_score": 83.4,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 14.0,
+        "movement_stability": 19.4
+      }
+    },
+    {
+      "object": "laptop",
+      "is_essential": false,
+      "current_zone": "South",
+      "recommended_zone": "East",
+      "current_position_3d": [
+        -0.030346345156431198,
+        0.8510770201683044,
+        1.1467944383621216
+      ],
+      "recommended_position_3d": [
+        0.23700456321239471,
+        0.33674100041389465,
+        1.1551687717437744
+      ],
+      "movement_distance_m": 0.5797311263698302,
+      "action_needed": true,
+      "vastu_rationale": "Portable work device - follows desk rules. East for focus, North for professional success, North-East for creative output.",
+      "vastu_score": 74.7,
+      "vastu_score_label": "Good",
+      "score_breakdown": {
+        "zone_compliance": 50,
+        "detection_confidence": 12.4,
+        "movement_stability": 12.3
+      }
+    }
+  ],
+  "ga_stats": {
+    "generations": 100,
+    "population_size": 50,
+    "initial_fitness": 1.0758370918336282,
+    "final_fitness": 0.13088605669305517,
+    "improvement": 0.944951035140573
+  },
+  "public_urls": {
+    "html_report": "/media/vastu_results/c40ffc6f-5a5f-4e7b-95ff-46a08f1f8b57/data/vastu_report.html",
+    "current_3d_glb": "/media/vastu_results/c40ffc6f-5a5f-4e7b-95ff-46a08f1f8b57/3d_models/current_layout.glb",
+    "optimized_3d_glb": "/media/vastu_results/c40ffc6f-5a5f-4e7b-95ff-46a08f1f8b57/3d_models/optimised_layout.glb",
+    "compliance_radar": "/media/vastu_results/c40ffc6f-5a5f-4e7b-95ff-46a08f1f8b57/visualizations/04_compliance_radar.png",
+    "layout_comparison": "/media/vastu_results/c40ffc6f-5a5f-4e7b-95ff-46a08f1f8b57/visualizations/06_layout_comparison_2d.png"
+  }
+}
